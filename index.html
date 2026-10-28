@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>artikel: der, die or das?</title>
+  <meta name="description" content="Practise German noun genders. Pick der, die or das, see the plural and meaning, and let a card box bring back the words you miss.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#E8ECEF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#101419" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#card">Skip to the game</a>
+
+  <header class="top">
+    <h1 class="brand">
+      <span class="brand-mark" aria-hidden="true"><i class="m-der"></i><i class="m-die"></i><i class="m-das"></i></span>
+      artikel
+    </h1>
+
+    <div class="controls">
+      <fieldset class="seg seg-level" aria-label="Level">
+        <legend class="sr-only">Level</legend>
+        <label><input type="radio" name="level" value="A1" checked><span>A1</span></label>
+        <label><input type="radio" name="level" value="A2"><span>A2</span></label>
+        <label><input type="radio" name="level" value="B1"><span>B1</span></label>
+        <label><input type="radio" name="level" value="all"><span>All</span></label>
+      </fieldset>
+
+      <fieldset class="seg seg-lang" aria-label="Translation language">
+        <legend class="sr-only">Translation language</legend>
+        <label><input type="radio" name="lang" value="en" checked><span>EN</span></label>
+        <label><input type="radio" name="lang" value="fa"><span lang="fa">فا</span></label>
+      </fieldset>
+
+      <button type="button" class="ghost" id="stats-open" aria-haspopup="dialog">Stats</button>
+    </div>
+  </header>
+
+  <main class="stage">
+    <section class="card" id="card" aria-labelledby="noun" tabindex="-1">
+      <div class="card-meta">
+        <span id="word-level"></span>
+        <span id="word-box"></span>
+      </div>
+
+      <p class="phrase" lang="de">
+        <span class="slot" id="slot"></span>
+        <span class="noun" id="noun" tabindex="-1"></span>
+      </p>
+
+      <div class="feedback" id="feedback" hidden>
+        <p class="verdict" id="verdict"></p>
+        <p class="plural" id="plural"></p>
+        <p class="meaning" id="meaning"></p>
+        <p class="hint" id="hint" hidden></p>
+        <button type="button" class="next" id="next">Next word <kbd>Enter</kbd></button>
+      </div>
+    </section>
+
+    <div class="choices" role="group" aria-label="Choose the article">
+      <button type="button" class="choice" data-article="der" lang="de"><span class="choice-key" aria-hidden="true">1</span>der</button>
+      <button type="button" class="choice" data-article="die" lang="de"><span class="choice-key" aria-hidden="true">2</span>die</button>
+      <button type="button" class="choice" data-article="das" lang="de"><span class="choice-key" aria-hidden="true">3</span>das</button>
+    </div>
+    <p class="keys-help">Keys <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> answer, <kbd>Enter</kbd> moves on.</p>
+
+    <dl class="score" aria-label="Score">
+      <div><dt>Correct</dt><dd id="stat-correct">0 / 0</dd></div>
+      <div><dt>Streak</dt><dd id="stat-streak">0</dd></div>
+      <div><dt>Best</dt><dd id="stat-best">0</dd></div>
+    </dl>
+
+    <section class="box" aria-labelledby="box-caption">
+      <h2 class="box-caption" id="box-caption">Card box</h2>
+      <p class="box-note">Right answers move a word one box up. A miss sends it back to box 1, so you see it again soon. Box 5 means mastered.</p>
+      <ol class="box-cells">
+        <li class="box-cell box-new" data-box="0"><span class="box-count">0</span><span class="box-label">new</span></li>
+        <li class="box-cell" data-box="1"><span class="box-count">0</span><span class="box-label">1</span></li>
+        <li class="box-cell" data-box="2"><span class="box-count">0</span><span class="box-label">2</span></li>
+        <li class="box-cell" data-box="3"><span class="box-count">0</span><span class="box-label">3</span></li>
+        <li class="box-cell" data-box="4"><span class="box-count">0</span><span class="box-label">4</span></li>
+        <li class="box-cell" data-box="5"><span class="box-count">0</span><span class="box-label">5</span></li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Your progress stays in this browser. Nothing is sent anywhere.</p>
+  </footer>
+
+  <dialog class="stats" id="stats" aria-labelledby="stats-title">
+    <div class="stats-head">
+      <h2 id="stats-title">Your stats</h2>
+      <button type="button" class="ghost" id="stats-close">Close</button>
+    </div>
+
+    <h3>Accuracy by article</h3>
+    <div class="meters" id="stats-articles"></div>
+
+    <div class="totals">
+      <p><span class="total-num" id="stats-mastered">0</span> words mastered</p>
+      <p><span class="total-num" id="stats-answered">0</span> answers so far</p>
+    </div>
+
+    <h3>By level</h3>
+    <table class="levels">
+      <thead>
+        <tr><th scope="col">Level</th><th scope="col">Seen</th><th scope="col">Mastered</th></tr>
+      </thead>
+      <tbody id="stats-levels"></tbody>
+    </table>
+
+    <div class="danger">
+      <button type="button" class="reset" id="reset">Reset progress</button>
+      <p>Clears boxes, score and stats on this device.</p>
+    </div>
+  </dialog>
+
+  <div class="sr-only" id="live" aria-live="polite"></div>
+
+  <script src="words.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

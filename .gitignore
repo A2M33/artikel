@@ -1,0 +1,17 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Node (only used to run the word list test)
+node_modules/
+npm-debug.log*
+
+# Local screenshots and scratch files
+*.local.*
+tmp/
