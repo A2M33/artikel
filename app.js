@@ -23,6 +23,7 @@
   var FIRST_TRY_BOX = 3;
   var NO_PLURAL = "–";
   var GOALS = [10, 20, 30, 50];
+  var MISSED_SHOWN = 8;
   var DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
 
   // ---------------------------------------------------------------- rules
@@ -101,6 +102,8 @@
         var p = data.prog[w];
         if (p && isCount(p.b) && isCount(p.n) && p.b >= 1 && p.b <= BOXES) {
           s.prog[w] = { b: Math.floor(p.b), n: Math.floor(p.n) };
+          // m = misses, added later; older saves don't have it.
+          if (isCount(p.m)) s.prog[w].m = Math.floor(p.m);
         }
       });
     }
@@ -206,6 +209,8 @@
     statsLevels: $("stats-levels"),
     statsMastered: $("stats-mastered"),
     statsAnswered: $("stats-answered"),
+    statsMissed: $("stats-missed"),
+    statsMissedEmpty: $("stats-missed-empty"),
     reset: $("reset"),
     sound: $("sound"),
     daily: $("daily"),
@@ -486,6 +491,52 @@
     });
     setText(el.statsMastered, String(mastered));
     setText(el.statsAnswered, String(state.answered));
+    renderMissed();
+  }
+
+  // Words missed most often, then those sitting lowest in the box. Box 1
+  // counts as missed even without a miss count: only a wrong answer puts a
+  // word there, and saves from before the count existed have none.
+  function mostMissed() {
+    return WORDS.filter(function (w) {
+      var p = state.prog[w.w];
+      return p && ((p.m || 0) > 0 || p.b === 1);
+    }).sort(function (x, y) {
+      var px = state.prog[x.w];
+      var py = state.prog[y.w];
+      return (py.m || 0) - (px.m || 0) || px.b - py.b;
+    }).slice(0, MISSED_SHOWN);
+  }
+
+  function renderMissed() {
+    var list = mostMissed();
+    el.statsMissed.textContent = "";
+    el.statsMissed.hidden = !list.length;
+    el.statsMissedEmpty.hidden = list.length > 0;
+    list.forEach(function (w) {
+      var p = state.prog[w.w];
+      var li = document.createElement("li");
+
+      var noun = document.createElement("span");
+      noun.className = "missed-noun";
+      noun.lang = "de";
+      noun.dir = "ltr";
+      noun.append(artNode(w.a), " " + w.w);
+
+      var meaning = document.createElement("span");
+      meaning.className = "missed-meaning";
+      var fa = state.lang === "fa";
+      meaning.lang = fa ? "fa" : "en";
+      meaning.textContent = fa ? w.fa : w.en;
+
+      var detail = document.createElement("span");
+      detail.className = "missed-detail";
+      var m = p.m || 0;
+      detail.textContent = (m ? m + (m === 1 ? " miss" : " misses") + ", " : "") + "box " + p.b;
+
+      li.append(noun, meaning, detail);
+      el.statsMissed.appendChild(li);
+    });
   }
 
   // ---------------------------------------------------------------- speech
@@ -566,6 +617,7 @@
     } else {
       state.streak = 0;
       p.b = 1;
+      p.m = (p.m || 0) + 1;
     }
     p.n = state.turn + GAP[p.b];
     state.prog[current.w] = p;

@@ -955,6 +955,56 @@ kbd {
   font-variant-numeric: tabular-nums;
 }
 
+.missed {
+  display: grid;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.missed li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "noun detail"
+    "meaning detail";
+  align-items: center;
+  column-gap: 0.75rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.missed-noun {
+  grid-area: noun;
+  font-family: var(--din);
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: start;
+}
+
+.missed-meaning {
+  grid-area: meaning;
+  overflow: hidden;
+  color: var(--ink-2);
+  font-size: 0.85rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.missed-detail {
+  grid-area: detail;
+  color: var(--ink-2);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.missed-empty {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 0.9rem;
+}
+
 .goal-note {
   margin: 0.5rem 0 0;
   color: var(--ink-2);

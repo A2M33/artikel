@@ -22,7 +22,7 @@ artikel drills der, die and das on over 900 German nouns from A1 to B1. You answ
 - The app tracks your score and your current and best streak.
 - You set a daily goal of 10, 20, 30 or 50 cards in the stats panel. A bar shows how many cards you have done today, and a counter shows how many days in a row you have met the goal.
 - When a noun reaches box 5, the card marks it as mastered with a short burst in the der, die and das colours. If your system asks for reduced motion, you get the badge without the animation.
-- The stats panel shows your accuracy for each article and how many nouns you have mastered per level.
+- The stats panel shows your accuracy for each article and how many nouns you have mastered per level. It also lists the eight nouns you miss most, with how often you missed each one and which box it sits in.
 - You can limit the cards to A1, A2 or B1, or practise all levels together.
 - Colours follow the classroom convention: blue for der, red for die, green for das.
 - The light or dark theme follows your system setting. Buttons are large on phones, and screen readers get labels.
