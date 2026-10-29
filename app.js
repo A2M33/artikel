@@ -25,41 +25,8 @@
 
   // ---------------------------------------------------------------- rules
 
-  var TIME_WORDS = [
-    "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag",
-    "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August",
-    "September", "Oktober", "November", "Dezember",
-    "Frühling", "Sommer", "Herbst", "Winter"
-  ];
-
-  var SUFFIX_RULES = [
-    { a: "die", suffix: "ung", re: /ung$/ },
-    { a: "die", suffix: "heit", re: /heit$/ },
-    { a: "die", suffix: "keit", re: /keit$/ },
-    { a: "die", suffix: "schaft", re: /schaft$/ },
-    { a: "die", suffix: "tät", re: /tät$/ },
-    { a: "die", suffix: "ion", re: /ion$/ },
-    { a: "das", suffix: "chen", re: /chen$/ },
-    { a: "das", suffix: "lein", re: /lein$/ },
-    { a: "das", suffix: "ment", re: /ment$/ },
-    { a: "das", suffix: "um", re: /[^aeiouäöü]um$/ },
-    { a: "der", suffix: "ling", re: /ling$/ },
-    { a: "der", suffix: "ismus", re: /ismus$/ }
-  ];
-
-  // Returns the rule that explains this word, or null. A rule is only shown
-  // when the word actually follows it, so exceptions (der Kuchen, das Stadion)
-  // never get a misleading hint.
-  function ruleFor(word) {
-    if (TIME_WORDS.indexOf(word.w) !== -1) {
-      return word.a === "der" ? { a: "der", time: true } : null;
-    }
-    for (var i = 0; i < SUFFIX_RULES.length; i++) {
-      var r = SUFFIX_RULES[i];
-      if (r.re.test(word.w)) return r.a === word.a ? r : null;
-    }
-    return null;
-  }
+  // rules.js holds the gender rules; tests/rules.test.mjs checks them.
+  var ruleFor = window.RULES ? window.RULES.ruleFor : function () { return null; };
 
   // ---------------------------------------------------------------- state
 
@@ -286,13 +253,13 @@
     var fa = state.lang === "fa";
     el.hint.lang = fa ? "fa" : "en";
     el.hint.dir = fa ? "rtl" : "ltr";
-    el.hint.setAttribute("data-article", rule.a);
+    el.hint.setAttribute("data-article", current.a);
 
-    var art = document.createElement("b");
-    art.lang = "de";
-    art.dir = "ltr";
-    art.className = "art art-" + rule.a;
-    art.textContent = rule.a;
+    // -nis allows two articles; the hint names both.
+    var arts = typeof rule.a === "string" ? [rule.a] : rule.a;
+    var art = artNode(arts[0]);
+    var or = fa ? " یا " : " or ";
+    var artText = arts.length > 1 ? [art, or, artNode(arts[1])] : [art];
 
     if (rule.time) {
       if (fa) {
@@ -300,19 +267,45 @@
       } else {
         el.hint.append("Days, months and seasons take ", art, ".");
       }
-    } else {
-      var suf = document.createElement("span");
-      suf.lang = "de";
-      suf.dir = "ltr";
-      suf.className = "suffix";
-      suf.textContent = "-" + rule.suffix;
+    } else if (rule.prefix) {
+      var pre = germanSpan("suffix", rule.prefix + "-");
       if (fa) {
-        el.hint.append("اسم‌هایی که به ", suf, " ختم می‌شوند با ", art, " می‌آیند.");
+        el.hint.append("بسیاری از اسم‌هایی که با ", pre, " شروع می‌شوند با ", art, " می‌آیند.");
       } else {
-        el.hint.append("Nouns ending in ", suf, " take ", art, ".");
+        el.hint.append("Many nouns starting with ", pre, " take ", art, ".");
+      }
+    } else {
+      var suf = germanSpan("suffix", "-" + rule.suffix);
+      var most = rule.hedge === "usually";
+      if (fa) {
+        el.hint.append(most ? "بیشتر اسم‌هایی که به " : "اسم‌هایی که به ", suf, " ختم می‌شوند با ");
+        el.hint.append.apply(el.hint, artText);
+        el.hint.append(" می‌آیند.");
+      } else {
+        el.hint.append(most ? "Most nouns ending in " : "Nouns ending in ", suf, " take ");
+        el.hint.append.apply(el.hint, artText);
+        el.hint.append(".");
       }
     }
     el.hint.hidden = false;
+  }
+
+  function germanSpan(className, text) {
+    var node = document.createElement("span");
+    node.lang = "de";
+    node.dir = "ltr";
+    node.className = className;
+    node.textContent = text;
+    return node;
+  }
+
+  function artNode(article) {
+    var node = document.createElement("b");
+    node.lang = "de";
+    node.dir = "ltr";
+    node.className = "art art-" + article;
+    node.textContent = article;
+    return node;
   }
 
   function renderScore() {

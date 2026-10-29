@@ -14,4 +14,5 @@ jobs:
           node-version: 22
       - run: node tests/words.test.mjs
       - run: node tests/page.test.mjs
-      - run: node --check app.js && node --check words.js
+      - run: node tests/rules.test.mjs
+      - run: node --check app.js && node --check words.js && node --check rules.js

@@ -27,22 +27,29 @@ artikel drills der, die and das on over 900 German nouns from A1 to B1. You answ
 
 ## Hints
 
-| Article | Endings and word groups |
-|---------|-------------------------|
-| die | -ung, -heit, -keit, -schaft, -tät, -ion |
-| das | -chen, -lein, -ment, -um |
-| der | -ling, -ismus, days of the week, months, seasons |
+| Article | Endings and word groups | Share of matching nouns in the list |
+|---------|-------------------------|-------------------------------------|
+| die | -ung, -heit, -keit, -schaft, -tät, -ion, -ie, -ei, -ik, -ur, -enz, -anz | 90% or more |
+| die | most nouns ending in -e | 90% (der Name, das Auge and der Käse break it) |
+| die or das | -nis | all of them |
+| das | -chen, -lein, -ment, -um (das Datum, das Museum, das Studium) | 90% or more |
+| das | many nouns starting with Ge- | 56% (die Geschichte, der Gedanke) |
+| der | -ling, -ismus, -eur, days of the week, months, seasons | 90% or more |
 
-The app shows a hint only when the noun follows the rule. Exceptions such as der Kuchen or das Stadion get no hint, so you won't learn a rule that contradicts the word in front of you.
+The app shows a hint only when the noun follows the rule. Exceptions such as der Kuchen or das Stadion get no hint, so you won't learn a rule that contradicts the word in front of you. The -ie, -ei, -ik, -ur and -anz rules skip one-syllable nouns, which is why der Tanz and das Knie don't count against them.
+
+`tests/rules.test.mjs` measures each rule against the word list and fails if a rule drops below what its hint says: 90% for a plain rule, 80% for "most" and 50% for "many".
 
 ## Run it locally
 
 Download or clone the repository and open `index.html` in a browser. You don't need a build step or any installs, and the page works offline.
 
-To check the word list you need Node.js 18 or newer:
+The tests need Node.js 18 or newer:
 
 ```
 node tests/words.test.mjs
+node tests/rules.test.mjs
+node tests/page.test.mjs
 ```
 
 ## The word list
