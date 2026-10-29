@@ -24,6 +24,13 @@
   var NO_PLURAL = "–";
   var GOALS = [10, 20, 30, 50];
   var MISSED_SHOWN = 8;
+  // Answer keys by physical position (e.code), so they also work with a
+  // Persian or other non-Latin keyboard layout. D, I, S: der, die, das.
+  var ANSWER_KEYS = {
+    Digit1: 0, Numpad1: 0, KeyD: 0,
+    Digit2: 1, Numpad2: 1, KeyI: 1,
+    Digit3: 2, Numpad3: 2, KeyS: 2
+  };
   var DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
 
   // ---------------------------------------------------------------- text
@@ -42,6 +49,7 @@
       choose: "Choose the article",
       next: "Next word",
       keys: "Keys",
+      orKey: "or",
       keysAnswer: "answer,",
       keysNext: "moves on.",
       daily: "Daily goal",
@@ -113,6 +121,7 @@
       choose: "حرف تعریف را انتخاب کنید",
       next: "واژهٔ بعدی",
       keys: "کلیدهای",
+      orKey: "یا",
       keysAnswer: "برای پاسخ،",
       keysNext: "برای واژهٔ بعدی.",
       daily: "هدف روزانه",
@@ -1066,13 +1075,17 @@
     var tag = e.target && e.target.tagName;
     if (tag === "TEXTAREA" || tag === "SELECT" || (tag === "INPUT" && e.target.type === "text")) return;
 
-    var index = ["1", "2", "3"].indexOf(e.key);
+    var index = Object.prototype.hasOwnProperty.call(ANSWER_KEYS, e.code)
+      ? ANSWER_KEYS[e.code]
+      : ["1", "2", "3"].indexOf(e.key);
     if (index !== -1 && !hasAnswered) {
       e.preventDefault();
       answer(ARTICLES[index]);
       return;
     }
-    if (hasAnswered && e.key === "Enter" && tag !== "BUTTON" && tag !== "A" && tag !== "INPUT") {
+    // On a focused button, Enter and Space already click it.
+    var isNextKey = e.key === "Enter" || e.key === " " || e.code === "Space";
+    if (hasAnswered && isNextKey && tag !== "BUTTON" && tag !== "A" && tag !== "INPUT") {
       e.preventDefault();
       nextWord();
     }
