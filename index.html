@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <a class="skip" href="#card">Skip to the game</a>
+  <a class="skip" href="#card" data-i18n="skip">Skip to the game</a>
 
   <header class="top">
     <h1 class="brand">
@@ -21,22 +21,22 @@
     </h1>
 
     <div class="controls">
-      <fieldset class="seg seg-level" aria-label="Level">
-        <legend class="sr-only">Level</legend>
+      <fieldset class="seg seg-level" aria-label="Level" data-i18n-label="level">
+        <legend class="sr-only" data-i18n="level">Level</legend>
         <label><input type="radio" name="level" value="A1" checked><span>A1</span></label>
         <label><input type="radio" name="level" value="A2"><span>A2</span></label>
         <label><input type="radio" name="level" value="B1"><span>B1</span></label>
-        <label><input type="radio" name="level" value="all"><span>All</span></label>
+        <label><input type="radio" name="level" value="all"><span data-i18n="levelAll">All</span></label>
       </fieldset>
 
-      <fieldset class="seg seg-lang" aria-label="Translation language">
-        <legend class="sr-only">Translation language</legend>
+      <fieldset class="seg seg-lang" aria-label="Language" data-i18n-label="lang">
+        <legend class="sr-only" data-i18n="lang">Language</legend>
         <label><input type="radio" name="lang" value="en" checked><span>EN</span></label>
         <label><input type="radio" name="lang" value="fa"><span lang="fa">فا</span></label>
       </fieldset>
 
       <!-- Shown by app.js only when the browser has a German voice. -->
-      <button type="button" class="ghost sound" id="sound" aria-pressed="true" aria-label="Say the word aloud" title="Say the word aloud" hidden>
+      <button type="button" class="ghost sound" id="sound" aria-pressed="true" aria-label="Say the word aloud" title="Say the word aloud" data-i18n-label="sound" hidden>
         <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
           <path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/>
           <path class="sound-waves" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -44,7 +44,7 @@
         </svg>
       </button>
 
-      <button type="button" class="ghost" id="stats-open" aria-haspopup="dialog">Stats</button>
+      <button type="button" class="ghost" id="stats-open" aria-haspopup="dialog" data-i18n="stats">Stats</button>
     </div>
   </header>
 
@@ -55,13 +55,13 @@
         <span id="word-box"></span>
       </div>
 
-      <p class="phrase" lang="de">
+      <p class="phrase" lang="de" dir="ltr">
         <span class="slot" id="slot"></span>
         <span class="noun" id="noun" tabindex="-1"></span>
       </p>
     </section>
 
-    <div class="choices" role="group" aria-label="Choose the article">
+    <div class="choices" role="group" aria-label="Choose the article" data-i18n-label="choose" dir="ltr">
       <button type="button" class="choice" data-article="der" lang="de"><span class="choice-key" aria-hidden="true">1</span>der</button>
       <button type="button" class="choice" data-article="die" lang="de"><span class="choice-key" aria-hidden="true">2</span>die</button>
       <button type="button" class="choice" data-article="das" lang="de"><span class="choice-key" aria-hidden="true">3</span>das</button>
@@ -73,80 +73,80 @@
       <p class="plural" id="plural"></p>
       <p class="meaning" id="meaning"></p>
       <p class="hint" id="hint" hidden></p>
-      <button type="button" class="next" id="next">Next word <kbd>Enter</kbd></button>
+      <button type="button" class="next" id="next"><span data-i18n="next">Next word</span> <kbd>Enter</kbd></button>
     </div>
-    <p class="keys-help">Keys <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> answer, <kbd>Enter</kbd> moves on.</p>
+    <p class="keys-help"><span data-i18n="keys">Keys</span> <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <span data-i18n="keysAnswer">answer,</span> <kbd>Enter</kbd> <span data-i18n="keysNext">moves on.</span></p>
 
-    <section class="daily" id="daily" aria-label="Daily goal">
+    <section class="daily" id="daily" aria-label="Daily goal" data-i18n-label="daily">
       <div class="daily-goal">
-        <p class="daily-line"><span id="daily-title">Today</span> <span class="daily-count" id="daily-count">0 / 20</span></p>
+        <p class="daily-line"><span id="daily-title" data-i18n="today">Today</span> <span class="daily-count" id="daily-count">0 / 20</span></p>
         <span class="meter" id="daily-meter" role="progressbar" aria-labelledby="daily-title" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0"><span class="meter-fill" id="daily-fill"></span></span>
       </div>
       <p class="daily-days"><span class="daily-num" id="daily-days">0</span> <span id="daily-days-label">days in a row</span></p>
     </section>
 
-    <dl class="score" aria-label="Score">
-      <div><dt>Correct</dt><dd id="stat-correct">0 / 0</dd></div>
-      <div><dt>Streak</dt><dd id="stat-streak">0</dd></div>
-      <div><dt>Best</dt><dd id="stat-best">0</dd></div>
+    <dl class="score" aria-label="Score" data-i18n-label="score">
+      <div><dt data-i18n="correct">Correct</dt><dd id="stat-correct">0 / 0</dd></div>
+      <div><dt data-i18n="streak">Streak</dt><dd id="stat-streak">0</dd></div>
+      <div><dt data-i18n="best">Best</dt><dd id="stat-best">0</dd></div>
     </dl>
 
     <section class="box" aria-labelledby="box-caption">
-      <h2 class="box-caption" id="box-caption">Card box</h2>
-      <p class="box-note">Right answers move a word one box up. A miss sends it back to box 1, so you see it again soon. Box 5 means mastered.</p>
+      <h2 class="box-caption" id="box-caption" data-i18n="boxTitle">Card box</h2>
+      <p class="box-note" data-i18n="boxNote">Right answers move a word one box up. A miss sends it back to box 1, so you see it again soon. Box 5 means mastered.</p>
       <ol class="box-cells">
-        <li class="box-cell box-new" data-box="0"><span class="box-count">0</span><span class="box-label">new</span></li>
-        <li class="box-cell" data-box="1"><span class="box-count">0</span><span class="box-label">1</span></li>
-        <li class="box-cell" data-box="2"><span class="box-count">0</span><span class="box-label">2</span></li>
-        <li class="box-cell" data-box="3"><span class="box-count">0</span><span class="box-label">3</span></li>
-        <li class="box-cell" data-box="4"><span class="box-count">0</span><span class="box-label">4</span></li>
-        <li class="box-cell" data-box="5"><span class="box-count">0</span><span class="box-label">5</span></li>
+        <li class="box-cell box-new" data-box="0"><span class="box-count">0</span><span class="box-label" data-i18n="boxNew">new</span></li>
+        <li class="box-cell" data-box="1"><span class="box-count">0</span><span class="box-label" data-num="1">1</span></li>
+        <li class="box-cell" data-box="2"><span class="box-count">0</span><span class="box-label" data-num="2">2</span></li>
+        <li class="box-cell" data-box="3"><span class="box-count">0</span><span class="box-label" data-num="3">3</span></li>
+        <li class="box-cell" data-box="4"><span class="box-count">0</span><span class="box-label" data-num="4">4</span></li>
+        <li class="box-cell" data-box="5"><span class="box-count">0</span><span class="box-label" data-num="5">5</span></li>
       </ol>
     </section>
   </main>
 
   <footer class="foot">
-    <p>Your progress stays in this browser. Nothing is sent anywhere.</p>
+    <p data-i18n="foot">Your progress stays in this browser. Nothing is sent anywhere.</p>
   </footer>
 
   <dialog class="stats" id="stats" aria-labelledby="stats-title">
     <div class="stats-head">
-      <h2 id="stats-title">Your stats</h2>
-      <button type="button" class="ghost" id="stats-close">Close</button>
+      <h2 id="stats-title" data-i18n="statsTitle">Your stats</h2>
+      <button type="button" class="ghost" id="stats-close" data-i18n="close">Close</button>
     </div>
 
-    <h3>Accuracy by article</h3>
+    <h3 data-i18n="byArticle">Accuracy by article</h3>
     <div class="meters" id="stats-articles"></div>
 
     <div class="totals">
-      <p><span class="total-num" id="stats-mastered">0</span> words mastered</p>
-      <p><span class="total-num" id="stats-answered">0</span> answers so far</p>
+      <p><span class="total-num" id="stats-mastered">0</span> <span data-i18n="masteredTotal">words mastered</span></p>
+      <p><span class="total-num" id="stats-answered">0</span> <span data-i18n="answersTotal">answers so far</span></p>
     </div>
 
-    <h3>Most missed</h3>
+    <h3 data-i18n="missedTitle">Most missed</h3>
     <ol class="missed" id="stats-missed"></ol>
-    <p class="missed-empty" id="stats-missed-empty">No misses yet.</p>
+    <p class="missed-empty" id="stats-missed-empty" data-i18n="missedEmpty">No misses yet.</p>
 
-    <h3 id="goal-title">Daily goal</h3>
+    <h3 id="goal-title" data-i18n="daily">Daily goal</h3>
     <fieldset class="seg seg-goal" aria-labelledby="goal-title">
-      <label><input type="radio" name="goal" value="10"><span>10</span></label>
-      <label><input type="radio" name="goal" value="20" checked><span>20</span></label>
-      <label><input type="radio" name="goal" value="30"><span>30</span></label>
-      <label><input type="radio" name="goal" value="50"><span>50</span></label>
+      <label><input type="radio" name="goal" value="10"><span data-num="10">10</span></label>
+      <label><input type="radio" name="goal" value="20" checked><span data-num="20">20</span></label>
+      <label><input type="radio" name="goal" value="30"><span data-num="30">30</span></label>
+      <label><input type="radio" name="goal" value="50"><span data-num="50">50</span></label>
     </fieldset>
-    <p class="goal-note" id="goal-note">Cards a day. Meet the goal on days in a row to build a streak.</p>
+    <p class="goal-note" id="goal-note" data-i18n="goalNote">Cards a day. Meet the goal on days in a row to build a streak.</p>
 
-    <h3>By level</h3>
+    <h3 data-i18n="byLevel">By level</h3>
     <table class="levels">
       <thead>
-        <tr><th scope="col">Level</th><th scope="col">Seen</th><th scope="col">Mastered</th></tr>
+        <tr><th scope="col" data-i18n="level">Level</th><th scope="col" data-i18n="colSeen">Seen</th><th scope="col" data-i18n="colMastered">Mastered</th></tr>
       </thead>
       <tbody id="stats-levels"></tbody>
     </table>
 
     <div class="danger">
       <button type="button" class="reset" id="reset">Reset progress</button>
-      <p>Clears boxes, score and stats on this device.</p>
+      <p data-i18n="resetNote">Clears boxes, score and stats on this device.</p>
     </div>
   </dialog>
 

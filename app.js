@@ -26,6 +26,188 @@
   var MISSED_SHOWN = 8;
   var DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
 
+  // ---------------------------------------------------------------- text
+
+  // Interface text. {name} marks a slot; numbers in slots get Persian digits
+  // in Persian mode. German words stay German in both languages.
+  var TEXT = {
+    en: {
+      title: "artikel: der, die or das?",
+      skip: "Skip to the game",
+      level: "Level",
+      levelAll: "All",
+      lang: "Language",
+      sound: "Say the word aloud",
+      stats: "Stats",
+      choose: "Choose the article",
+      next: "Next word",
+      keys: "Keys",
+      keysAnswer: "answer,",
+      keysNext: "moves on.",
+      daily: "Daily goal",
+      today: "Today",
+      score: "Score",
+      correct: "Correct",
+      streak: "Streak",
+      best: "Best",
+      boxTitle: "Card box",
+      boxNote: "Right answers move a word one box up. A miss sends it back to box 1, so you see it again soon. Box 5 means mastered.",
+      boxNew: "new",
+      foot: "Your progress stays in this browser. Nothing is sent anywhere.",
+      statsTitle: "Your stats",
+      close: "Close",
+      byArticle: "Accuracy by article",
+      masteredTotal: "words mastered",
+      answersTotal: "answers so far",
+      missedTitle: "Most missed",
+      missedEmpty: "No misses yet.",
+      goalNote: "Cards a day. Meet the goal on days in a row to build a streak.",
+      byLevel: "By level",
+      colSeen: "Seen",
+      colMastered: "Mastered",
+      reset: "Reset progress",
+      resetArmed: "Tap again to erase all progress",
+      resetNote: "Clears boxes, score and stats on this device.",
+      erased: "Progress erased.",
+      noWords: "No words for this level",
+      missingArticle: "missing article",
+      newWord: "New word",
+      boxOf: "Box {b} of {total}",
+      nowBox: "Now in box {b} of {total}",
+      right: "Richtig.",
+      wrong: "Not {chosen}. It is {answer}.",
+      plural: "Plural: {pl}",
+      noPlural: "No plural",
+      mastered: "Mastered",
+      liveRight: "Correct.",
+      liveWrong: "Wrong.",
+      liveMastered: "Mastered.",
+      liveGoal: "Daily goal reached.",
+      count: "{n} / {total}",
+      dayOne: "day in a row",
+      days: "days in a row",
+      cellNew: "New",
+      cellBox: "Box {b}",
+      wordOne: "{n} word",
+      words: "{n} words",
+      currentWord: ", current word",
+      meterRight: "{a}: {p}% correct",
+      meterNone: "{a}: not asked yet",
+      percent: "{p}%",
+      okOf: "{ok} of {n}",
+      noAnswers: "no answers yet",
+      missOne: "{m} miss",
+      misses: "{m} misses",
+      inBox: "box {b}",
+      listSep: ", ",
+      or: " or "
+    },
+    fa: {
+      title: "artikel: der، die یا das؟",
+      skip: "رفتن به بازی",
+      level: "سطح",
+      levelAll: "همه",
+      lang: "زبان",
+      sound: "خواندن واژه با صدا",
+      stats: "آمار",
+      choose: "حرف تعریف را انتخاب کنید",
+      next: "واژهٔ بعدی",
+      keys: "کلیدهای",
+      keysAnswer: "برای پاسخ،",
+      keysNext: "برای واژهٔ بعدی.",
+      daily: "هدف روزانه",
+      today: "امروز",
+      score: "امتیاز",
+      correct: "درست",
+      streak: "پیاپی",
+      best: "بهترین",
+      boxTitle: "جعبهٔ کارت‌ها",
+      boxNote: "با هر پاسخ درست، واژه یک جعبه بالا می‌رود. با هر اشتباه به جعبهٔ ۱ برمی‌گردد تا زود دوباره آن را ببینید. جعبهٔ ۵ یعنی واژه را یاد گرفته‌اید.",
+      boxNew: "تازه",
+      foot: "پیشرفت شما فقط در همین مرورگر می‌ماند و به هیچ جا فرستاده نمی‌شود.",
+      statsTitle: "آمار شما",
+      close: "بستن",
+      byArticle: "درستی پاسخ برای هر حرف تعریف",
+      masteredTotal: "واژهٔ یادگرفته",
+      answersTotal: "پاسخ تا اینجا",
+      missedTitle: "بیشترین اشتباه‌ها",
+      missedEmpty: "هنوز اشتباهی نداشته‌اید.",
+      goalNote: "کارت در روز. هر روز به هدف برسید تا شمار روزهای پیاپی بالا برود.",
+      byLevel: "به تفکیک سطح",
+      colSeen: "دیده‌شده",
+      colMastered: "یادگرفته",
+      reset: "پاک کردن پیشرفت",
+      resetArmed: "برای پاک کردن همهٔ پیشرفت دوباره بزنید",
+      resetNote: "جعبه‌ها، امتیاز و آمار را در این دستگاه پاک می‌کند.",
+      erased: "پیشرفت پاک شد.",
+      noWords: "برای این سطح واژه‌ای نیست",
+      missingArticle: "حرف تعریف خالی",
+      newWord: "واژهٔ تازه",
+      boxOf: "جعبهٔ {b} از {total}",
+      nowBox: "حالا در جعبهٔ {b} از {total}",
+      right: "درست است.",
+      wrong: "{chosen} نه، {answer} درست است.",
+      plural: "جمع: {pl}",
+      noPlural: "جمع ندارد",
+      mastered: "یاد گرفتید",
+      liveRight: "درست.",
+      liveWrong: "نادرست.",
+      liveMastered: "این واژه را یاد گرفتید.",
+      liveGoal: "به هدف امروز رسیدید.",
+      count: "{n} از {total}",
+      dayOne: "روز پیاپی",
+      days: "روز پیاپی",
+      cellNew: "تازه",
+      cellBox: "جعبهٔ {b}",
+      wordOne: "{n} واژه",
+      words: "{n} واژه",
+      currentWord: "، واژهٔ فعلی",
+      meterRight: "{a}: {p}٪ درست",
+      meterNone: "{a}: هنوز پرسیده نشده",
+      percent: "{p}٪",
+      okOf: "{ok} از {n}",
+      noAnswers: "هنوز پاسخی نیست",
+      missOne: "{m} اشتباه",
+      misses: "{m} اشتباه",
+      inBox: "جعبهٔ {b}",
+      listSep: "، ",
+      or: " یا "
+    }
+  };
+
+  var FA_DIGITS = "۰۱۲۳۴۵۶۷۸۹";
+
+  function t(key) {
+    var table = TEXT[state.lang] || TEXT.en;
+    return key in table ? table[key] : TEXT.en[key];
+  }
+
+  function num(n) {
+    var s = String(n);
+    if (state.lang !== "fa") return s;
+    return s.replace(/[0-9]/g, function (d) { return FA_DIGITS.charAt(Number(d)); });
+  }
+
+  // Splits a template into text and values, in order. Numbers are localised;
+  // DOM nodes pass through so callers can append them.
+  function parts(key, vars) {
+    var out = [];
+    t(key).split(/(\{\w+\})/).forEach(function (piece) {
+      var m = /^\{(\w+)\}$/.exec(piece);
+      if (!m) {
+        if (piece) out.push(piece);
+        return;
+      }
+      var v = vars[m[1]];
+      out.push(typeof v === "number" ? num(v) : v);
+    });
+    return out;
+  }
+
+  function fmt(key, vars) {
+    return parts(key, vars || {}).join("");
+  }
+
   // ---------------------------------------------------------------- rules
 
   // rules.js holds the gender rules; tests/rules.test.mjs checks them.
@@ -122,6 +304,8 @@
   var state = load();
   var current = null;
   var hasAnswered = false;
+  // The last answer, kept so a language switch can redraw the feedback.
+  var last = null;
 
   // ---------------------------------------------------------------- picking
 
@@ -236,7 +420,7 @@
 
   function renderWord() {
     if (!current) {
-      setText(el.noun, "No words for this level");
+      setText(el.noun, t("noWords"));
       setText(el.slot, "");
       el.choices.forEach(function (b) { b.disabled = true; });
       return;
@@ -245,11 +429,11 @@
     el.card.style.setProperty("--len", String(current.w.length));
     el.slot.textContent = "";
     el.slot.removeAttribute("data-article");
-    el.slot.setAttribute("aria-label", "missing article");
+    el.slot.setAttribute("aria-label", t("missingArticle"));
     el.noun.textContent = current.w;
     setText(el.wordLevel, current.lvl);
     var b = boxOf(current);
-    setText(el.wordBox, b ? "Box " + b + " of " + BOXES : "New word");
+    renderWordBox();
 
     el.choices.forEach(function (btn) {
       btn.disabled = false;
@@ -259,6 +443,16 @@
     el.feedback.hidden = true;
     el.card.classList.remove("is-answered");
     renderBox(b);
+  }
+
+  function renderWordBox() {
+    if (!current) return;
+    if (hasAnswered && last) {
+      setText(el.wordBox, fmt("nowBox", { b: last.box, total: BOXES }));
+      return;
+    }
+    var b = boxOf(current);
+    setText(el.wordBox, b ? fmt("boxOf", { b: b, total: BOXES }) : t("newWord"));
   }
 
   function renderMeaning() {
@@ -286,7 +480,7 @@
     // -nis allows two articles; the hint names both.
     var arts = typeof rule.a === "string" ? [rule.a] : rule.a;
     var art = artNode(arts[0]);
-    var or = fa ? " یا " : " or ";
+    var or = t("or");
     var artText = arts.length > 1 ? [art, or, artNode(arts[1])] : [art];
 
     if (rule.time) {
@@ -337,9 +531,9 @@
   }
 
   function renderScore() {
-    setText(el.statCorrect, state.correct + " / " + state.answered);
-    setText(el.statStreak, String(state.streak));
-    setText(el.statBest, String(state.best));
+    setText(el.statCorrect, fmt("count", { n: state.correct, total: state.answered }));
+    setText(el.statStreak, num(state.streak));
+    setText(el.statBest, num(state.best));
   }
 
   function boxCounts() {
@@ -356,10 +550,11 @@
     el.boxCells.forEach(function (cell) {
       var i = Number(cell.getAttribute("data-box"));
       var countNode = cell.querySelector(".box-count");
-      setText(countNode, String(counts[i]));
+      setText(countNode, num(counts[i]));
       cell.classList.toggle("is-active", i === activeBox);
-      var label = (i === 0 ? "New" : "Box " + i) + ": " + counts[i] + (counts[i] === 1 ? " word" : " words");
-      if (i === activeBox) label += ", current word";
+      var label = (i === 0 ? t("cellNew") : fmt("cellBox", { b: i })) + ": " +
+        fmt(counts[i] === 1 ? "wordOne" : "words", { n: counts[i] });
+      if (i === activeBox) label += t("currentWord");
       cell.setAttribute("aria-label", label);
     });
   }
@@ -410,14 +605,14 @@
   function renderDaily() {
     var n = cardsToday();
     var done = n >= state.goal;
-    setText(el.dailyCount, n + " / " + state.goal);
+    setText(el.dailyCount, fmt("count", { n: n, total: state.goal }));
     el.dailyFill.style.width = Math.min(100, (n / state.goal) * 100) + "%";
     el.dailyMeter.setAttribute("aria-valuemax", String(state.goal));
     el.dailyMeter.setAttribute("aria-valuenow", String(Math.min(n, state.goal)));
     el.daily.classList.toggle("is-done", done);
     var days = dayStreak();
-    setText(el.dailyDays, String(days));
-    setText(el.dailyDaysLabel, days === 1 ? "day in a row" : "days in a row");
+    setText(el.dailyDays, num(days));
+    setText(el.dailyDaysLabel, t(days === 1 ? "dayOne" : "days"));
   }
 
   function setGoal(goal) {
@@ -449,7 +644,7 @@
       var bar = document.createElement("span");
       bar.className = "meter";
       bar.setAttribute("role", "img");
-      bar.setAttribute("aria-label", a + ": " + (st.n ? p + "% correct" : "not asked yet"));
+      bar.setAttribute("aria-label", st.n ? fmt("meterRight", { a: a, p: p }) : fmt("meterNone", { a: a }));
       var fill = document.createElement("span");
       fill.className = "meter-fill";
       fill.style.width = p + "%";
@@ -457,10 +652,10 @@
 
       var value = document.createElement("span");
       value.className = "meter-value";
-      value.textContent = st.n ? p + "%" : "–";
+      value.textContent = st.n ? fmt("percent", { p: p }) : "–";
       var detail = document.createElement("span");
       detail.className = "meter-detail";
-      detail.textContent = st.n ? st.ok + " of " + st.n : "no answers yet";
+      detail.textContent = st.n ? fmt("okOf", { ok: st.ok, n: st.n }) : t("noAnswers");
 
       row.append(name, bar, value, detail);
       el.statsArticles.appendChild(row);
@@ -483,14 +678,14 @@
       th.scope = "row";
       th.textContent = lvl;
       var tdSeen = document.createElement("td");
-      tdSeen.textContent = seen + " / " + words.length;
+      tdSeen.textContent = fmt("count", { n: seen, total: words.length });
       var tdM = document.createElement("td");
-      tdM.textContent = String(m);
+      tdM.textContent = num(m);
       row.append(th, tdSeen, tdM);
       el.statsLevels.appendChild(row);
     });
-    setText(el.statsMastered, String(mastered));
-    setText(el.statsAnswered, String(state.answered));
+    setText(el.statsMastered, num(mastered));
+    setText(el.statsAnswered, num(state.answered));
     renderMissed();
   }
 
@@ -532,7 +727,7 @@
       var detail = document.createElement("span");
       detail.className = "missed-detail";
       var m = p.m || 0;
-      detail.textContent = (m ? m + (m === 1 ? " miss" : " misses") + ", " : "") + "box " + p.b;
+      detail.textContent = (m ? fmt(m === 1 ? "missOne" : "misses", { m: m }) + t("listSep") : "") + fmt("inBox", { b: p.b });
 
       li.append(noun, meaning, detail);
       el.statsMissed.appendChild(li);
@@ -638,32 +833,9 @@
       if (a === article && !ok) btn.classList.add("is-wrong");
     });
 
-    el.verdict.textContent = "";
-    if (ok) {
-      el.verdict.textContent = "Richtig.";
-    } else {
-      var strong = document.createElement("b");
-      strong.lang = "de";
-      strong.textContent = current.a + " " + current.w;
-      el.verdict.append("Not ", article, ". It is ", strong, ".");
-    }
-    el.verdict.lang = ok ? "de" : "en";
-
     var mastered = p.b === BOXES && wasBox < BOXES;
-    if (mastered) el.verdict.append(" ", masteredBadge());
-
-    if (current.pl === NO_PLURAL) {
-      el.plural.textContent = "No plural";
-    } else {
-      el.plural.textContent = "";
-      var pl = document.createElement("span");
-      pl.lang = "de";
-      pl.textContent = "die " + current.pl;
-      el.plural.append("Plural: ", pl);
-    }
-
-    setText(el.wordBox, "Now in box " + p.b + " of " + BOXES);
-    renderMeaning();
+    last = { chosen: article, ok: ok, box: p.b, mastered: mastered };
+    renderFeedback(true);
     el.feedback.hidden = false;
     renderScore();
     renderDaily();
@@ -671,22 +843,62 @@
     if (mastered) celebrate();
 
     var meaning = state.lang === "fa" ? current.fa : current.en;
-    el.live.textContent = (ok ? "Correct. " : "Wrong. ") + current.a + " " + current.w + ". " + meaning +
-      (mastered ? " Mastered." : "") + (goalMet ? " Daily goal reached." : "");
+    el.live.textContent = t(ok ? "liveRight" : "liveWrong") + " " + current.a + " " + current.w + ". " + meaning +
+      (mastered ? " " + t("liveMastered") : "") + (goalMet ? " " + t("liveGoal") : "");
     say(current.a + " " + current.w);
     el.next.focus({ preventScroll: true });
   }
 
-  function masteredBadge() {
+  // Verdict, plural, box line and meaning for the last answer. fresh is
+  // false when only the language changed, so the badge stays still.
+  function renderFeedback(fresh) {
+    if (!current || !last) return;
+    var fa = state.lang === "fa";
+
+    el.verdict.textContent = "";
+    if (last.ok) {
+      el.verdict.textContent = t("right");
+      el.verdict.lang = fa ? "fa" : "de";
+    } else {
+      var chosen = document.createElement("span");
+      chosen.lang = "de";
+      chosen.dir = "ltr";
+      chosen.textContent = last.chosen;
+      var strong = document.createElement("b");
+      strong.lang = "de";
+      strong.dir = "ltr";
+      strong.textContent = current.a + " " + current.w;
+      el.verdict.append.apply(el.verdict, parts("wrong", { chosen: chosen, answer: strong }));
+      el.verdict.lang = fa ? "fa" : "en";
+    }
+    if (last.mastered) el.verdict.append(" ", masteredBadge(fresh));
+
+    if (current.pl === NO_PLURAL) {
+      el.plural.textContent = t("noPlural");
+    } else {
+      el.plural.textContent = "";
+      var pl = document.createElement("span");
+      pl.lang = "de";
+      pl.dir = "ltr";
+      pl.textContent = "die " + current.pl;
+      el.plural.append.apply(el.plural, parts("plural", { pl: pl }));
+    }
+
+    renderWordBox();
+    renderMeaning();
+  }
+
+  function masteredBadge(fresh) {
     var badge = document.createElement("span");
-    badge.className = "mastered";
-    badge.lang = "en";
-    badge.textContent = "Mastered";
-    var burst = document.createElement("span");
-    burst.className = "burst";
-    burst.setAttribute("aria-hidden", "true");
-    for (var i = 0; i < 6; i++) burst.appendChild(document.createElement("i"));
-    badge.appendChild(burst);
+    badge.className = "mastered" + (fresh ? "" : " is-still");
+    badge.textContent = t("mastered");
+    if (fresh) {
+      var burst = document.createElement("span");
+      burst.className = "burst";
+      burst.setAttribute("aria-hidden", "true");
+      for (var i = 0; i < 6; i++) burst.appendChild(document.createElement("i"));
+      badge.appendChild(burst);
+    }
     return badge;
   }
 
@@ -702,6 +914,7 @@
 
   function nextWord() {
     hasAnswered = false;
+    last = null;
     el.card.removeAttribute("data-result");
     current = pickNext();
     renderWord();
@@ -721,16 +934,49 @@
   function setLang(lang) {
     if (LANGS.indexOf(lang) === -1) return;
     state.lang = lang;
-    document.documentElement.setAttribute("data-lang", lang);
     save();
-    if (hasAnswered) renderMeaning();
+    applyLang();
+    renderScore();
+    renderDaily();
+    renderBox(hasAnswered && last ? last.box : boxOf(current));
+    if (!current) {
+      setText(el.noun, t("noWords"));
+    } else if (hasAnswered) {
+      renderFeedback(false);
+    } else {
+      renderWordBox();
+      el.slot.setAttribute("aria-label", t("missingArticle"));
+    }
+  }
+
+  // Static text in index.html carries data-i18n (text), data-i18n-label
+  // (aria-label and title) or data-num (a number to localise).
+  function applyLang() {
+    var fa = state.lang === "fa";
+    var root = document.documentElement;
+    root.lang = fa ? "fa" : "en";
+    root.dir = fa ? "rtl" : "ltr";
+    root.setAttribute("data-lang", state.lang);
+    document.title = t("title");
+    Array.prototype.forEach.call(document.querySelectorAll("[data-i18n]"), function (node) {
+      node.textContent = t(node.getAttribute("data-i18n"));
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-i18n-label]"), function (node) {
+      var text = t(node.getAttribute("data-i18n-label"));
+      node.setAttribute("aria-label", text);
+      if (node.hasAttribute("title")) node.title = text;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-num]"), function (node) {
+      node.textContent = num(node.getAttribute("data-num"));
+    });
+    if (!el.reset.classList.contains("is-armed")) el.reset.textContent = t("reset");
   }
 
   var resetTimer = null;
   function resetProgress() {
     if (!el.reset.classList.contains("is-armed")) {
       el.reset.classList.add("is-armed");
-      el.reset.textContent = "Tap again to erase all progress";
+      el.reset.textContent = t("resetArmed");
       clearTimeout(resetTimer);
       resetTimer = setTimeout(disarmReset, 4000);
       return;
@@ -748,13 +994,13 @@
     renderStats();
     current = null;
     nextWord();
-    el.live.textContent = "Progress erased.";
+    el.live.textContent = t("erased");
   }
 
   function disarmReset() {
     clearTimeout(resetTimer);
     el.reset.classList.remove("is-armed");
-    el.reset.textContent = "Reset progress";
+    el.reset.textContent = t("reset");
   }
 
   function openStats() {
@@ -834,7 +1080,7 @@
 
   // ---------------------------------------------------------------- start
 
-  document.documentElement.setAttribute("data-lang", state.lang);
+  applyLang();
   renderSound();
   renderDaily();
   if (speech) {

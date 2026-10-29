@@ -22,7 +22,7 @@
   --focus: #0b63d6;
   --shadow: 0 1px 0 rgb(23 32 43 / 0.06), 0 8px 24px -12px rgb(23 32 43 / 0.25);
 
-  --din: "Bahnschrift", "DIN Alternate", "DIN Next", "D-DIN", "Roboto Condensed", "Arial Narrow", system-ui, sans-serif;
+  --din: "Bahnschrift", "DIN Alternate", "DIN Next", "D-DIN", "Roboto Condensed", "Arial Narrow", "Vazirmatn", "Segoe UI", Tahoma, system-ui, sans-serif;
   --ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --fa: "Vazirmatn", "Segoe UI", Tahoma, "Geeza Pro", "Noto Naskh Arabic", system-ui, sans-serif;
 
@@ -114,7 +114,7 @@ input {
 
 .skip {
   position: absolute;
-  left: 1rem;
+  inset-inline-start: 1rem;
   top: -3rem;
   padding: 0.5rem 0.9rem;
   background: var(--ink);
@@ -142,6 +142,16 @@ kbd {
 
 [lang="fa"] {
   font-family: var(--fa);
+}
+
+/* German words inside Persian text keep their own direction. */
+[lang="fa"] [lang="de"] {
+  unicode-bidi: isolate;
+}
+
+/* Keys are physical, so their labels stay left to right. */
+[dir="rtl"] kbd {
+  direction: ltr;
 }
 
 /* ------------------------------------------------------------ header */
@@ -301,11 +311,12 @@ kbd {
   overflow: hidden;
 }
 
-/* The left edge takes the colour of the right article once answered. */
+/* The leading edge takes the colour of the right article once answered. */
 .card::before {
   content: "";
   position: absolute;
-  inset: 0 auto 0 0;
+  inset-block: 0;
+  inset-inline-start: 0;
   width: 6px;
   background: var(--accent);
   transition: background-color 200ms ease;
@@ -613,6 +624,11 @@ kbd {
   font-variant-numeric: tabular-nums;
 }
 
+/* The page is --paper too, so the track needs a darker tone here. */
+.daily .meter {
+  background: var(--rule);
+}
+
 .daily .meter-fill {
   transition: width 250ms ease, background-color 250ms ease;
 }
@@ -654,6 +670,10 @@ kbd {
   font-size: 0.85rem;
   vertical-align: 0.1em;
   animation: pop 420ms cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+
+.mastered.is-still {
+  animation: none;
 }
 
 @keyframes pop {
@@ -732,7 +752,7 @@ kbd {
 }
 
 .score div + div {
-  border-left: 1px solid var(--rule);
+  border-inline-start: 1px solid var(--rule);
 }
 
 .score dt {
@@ -791,7 +811,7 @@ kbd {
 }
 
 .box-cell + .box-cell {
-  border-left: 1px solid var(--rule);
+  border-inline-start: 1px solid var(--rule);
 }
 
 .box-new {
@@ -899,7 +919,7 @@ kbd {
 .meter { grid-area: bar; }
 .meter-value {
   grid-area: value;
-  text-align: right;
+  text-align: end;
   font-family: var(--din);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
@@ -975,12 +995,14 @@ kbd {
   border-bottom: 1px solid var(--rule);
 }
 
+/* The noun runs left to right even in Persian mode; justify-self keeps it
+   on the reading side of the row. */
 .missed-noun {
   grid-area: noun;
+  justify-self: start;
   font-family: var(--din);
   font-size: 1.05rem;
   font-weight: 600;
-  text-align: start;
 }
 
 .missed-meaning {
@@ -1021,7 +1043,7 @@ kbd {
 .levels td {
   padding: 0.45rem 0.25rem;
   border-bottom: 1px solid var(--rule);
-  text-align: left;
+  text-align: start;
 }
 
 .levels thead th {
