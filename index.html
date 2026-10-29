@@ -77,6 +77,14 @@
     </div>
     <p class="keys-help">Keys <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> answer, <kbd>Enter</kbd> moves on.</p>
 
+    <section class="daily" id="daily" aria-label="Daily goal">
+      <div class="daily-goal">
+        <p class="daily-line"><span id="daily-title">Today</span> <span class="daily-count" id="daily-count">0 / 20</span></p>
+        <span class="meter" id="daily-meter" role="progressbar" aria-labelledby="daily-title" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0"><span class="meter-fill" id="daily-fill"></span></span>
+      </div>
+      <p class="daily-days"><span class="daily-num" id="daily-days">0</span> <span id="daily-days-label">days in a row</span></p>
+    </section>
+
     <dl class="score" aria-label="Score">
       <div><dt>Correct</dt><dd id="stat-correct">0 / 0</dd></div>
       <div><dt>Streak</dt><dd id="stat-streak">0</dd></div>
@@ -114,6 +122,15 @@
       <p><span class="total-num" id="stats-mastered">0</span> words mastered</p>
       <p><span class="total-num" id="stats-answered">0</span> answers so far</p>
     </div>
+
+    <h3 id="goal-title">Daily goal</h3>
+    <fieldset class="seg seg-goal" aria-labelledby="goal-title">
+      <label><input type="radio" name="goal" value="10"><span>10</span></label>
+      <label><input type="radio" name="goal" value="20" checked><span>20</span></label>
+      <label><input type="radio" name="goal" value="30"><span>30</span></label>
+      <label><input type="radio" name="goal" value="50"><span>50</span></label>
+    </fieldset>
+    <p class="goal-note" id="goal-note">Cards a day. Meet the goal on days in a row to build a streak.</p>
 
     <h3>By level</h3>
     <table class="levels">

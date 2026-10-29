@@ -22,6 +22,8 @@
   var MAX_LEARNING = 10;
   var FIRST_TRY_BOX = 3;
   var NO_PLURAL = "–";
+  var GOALS = [10, 20, 30, 50];
+  var DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
 
   // ---------------------------------------------------------------- rules
 
@@ -46,7 +48,13 @@
       best: 0,
       level: "A1",
       lang: "en",
-      sound: true
+      sound: true,
+      goal: 20,
+      // Cards answered on day d (local date, YYYY-MM-DD).
+      today: { d: "", n: 0 },
+      // Days in a row the goal was met, ending on goalDay.
+      days: 0,
+      goalDay: ""
     };
   }
 
@@ -71,12 +79,17 @@
     }
     if (!data || typeof data !== "object") return s;
 
-    ["turn", "answered", "correct", "streak", "best"].forEach(function (k) {
+    ["turn", "answered", "correct", "streak", "best", "days"].forEach(function (k) {
       if (isCount(data[k])) s[k] = Math.floor(data[k]);
     });
     if (LEVELS.indexOf(data.level) !== -1) s.level = data.level;
     if (LANGS.indexOf(data.lang) !== -1) s.lang = data.lang;
     if (typeof data.sound === "boolean") s.sound = data.sound;
+    if (GOALS.indexOf(data.goal) !== -1) s.goal = data.goal;
+    if (typeof data.goalDay === "string" && DAY_RE.test(data.goalDay)) s.goalDay = data.goalDay;
+    if (data.today && DAY_RE.test(data.today.d) && isCount(data.today.n)) {
+      s.today = { d: data.today.d, n: Math.floor(data.today.n) };
+    }
     if (data.stats && typeof data.stats === "object") {
       ARTICLES.forEach(function (a) {
         var st = data.stats[a];
@@ -195,6 +208,13 @@
     statsAnswered: $("stats-answered"),
     reset: $("reset"),
     sound: $("sound"),
+    daily: $("daily"),
+    dailyCount: $("daily-count"),
+    dailyMeter: $("daily-meter"),
+    dailyFill: $("daily-fill"),
+    dailyDays: $("daily-days"),
+    dailyDaysLabel: $("daily-days-label"),
+    goalInputs: Array.prototype.slice.call(document.querySelectorAll('input[name="goal"]')),
     live: $("live")
   };
 
@@ -339,6 +359,70 @@
     });
   }
 
+  // ---------------------------------------------------------------- daily goal
+
+  function dayKey(date) {
+    var m = date.getMonth() + 1;
+    var d = date.getDate();
+    return date.getFullYear() + "-" + (m < 10 ? "0" : "") + m + "-" + (d < 10 ? "0" : "") + d;
+  }
+
+  function todayKey() {
+    return dayKey(new Date());
+  }
+
+  function yesterdayKey() {
+    var now = new Date();
+    return dayKey(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1));
+  }
+
+  function cardsToday() {
+    return state.today.d === todayKey() ? state.today.n : 0;
+  }
+
+  // The streak survives until the end of the day after it was last met.
+  function dayStreak() {
+    var g = state.goalDay;
+    return g && (g === todayKey() || g === yesterdayKey()) ? state.days : 0;
+  }
+
+  // Returns true when this call is the one that met today's goal.
+  function checkGoal() {
+    var today = todayKey();
+    if (state.goalDay === today || cardsToday() < state.goal) return false;
+    state.days = state.goalDay === yesterdayKey() ? state.days + 1 : 1;
+    state.goalDay = today;
+    return true;
+  }
+
+  function countCard() {
+    var today = todayKey();
+    if (state.today.d !== today) state.today = { d: today, n: 0 };
+    state.today.n++;
+    return checkGoal();
+  }
+
+  function renderDaily() {
+    var n = cardsToday();
+    var done = n >= state.goal;
+    setText(el.dailyCount, n + " / " + state.goal);
+    el.dailyFill.style.width = Math.min(100, (n / state.goal) * 100) + "%";
+    el.dailyMeter.setAttribute("aria-valuemax", String(state.goal));
+    el.dailyMeter.setAttribute("aria-valuenow", String(Math.min(n, state.goal)));
+    el.daily.classList.toggle("is-done", done);
+    var days = dayStreak();
+    setText(el.dailyDays, String(days));
+    setText(el.dailyDaysLabel, days === 1 ? "day in a row" : "days in a row");
+  }
+
+  function setGoal(goal) {
+    if (GOALS.indexOf(goal) === -1) return;
+    state.goal = goal;
+    checkGoal();
+    save();
+    renderDaily();
+  }
+
   function pct(ok, n) {
     return n ? Math.round((ok / n) * 100) : 0;
   }
@@ -469,6 +553,8 @@
     state.stats[current.a].n++;
     var isNew = !state.prog[current.w];
     var p = state.prog[current.w] || { b: 1, n: 0 };
+    var wasBox = isNew ? 0 : p.b;
+    var goalMet = countCard();
     if (ok) {
       state.correct++;
       state.stats[current.a].ok++;
@@ -511,6 +597,9 @@
     }
     el.verdict.lang = ok ? "de" : "en";
 
+    var mastered = p.b === BOXES && wasBox < BOXES;
+    if (mastered) el.verdict.append(" ", masteredBadge());
+
     if (current.pl === NO_PLURAL) {
       el.plural.textContent = "No plural";
     } else {
@@ -525,12 +614,38 @@
     renderMeaning();
     el.feedback.hidden = false;
     renderScore();
+    renderDaily();
     renderBox(p.b);
+    if (mastered) celebrate();
 
     var meaning = state.lang === "fa" ? current.fa : current.en;
-    el.live.textContent = (ok ? "Correct. " : "Wrong. ") + current.a + " " + current.w + ". " + meaning;
+    el.live.textContent = (ok ? "Correct. " : "Wrong. ") + current.a + " " + current.w + ". " + meaning +
+      (mastered ? " Mastered." : "") + (goalMet ? " Daily goal reached." : "");
     say(current.a + " " + current.w);
     el.next.focus({ preventScroll: true });
+  }
+
+  function masteredBadge() {
+    var badge = document.createElement("span");
+    badge.className = "mastered";
+    badge.lang = "en";
+    badge.textContent = "Mastered";
+    var burst = document.createElement("span");
+    burst.className = "burst";
+    burst.setAttribute("aria-hidden", "true");
+    for (var i = 0; i < 6; i++) burst.appendChild(document.createElement("i"));
+    badge.appendChild(burst);
+    return badge;
+  }
+
+  function celebrate() {
+    var cell = el.boxCells[BOXES];
+    if (!cell) return;
+    cell.classList.remove("is-celebrating");
+    // Force a reflow so the animation restarts when two words in a row
+    // reach the top box.
+    void cell.offsetWidth;
+    cell.classList.add("is-celebrating");
   }
 
   function nextWord() {
@@ -569,13 +684,15 @@
       return;
     }
     disarmReset();
-    var keep = { level: state.level, lang: state.lang, sound: state.sound };
+    var keep = { level: state.level, lang: state.lang, sound: state.sound, goal: state.goal };
     state = defaults();
     state.level = keep.level;
     state.lang = keep.lang;
     state.sound = keep.sound;
+    state.goal = keep.goal;
     save();
     renderScore();
+    renderDaily();
     renderStats();
     current = null;
     nextWord();
@@ -628,6 +745,13 @@
     });
   });
 
+  el.goalInputs.forEach(function (input) {
+    input.checked = Number(input.value) === state.goal;
+    input.addEventListener("change", function () {
+      if (input.checked) setGoal(Number(input.value));
+    });
+  });
+
   el.statsOpen.addEventListener("click", openStats);
   el.statsClose.addEventListener("click", closeStats);
   el.statsDialog.addEventListener("close", disarmReset);
@@ -660,6 +784,7 @@
 
   document.documentElement.setAttribute("data-lang", state.lang);
   renderSound();
+  renderDaily();
   if (speech) {
     findVoice();
     // Chrome and Edge load the voice list after the page.

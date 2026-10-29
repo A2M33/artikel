@@ -20,6 +20,8 @@ artikel drills der, die and das on over 900 German nouns from A1 to B1. You answ
 - If you miss a noun that follows a gender rule, the card shows you the rule. The [hint table](#hints) lists them.
 - Five boxes decide which noun comes next. A right answer moves the noun up a box, and a miss sends it back to box 1 so you see it again within a few cards. A noun you get right the first time starts in box 3, and box 5 counts as mastered.
 - The app tracks your score and your current and best streak.
+- You set a daily goal of 10, 20, 30 or 50 cards in the stats panel. A bar shows how many cards you have done today, and a counter shows how many days in a row you have met the goal.
+- When a noun reaches box 5, the card marks it as mastered with a short burst in the der, die and das colours. If your system asks for reduced motion, you get the badge without the animation.
 - The stats panel shows your accuracy for each article and how many nouns you have mastered per level.
 - You can limit the cards to A1, A2 or B1, or practise all levels together.
 - Colours follow the classroom convention: blue for der, red for die, green for das.
