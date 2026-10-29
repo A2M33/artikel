@@ -79,6 +79,9 @@
   // when the word actually follows it, so exceptions (der Gedanke, das
   // Stadion) never get a misleading hint.
   function ruleFor(word) {
+    // A compound takes the article of its last noun (words.js marks these by
+    // hand), which beats any ending rule.
+    if (word.h) return { a: word.a, head: word.h };
     if (TIME_WORDS.indexOf(word.w) !== -1) {
       return word.a === "der" ? { a: "der", time: true } : null;
     }

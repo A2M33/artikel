@@ -1,9 +1,14 @@
 /*
  * Word list for artikel.
  *
- * One noun per line:  article | noun | plural | English | Persian
+ * One noun per line:  article | noun | plural | English | Persian [| head]
  * Plural is written without its article. "–" means the noun is (almost)
  * never used in the plural.
+ *
+ * head is optional and marks a compound by its last noun (Hauptstadt|...|Stadt).
+ * Add it by hand, only for clear compounds whose head is also in this list;
+ * prefix words like Bewerbung or Umzug get none. The test checks that the
+ * head exists, ends the word and has the same article.
  *
  * Rules for adding a word:
  *  - Standard German gender only (Duden). Leave out nouns that have two
@@ -35,15 +40,15 @@ die|Wohnung|Wohnungen|flat, apartment|آپارتمان
 das|Zimmer|Zimmer|room|اتاق
 die|Küche|Küchen|kitchen|آشپزخانه
 das|Bad|Bäder|bathroom|حمام
-das|Schlafzimmer|Schlafzimmer|bedroom|اتاق خواب
-das|Wohnzimmer|Wohnzimmer|living room|اتاق نشیمن
+das|Schlafzimmer|Schlafzimmer|bedroom|اتاق خواب|Zimmer
+das|Wohnzimmer|Wohnzimmer|living room|اتاق نشیمن|Zimmer
 der|Garten|Gärten|garden|باغچه
 der|Balkon|Balkone|balcony|بالکن
 die|Treppe|Treppen|stairs|راه‌پله
 der|Schlüssel|Schlüssel|key|کلید
 das|Dach|Dächer|roof|بام
 die|Miete|Mieten|rent|اجاره
-der|Kühlschrank|Kühlschränke|fridge|یخچال
+der|Kühlschrank|Kühlschränke|fridge|یخچال|Schrank
 der|Herd|Herde|cooker, stove|اجاق گاز
 die|Dusche|Duschen|shower|دوش
 die|Toilette|Toiletten|toilet|توالت
@@ -64,7 +69,7 @@ das|Telefon|Telefone|telephone|تلفن
 der|Fernseher|Fernseher|television set|تلویزیون
 die|Zeitung|Zeitungen|newspaper|روزنامه
 der|Brief|Briefe|letter|نامه
-die|Postkarte|Postkarten|postcard|کارت پستال
+die|Postkarte|Postkarten|postcard|کارت پستال|Karte
 die|Karte|Karten|card; map; ticket|کارت؛ نقشه؛ بلیت
 das|Foto|Fotos|photo|عکس
 die|Brille|Brillen|glasses|عینک
@@ -98,17 +103,17 @@ der|Herr|Herren|gentleman; Mr|آقا
 die|Dame|Damen|lady|خانم
 der|Gast|Gäste|guest|مهمان
 der|Name|Namen|name|نام
-der|Vorname|Vornamen|first name|نام کوچک
-der|Nachname|Nachnamen|surname|نام خانوادگی
+der|Vorname|Vornamen|first name|نام کوچک|Name
+der|Nachname|Nachnamen|surname|نام خانوادگی|Name
 das|Alter|–|age|سن
 die|Adresse|Adressen|address|نشانی
 die|Straße|Straßen|street|خیابان
-die|Hausnummer|Hausnummern|house number|پلاک
-die|Postleitzahl|Postleitzahlen|postcode|کد پستی
-die|Telefonnummer|Telefonnummern|phone number|شماره تلفن
+die|Hausnummer|Hausnummern|house number|پلاک|Nummer
+die|Postleitzahl|Postleitzahlen|postcode|کد پستی|Zahl
+die|Telefonnummer|Telefonnummern|phone number|شماره تلفن|Nummer
 der|Wohnort|Wohnorte|place of residence|محل سکونت
 der|Geburtsort|Geburtsorte|place of birth|محل تولد
-das|Geburtsdatum|Geburtsdaten|date of birth|تاریخ تولد
+das|Geburtsdatum|Geburtsdaten|date of birth|تاریخ تولد|Datum
 der|Familienstand|–|marital status|وضعیت تأهل
 die|Stadt|Städte|town, city|شهر
 das|Dorf|Dörfer|village|روستا
@@ -134,7 +139,7 @@ der|Koch|Köche|cook, chef|آشپز
 der|Verkäufer|Verkäufer|shop assistant|فروشنده
 der|Bäcker|Bäcker|baker|نانوا
 der|Fahrer|Fahrer|driver|راننده
-die|Krankenschwester|Krankenschwestern|nurse|پرستار
+die|Krankenschwester|Krankenschwestern|nurse|پرستار|Schwester
 der|Polizist|Polizisten|police officer|مأمور پلیس
 die|Polizei|–|police|پلیس
 die|Schule|Schulen|school|مدرسه
@@ -147,7 +152,7 @@ das|Wort|Wörter|word|واژه
 der|Satz|Sätze|sentence|جمله
 der|Buchstabe|Buchstaben|letter (of the alphabet)|حرف الفبا
 die|Seite|Seiten|page; side|صفحه؛ طرف
-die|Hausaufgabe|Hausaufgaben|homework|تکلیف خانه
+die|Hausaufgabe|Hausaufgaben|homework|تکلیف خانه|Aufgabe
 die|Prüfung|Prüfungen|exam|امتحان
 die|Zahl|Zahlen|number|عدد
 die|Nummer|Nummern|number|شماره
@@ -159,15 +164,15 @@ die|Stunde|Stunden|hour; lesson|ساعت (۶۰ دقیقه)؛ جلسهٔ درس
 die|Minute|Minuten|minute|دقیقه
 die|Sekunde|Sekunden|second|ثانیه
 die|Zeit|Zeiten|time|زمان
-die|Uhrzeit|Uhrzeiten|time of day|ساعت (زمان روز)
+die|Uhrzeit|Uhrzeiten|time of day|ساعت (زمان روز)|Zeit
 das|Datum|Daten|date|تاریخ
 der|Termin|Termine|appointment|وقت ملاقات
-der|Vormittag|Vormittage|late morning|پیش از ظهر
+der|Vormittag|Vormittage|late morning|پیش از ظهر|Mittag
 der|Mittag|Mittage|noon, midday|ظهر
-der|Nachmittag|Nachmittage|afternoon|بعدازظهر
+der|Nachmittag|Nachmittage|afternoon|بعدازظهر|Mittag
 der|Abend|Abende|evening|عصر؛ سر شب
 die|Nacht|Nächte|night|شب
-das|Wochenende|Wochenenden|weekend|آخر هفته
+das|Wochenende|Wochenenden|weekend|آخر هفته|Ende
 der|Montag|Montage|Monday|دوشنبه
 der|Dienstag|Dienstage|Tuesday|سه‌شنبه
 der|Mittwoch|Mittwoche|Wednesday|چهارشنبه
@@ -235,9 +240,9 @@ der|Hamburger|Hamburger|hamburger|همبرگر
 der|Zucker|–|sugar|شکر
 das|Salz|–|salt|نمک
 der|Pfeffer|–|pepper|فلفل
-das|Frühstück|Frühstücke|breakfast|صبحانه
-das|Mittagessen|Mittagessen|lunch|ناهار
-das|Abendessen|Abendessen|dinner|شام
+das|Frühstück|Frühstücke|breakfast|صبحانه|Stück
+das|Mittagessen|Mittagessen|lunch|ناهار|Essen
+das|Abendessen|Abendessen|dinner|شام|Essen
 das|Glas|Gläser|glass|لیوان
 die|Tasse|Tassen|cup|فنجان
 der|Teller|Teller|plate|بشقاب
@@ -255,7 +260,7 @@ die|Packung|Packungen|packet|بسته
 die|Dose|Dosen|tin, can|قوطی
 die|Größe|Größen|size; height|اندازه؛ قد
 das|Angebot|Angebote|offer|پیشنهاد ویژه؛ حراج
-der|Supermarkt|Supermärkte|supermarket|سوپرمارکت
+der|Supermarkt|Supermärkte|supermarket|سوپرمارکت|Markt
 der|Markt|Märkte|market|بازار
 die|Bäckerei|Bäckereien|bakery|نانوایی
 das|Geschäft|Geschäfte|shop; business|مغازه؛ کسب‌وکار
@@ -269,13 +274,13 @@ das|Taxi|Taxis|taxi|تاکسی
 die|U-Bahn|U-Bahnen|underground, subway|مترو
 die|Straßenbahn|Straßenbahnen|tram|تراموا
 das|Flugzeug|Flugzeuge|aeroplane|هواپیما
-der|Flughafen|Flughäfen|airport|فرودگاه
-die|Haltestelle|Haltestellen|stop (bus, tram)|ایستگاه اتوبوس یا تراموا
-die|Fahrkarte|Fahrkarten|ticket (travel)|بلیت
+der|Flughafen|Flughäfen|airport|فرودگاه|Hafen
+die|Haltestelle|Haltestellen|stop (bus, tram)|ایستگاه اتوبوس یا تراموا|Stelle
+die|Fahrkarte|Fahrkarten|ticket (travel)|بلیت|Karte
 das|Ticket|Tickets|ticket|بلیت
 der|Weg|Wege|way, path|راه
 der|Plan|Pläne|plan|برنامه؛ نقشه
-der|Stadtplan|Stadtpläne|city map|نقشهٔ شهر
+der|Stadtplan|Stadtpläne|city map|نقشهٔ شهر|Plan
 die|Reise|Reisen|journey, trip|سفر
 der|Urlaub|Urlaube|holiday, leave|تعطیلات؛ مرخصی
 das|Hotel|Hotels|hotel|هتل
@@ -283,7 +288,7 @@ der|Pass|Pässe|passport|گذرنامه
 die|Bank|Banken|bank|بانک
 die|Post|–|post office; mail|ادارهٔ پست؛ نامه‌ها
 die|Apotheke|Apotheken|pharmacy|داروخانه
-das|Krankenhaus|Krankenhäuser|hospital|بیمارستان
+das|Krankenhaus|Krankenhäuser|hospital|بیمارستان|Haus
 die|Kirche|Kirchen|church|کلیسا
 das|Kino|Kinos|cinema|سینما
 das|Museum|Museen|museum|موزه
@@ -334,10 +339,10 @@ die|Socke|Socken|sock|جوراب
 der|Pullover|Pullover|jumper, sweater|پلیور
 die|Mütze|Mützen|woolly hat, cap|کلاه بافتنی
 die|Farbe|Farben|colour; paint|رنگ
-die|Freizeit|–|free time|اوقات فراغت
+die|Freizeit|–|free time|اوقات فراغت|Zeit
 das|Spiel|Spiele|game; match|بازی؛ مسابقه
 der|Sport|–|sport|ورزش
-der|Fußball|Fußbälle|football|فوتبال؛ توپ فوتبال
+der|Fußball|Fußbälle|football|فوتبال؛ توپ فوتبال|Ball
 der|Ball|Bälle|ball|توپ
 die|Musik|–|music|موسیقی
 das|Lied|Lieder|song|آهنگ؛ ترانه
@@ -345,7 +350,7 @@ der|Film|Filme|film|فیلم
 das|Hobby|Hobbys|hobby|سرگرمی
 die|Party|Partys|party|مهمانی
 das|Geschenk|Geschenke|present, gift|هدیه
-der|Geburtstag|Geburtstage|birthday|تولد (سالروز)
+der|Geburtstag|Geburtstage|birthday|تولد (سالروز)|Tag
 das|Fest|Feste|celebration|جشن
 die|Einladung|Einladungen|invitation|دعوت؛ دعوت‌نامه
 der|Hunger|–|hunger|گرسنگی
@@ -380,7 +385,7 @@ der|Lebenslauf|Lebensläufe|CV, résumé|رزومه
 das|Zeugnis|Zeugnisse|certificate; school report|گواهی؛ کارنامه
 die|Erfahrung|Erfahrungen|experience|تجربه
 das|Gespräch|Gespräche|conversation|گفت‌وگو
-das|Vorstellungsgespräch|Vorstellungsgespräche|job interview|مصاحبهٔ استخدامی
+das|Vorstellungsgespräch|Vorstellungsgespräche|job interview|مصاحبهٔ استخدامی|Gespräch
 der|Vertrag|Verträge|contract|قرارداد
 der|Lohn|Löhne|wage|دستمزد
 die|Stelle|Stellen|job, position; place|موقعیت شغلی؛ جا
@@ -394,8 +399,8 @@ die|Aufgabe|Aufgaben|task; exercise|وظیفه؛ تمرین
 das|Ziel|Ziele|goal; destination|هدف؛ مقصد
 die|Möglichkeit|Möglichkeiten|possibility|امکان
 die|Erlaubnis|Erlaubnisse|permission|اجازه
-der|Feierabend|Feierabende|end of the working day|پایان ساعت کاری
-der|Arbeitsplatz|Arbeitsplätze|workplace; job|محل کار؛ شغل
+der|Feierabend|Feierabende|end of the working day|پایان ساعت کاری|Abend
+der|Arbeitsplatz|Arbeitsplätze|workplace; job|محل کار؛ شغل|Platz
 der|Ingenieur|Ingenieure|engineer|مهندس
 der|Mechaniker|Mechaniker|mechanic|مکانیک
 der|Elektriker|Elektriker|electrician|برق‌کار
@@ -405,7 +410,7 @@ der|Pilot|Piloten|pilot|خلبان
 die|Gesundheit|–|health|سلامتی
 der|Unfall|Unfälle|accident|تصادف؛ حادثه
 die|Versicherung|Versicherungen|insurance|بیمه
-die|Krankenkasse|Krankenkassen|health insurance fund|صندوق بیمهٔ درمانی
+die|Krankenkasse|Krankenkassen|health insurance fund|صندوق بیمهٔ درمانی|Kasse
 das|Rezept|Rezepte|prescription; recipe|نسخه؛ دستور آشپزی
 die|Tablette|Tabletten|tablet, pill|قرص
 das|Medikament|Medikamente|medicine|دارو
@@ -415,7 +420,7 @@ die|Erkältung|Erkältungen|cold|سرماخوردگی
 der|Husten|–|cough|سرفه
 die|Grippe|Grippen|flu|آنفلوانزا
 die|Praxis|Praxen|doctor's surgery; practice|مطب؛ تجربهٔ عملی
-der|Zahnarzt|Zahnärzte|dentist|دندان‌پزشک
+der|Zahnarzt|Zahnärzte|dentist|دندان‌پزشک|Arzt
 der|Vermieter|Vermieter|landlord|صاحب‌خانه
 der|Mieter|Mieter|tenant|مستأجر
 die|Kaution|Kautionen|deposit|ودیعه
@@ -423,7 +428,7 @@ der|Umzug|Umzüge|move (house)|اسباب‌کشی
 das|Stockwerk|Stockwerke|floor, storey|طبقه
 der|Aufzug|Aufzüge|lift, elevator|آسانسور
 der|Keller|Keller|cellar|زیرزمین
-das|Rathaus|Rathäuser|town hall|شهرداری
+das|Rathaus|Rathäuser|town hall|شهرداری|Haus
 der|Müll|–|rubbish|زباله
 die|Mülltonne|Mülltonnen|wheelie bin|سطل زباله
 die|Umwelt|–|environment|محیط زیست
@@ -441,12 +446,12 @@ die|Temperatur|Temperaturen|temperature|دما
 das|Gewitter|Gewitter|thunderstorm|طوفان رعدوبرق
 der|Nebel|Nebel|fog|مه
 das|Eis|–|ice; ice cream|یخ؛ بستنی
-die|Jahreszeit|Jahreszeiten|season|فصل
-der|Feiertag|Feiertage|public holiday|تعطیل رسمی
+die|Jahreszeit|Jahreszeiten|season|فصل|Zeit
+der|Feiertag|Feiertage|public holiday|تعطیل رسمی|Tag
 die|Hochzeit|Hochzeiten|wedding|عروسی
 die|Ehe|Ehen|marriage|ازدواج
-der|Ehemann|Ehemänner|husband|شوهر
-die|Ehefrau|Ehefrauen|wife|همسر (زن)
+der|Ehemann|Ehemänner|husband|شوهر|Mann
+die|Ehefrau|Ehefrauen|wife|همسر (زن)|Frau
 das|Paar|Paare|couple; pair|زوج؛ جفت
 der|Onkel|Onkel|uncle|عمو؛ دایی
 die|Tante|Tanten|aunt|عمه؛ خاله
@@ -474,14 +479,14 @@ die|Bedeutung|Bedeutungen|meaning|معنی
 die|Übung|Übungen|exercise|تمرین
 der|Text|Texte|text|متن
 die|Grammatik|Grammatiken|grammar|دستور زبان
-das|Wörterbuch|Wörterbücher|dictionary|واژه‌نامه
+das|Wörterbuch|Wörterbücher|dictionary|واژه‌نامه|Buch
 die|Note|Noten|grade, mark; musical note|نمره؛ نُت
 das|Studium|Studien|university studies|تحصیل دانشگاهی
 die|Universität|Universitäten|university|دانشگاه
 die|Bibliothek|Bibliotheken|library|کتابخانه
 das|Fach|Fächer|school subject; compartment|درس؛ قفسه
 das|Gymnasium|Gymnasien|academic secondary school|دبیرستان (گیمنازیوم)
-der|Kindergarten|Kindergärten|nursery school|مهدکودک
+der|Kindergarten|Kindergärten|nursery school|مهدکودک|Garten
 der|Unterricht|–|lessons, teaching|کلاس درس؛ تدریس
 die|Schwierigkeit|Schwierigkeiten|difficulty|دشواری
 die|Kleinigkeit|Kleinigkeiten|small thing, trifle|چیز جزئی
@@ -516,15 +521,15 @@ die|Anmeldung|Anmeldungen|registration|ثبت‌نام
 die|Gebühr|Gebühren|fee|کارمزد؛ هزینه
 das|Konto|Konten|bank account|حساب بانکی
 die|Überweisung|Überweisungen|bank transfer|انتقال وجه
-die|Kreditkarte|Kreditkarten|credit card|کارت اعتباری
+die|Kreditkarte|Kreditkarten|credit card|کارت اعتباری|Karte
 der|Automat|Automaten|vending machine|دستگاه خودکار
-das|Kleingeld|–|change (coins)|پول خرد
+das|Kleingeld|–|change (coins)|پول خرد|Geld
 die|Münze|Münzen|coin|سکه
 der|Schein|Scheine|banknote; certificate|اسکناس؛ گواهی
 die|Quittung|Quittungen|receipt|رسید
 der|Rabatt|Rabatte|discount|تخفیف
 die|Werbung|–|advertising|تبلیغات
-das|Kaufhaus|Kaufhäuser|department store|فروشگاه بزرگ
+das|Kaufhaus|Kaufhäuser|department store|فروشگاه بزرگ|Haus
 der|Laden|Läden|shop|مغازه
 der|Kiosk|Kioske|kiosk|دکه
 die|Metzgerei|Metzgereien|butcher's shop|قصابی
@@ -534,7 +539,7 @@ die|Mode|Moden|fashion|مد
 der|Anzug|Anzüge|suit|کت‌وشلوار
 die|Krawatte|Krawatten|tie|کراوات
 der|Gürtel|Gürtel|belt|کمربند
-der|Handschuh|Handschuhe|glove|دستکش
+der|Handschuh|Handschuhe|glove|دستکش|Schuh
 der|Schal|Schals|scarf|شال‌گردن
 der|Ring|Ringe|ring|انگشتر؛ حلقه
 die|Kette|Ketten|chain; necklace|زنجیر؛ گردنبند
@@ -548,21 +553,21 @@ der|Bahnsteig|Bahnsteige|platform|سکوی قطار
 das|Gleis|Gleise|track; platform|ریل؛ سکو
 die|Verspätung|Verspätungen|delay|تأخیر
 die|Verbindung|Verbindungen|connection|اتصال؛ ارتباط
-der|Fahrplan|Fahrpläne|timetable|جدول حرکت
+der|Fahrplan|Fahrpläne|timetable|جدول حرکت|Plan
 die|Station|Stationen|station, stop; hospital ward|ایستگاه؛ بخش بیمارستان
 die|Autobahn|Autobahnen|motorway|بزرگراه
 der|Verkehr|–|traffic|ترافیک؛ رفت‌وآمد
 der|Stau|Staus|traffic jam|راه‌بندان
-der|Parkplatz|Parkplätze|car park; parking space|پارکینگ؛ جای پارک
-die|Tankstelle|Tankstellen|petrol station|پمپ بنزین
-der|Führerschein|Führerscheine|driving licence|گواهینامهٔ رانندگی
+der|Parkplatz|Parkplätze|car park; parking space|پارکینگ؛ جای پارک|Platz
+die|Tankstelle|Tankstellen|petrol station|پمپ بنزین|Stelle
+der|Führerschein|Führerscheine|driving licence|گواهینامهٔ رانندگی|Schein
 das|Motorrad|Motorräder|motorbike|موتورسیکلت
 das|Schiff|Schiffe|ship|کشتی
 der|Hafen|Häfen|harbour, port|بندر
 die|Grenze|Grenzen|border; limit|مرز؛ حد
 das|Ausland|–|abroad, foreign countries|خارج از کشور
 die|Heimat|–|homeland, home|میهن؛ زادگاه
-die|Hauptstadt|Hauptstädte|capital city|پایتخت
+die|Hauptstadt|Hauptstädte|capital city|پایتخت|Stadt
 das|Zentrum|Zentren|centre|مرکز
 die|Gegend|Gegenden|area, region|منطقه؛ اطراف
 die|Richtung|Richtungen|direction|جهت
@@ -577,7 +582,7 @@ der|Verein|Vereine|club, association|باشگاه؛ انجمن
 die|Mannschaft|Mannschaften|team|تیم
 das|Training|Trainings|training|تمرین
 das|Stadion|Stadien|stadium|ورزشگاه
-das|Schwimmbad|Schwimmbäder|swimming pool|استخر
+das|Schwimmbad|Schwimmbäder|swimming pool|استخر|Bad
 der|Spaziergang|Spaziergänge|walk|پیاده‌روی
 die|Wanderung|Wanderungen|hike|کوه‌پیمایی؛ پیاده‌روی طولانی
 der|Ausflug|Ausflüge|excursion, day trip|گردش؛ سفر یک‌روزه
@@ -597,20 +602,20 @@ der|Bildschirm|Bildschirme|screen|صفحه‌نمایش
 die|Tastatur|Tastaturen|keyboard|صفحه‌کلید
 der|Drucker|Drucker|printer|چاپگر
 die|Datei|Dateien|file|فایل
-das|Passwort|Passwörter|password|رمز عبور
+das|Passwort|Passwörter|password|رمز عبور|Wort
 das|Gerät|Geräte|device, appliance|دستگاه
 der|Akku|Akkus|rechargeable battery|باتری قابل شارژ
 die|Batterie|Batterien|battery|باتری
-das|Ladegerät|Ladegeräte|charger|شارژر
+das|Ladegerät|Ladegeräte|charger|شارژر|Gerät
 der|Anruf|Anrufe|phone call|تماس تلفنی
 die|Verabredung|Verabredungen|date, arrangement to meet|قرار ملاقات
 der|Besuch|Besuche|visit; visitors|دیدار؛ مهمان
-die|Mahlzeit|Mahlzeiten|meal|وعدهٔ غذایی
-die|Speisekarte|Speisekarten|menu|منوی غذا
+die|Mahlzeit|Mahlzeiten|meal|وعدهٔ غذایی|Zeit
+die|Speisekarte|Speisekarten|menu|منوی غذا|Karte
 das|Gericht|Gerichte|dish; court of law|خوراک؛ دادگاه
 die|Vorspeise|Vorspeisen|starter|پیش‌غذا
 die|Nachspeise|Nachspeisen|dessert|دسر
-das|Trinkgeld|Trinkgelder|tip|انعام
+das|Trinkgeld|Trinkgelder|tip|انعام|Geld
 der|Geschmack|Geschmäcker|taste|مزه؛ سلیقه
 das|Öl|Öle|oil|روغن
 der|Essig|–|vinegar|سرکه
@@ -625,13 +630,13 @@ die|Traube|Trauben|grape|انگور
 die|Gurke|Gurken|cucumber|خیار
 die|Karotte|Karotten|carrot|هویج
 der|Knoblauch|–|garlic|سیر
-das|Rindfleisch|–|beef|گوشت گاو
-das|Schweinefleisch|–|pork|گوشت خوک
+das|Rindfleisch|–|beef|گوشت گاو|Fleisch
+das|Schweinefleisch|–|pork|گوشت خوک|Fleisch
 der|Topf|Töpfe|pot, saucepan|قابلمه
 die|Pfanne|Pfannen|frying pan|ماهیتابه
 der|Ofen|Öfen|oven; stove|فر؛ بخاری
-die|Spülmaschine|Spülmaschinen|dishwasher|ماشین ظرف‌شویی
-die|Waschmaschine|Waschmaschinen|washing machine|ماشین لباسشویی
+die|Spülmaschine|Spülmaschinen|dishwasher|ماشین ظرف‌شویی|Maschine
+die|Waschmaschine|Waschmaschinen|washing machine|ماشین لباسشویی|Maschine
 das|Handtuch|Handtücher|towel|حوله
 die|Seife|Seifen|soap|صابون
 die|Zahnbürste|Zahnbürsten|toothbrush|مسواک
@@ -706,16 +711,16 @@ der|Streik|Streiks|strike|اعتصاب
 die|Kündigung|Kündigungen|notice, termination|فسخ قرارداد؛ اخراج
 die|Rente|Renten|pension|حقوق بازنشستگی
 das|Einkommen|Einkommen|income|درآمد
-die|Überstunde|Überstunden|hour of overtime|اضافه‌کاری
+die|Überstunde|Überstunden|hour of overtime|اضافه‌کاری|Stunde
 die|Schicht|Schichten|shift; layer|شیفت کاری؛ لایه
-die|Berufsschule|Berufsschulen|vocational school|هنرستان؛ مدرسهٔ فنی‌وحرفه‌ای
+die|Berufsschule|Berufsschulen|vocational school|هنرستان؛ مدرسهٔ فنی‌وحرفه‌ای|Schule
 der|Lehrling|Lehrlinge|apprentice|شاگرد؛ کارآموز
 der|Abschluss|Abschlüsse|degree, qualification; conclusion|مدرک تحصیلی؛ پایان
 die|Weiterbildung|Weiterbildungen|further training|آموزش تکمیلی
 das|Seminar|Seminare|seminar|سمینار
 die|Qualifikation|Qualifikationen|qualification|صلاحیت؛ مدرک
 der|Experte|Experten|expert|متخصص
-der|Fachmann|Fachleute|specialist|کارشناس
+der|Fachmann|Fachleute|specialist|کارشناس|Mann
 der|Informatiker|Informatiker|computer scientist|متخصص رایانه
 der|Handwerker|Handwerker|tradesperson|پیشه‌ور؛ صنعتگر
 der|Tischler|Tischler|carpenter, joiner|نجار
@@ -747,7 +752,7 @@ die|Bevölkerung|–|population|جمعیت
 der|Einwohner|Einwohner|inhabitant|ساکن
 der|Bürger|Bürger|citizen|شهروند
 die|Staatsangehörigkeit|Staatsangehörigkeiten|citizenship|تابعیت
-die|Aufenthaltserlaubnis|Aufenthaltserlaubnisse|residence permit|اجازهٔ اقامت
+die|Aufenthaltserlaubnis|Aufenthaltserlaubnisse|residence permit|اجازهٔ اقامت|Erlaubnis
 das|Visum|Visa|visa|ویزا؛ روادید
 die|Integration|–|integration|ادغام اجتماعی
 die|Herkunft|Herkünfte|origin|خاستگاه؛ اصل‌ونسب
@@ -785,7 +790,7 @@ die|Wunde|Wunden|wound|زخم
 die|Behandlung|Behandlungen|treatment|درمان
 die|Operation|Operationen|operation|عمل جراحی
 die|Untersuchung|Untersuchungen|examination; investigation|معاینه؛ بررسی
-die|Krankmeldung|Krankmeldungen|notice of sickness|اعلام بیماری به کارفرما
+die|Krankmeldung|Krankmeldungen|notice of sickness|اعلام بیماری به کارفرما|Meldung
 die|Allergie|Allergien|allergy|حساسیت
 der|Patient|Patienten|patient|بیمار
 die|Pflege|–|care, nursing|مراقبت؛ پرستاری
@@ -796,7 +801,7 @@ die|Energie|Energien|energy|انرژی
 die|Verschmutzung|Verschmutzungen|pollution|آلودگی
 der|Abfall|Abfälle|waste|پسماند
 der|Rohstoff|Rohstoffe|raw material|مادهٔ خام
-die|Landwirtschaft|–|agriculture|کشاورزی
+die|Landwirtschaft|–|agriculture|کشاورزی|Wirtschaft
 die|Industrie|Industrien|industry|صنعت
 die|Fabrik|Fabriken|factory|کارخانه
 das|Unternehmen|Unternehmen|company, enterprise|شرکت؛ بنگاه
@@ -945,17 +950,19 @@ die|Existenz|Existenzen|existence; livelihood|هستی؛ معاش
       var line = lines[i].trim();
       if (!line || line.charAt(0) === "#") continue;
       var f = line.split("|");
-      if (f.length !== 5) {
-        throw new Error("words.js " + lvl + ": expected 5 fields in \"" + line + "\"");
+      if (f.length !== 5 && f.length !== 6) {
+        throw new Error("words.js " + lvl + ": expected 5 or 6 fields in \"" + line + "\"");
       }
-      out.push({
+      var entry = {
         w: f[1].trim(),
         a: f[0].trim(),
         pl: f[2].trim() || DASH,
         en: f[3].trim(),
         fa: f[4].trim(),
         lvl: lvl
-      });
+      };
+      if (f.length === 6 && f[5].trim()) entry.h = f[5].trim();
+      out.push(entry);
     }
     return out;
   }

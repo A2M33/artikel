@@ -492,7 +492,17 @@
     var or = t("or");
     var artText = arts.length > 1 ? [art, or, artNode(arts[1])] : [art];
 
-    if (rule.time) {
+    if (rule.head) {
+      var head = document.createElement("span");
+      head.lang = "de";
+      head.dir = "ltr";
+      head.append(artNode(rule.a), " " + rule.head);
+      if (fa) {
+        el.hint.append("اسم‌های مرکب حرف تعریف جزء آخرشان را می‌گیرند: ", head, ".");
+      } else {
+        el.hint.append("A compound noun takes the article of its last part: ", head, ".");
+      }
+    } else if (rule.time) {
       if (fa) {
         el.hint.append("نام روزها، ماه‌ها و فصل‌ها با ", art, " می‌آیند.");
       } else {

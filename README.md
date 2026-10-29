@@ -41,6 +41,8 @@ artikel drills der, die and das on over 900 German nouns from A1 to B1. You answ
 | das | many nouns starting with Ge- | 56% (die Geschichte, der Gedanke) |
 | der | -ling, -ismus, -eur, days of the week, months, seasons | 90% or more |
 
+Compound nouns get their own hint. Miss die Hauptstadt and the card tells you that a compound takes the article of its last part: die Stadt. I marked 65 clear compounds by hand in `words.js`, such as das Krankenhaus and der Kühlschrank. Words like die Bewerbung or der Umzug only look like compounds, so they get no head.
+
 The app shows a hint only when the noun follows the rule. Exceptions such as der Kuchen or das Stadion get no hint, so you won't learn a rule that contradicts the word in front of you. The -ie, -ei, -ik, -ur and -anz rules skip one-syllable nouns, which is why der Tanz and das Knie don't count against them.
 
 `tests/rules.test.mjs` measures each rule against the word list and fails if a rule drops below what its hint says: 90% for a plain rule, 80% for "most" and 50% for "many".
@@ -65,7 +67,7 @@ node tests/page.test.mjs
 - nouns you meet almost only in the plural, such as Eltern, Leute and Ferien
 - adjectival nouns like der/die Deutsche, where the article depends on the person
 
-A dash in the plural column marks a noun with no plural in everyday use (die Milch, das Obst).
+A dash in the plural column marks a noun with no plural in everyday use (die Milch, das Obst). An optional sixth column names the head of a compound, as in `die|Hauptstadt|Hauptstädte|capital city|پایتخت|Stadt`. The test checks that the head is in the list, ends the compound and has the same article.
 
 GitHub Actions runs `tests/words.test.mjs` on every push. The test fails if the list drops below 600 nouns or contains a duplicate. It also catches an article other than der, die or das, an empty field, a level outside A1 to B1, and any noun from the exclusion list.
 

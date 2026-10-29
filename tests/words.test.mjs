@@ -90,6 +90,16 @@ check(pluralWithArticle.length === 0, "plurals are written without an article" +
 const notPersian = words.filter((e) => !/[؀-ۿ]/.test(e.fa)).map((e) => e.w);
 check(notPersian.length === 0, "Persian meanings use Persian script" + (notPersian.length ? `: ${notPersian.join(", ")}` : ""));
 
+// Compound heads (optional 6th field): the head must be a noun in the list,
+// end the compound and share its article, or the hint would teach a wrong
+// gender.
+const withHead = words.filter((e) => e.h !== undefined);
+const badHead = withHead.filter((e) => {
+  const head = seen.get(e.h);
+  return !head || head.a !== e.a || e.w === e.h || !e.w.toLowerCase().endsWith(e.h.toLowerCase());
+}).map((e) => `${e.a} ${e.w} <- ${e.h}`);
+check(badHead.length === 0, `compound heads exist, end the word and share its article (${withHead.length} marked)` + (badHead.length ? `: ${badHead.join(", ")}` : ""));
+
 const perLevel = {};
 for (const e of words) perLevel[e.lvl] = (perLevel[e.lvl] || 0) + 1;
 const perArticle = {};
