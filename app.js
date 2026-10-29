@@ -45,7 +45,8 @@
       streak: 0,
       best: 0,
       level: "A1",
-      lang: "en"
+      lang: "en",
+      sound: true
     };
   }
 
@@ -75,6 +76,7 @@
     });
     if (LEVELS.indexOf(data.level) !== -1) s.level = data.level;
     if (LANGS.indexOf(data.lang) !== -1) s.lang = data.lang;
+    if (typeof data.sound === "boolean") s.sound = data.sound;
     if (data.stats && typeof data.stats === "object") {
       ARTICLES.forEach(function (a) {
         var st = data.stats[a];
@@ -192,6 +194,7 @@
     statsMastered: $("stats-mastered"),
     statsAnswered: $("stats-answered"),
     reset: $("reset"),
+    sound: $("sound"),
     live: $("live")
   };
 
@@ -401,6 +404,59 @@
     setText(el.statsAnswered, String(state.answered));
   }
 
+  // ---------------------------------------------------------------- speech
+
+  // Reads "der Gast" aloud after each answer. Browsers without the Web Speech
+  // API or without a German voice skip it, and the toggle stays hidden.
+  var speech = window.speechSynthesis && window.SpeechSynthesisUtterance ? window.speechSynthesis : null;
+  var germanVoice = null;
+
+  function findVoice() {
+    var voices = [];
+    try {
+      voices = speech.getVoices() || [];
+    } catch (e) {
+      voices = [];
+    }
+    germanVoice = null;
+    for (var i = 0; i < voices.length; i++) {
+      var lang = String(voices[i].lang || "").replace("_", "-");
+      if (!/^de(-|$)/i.test(lang)) continue;
+      // Prefer de-DE over Austrian or Swiss voices, and local voices
+      // over network ones.
+      var better = !germanVoice ||
+        (lang === "de-DE" && germanVoice.lang !== "de-DE") ||
+        (lang === germanVoice.lang && voices[i].localService && !germanVoice.localService);
+      if (better) germanVoice = voices[i];
+    }
+    el.sound.hidden = !germanVoice;
+  }
+
+  function say(text) {
+    if (!speech || !germanVoice || !state.sound) return;
+    try {
+      speech.cancel();
+      var u = new window.SpeechSynthesisUtterance(text);
+      u.voice = germanVoice;
+      u.lang = germanVoice.lang;
+      u.rate = 0.9;
+      speech.speak(u);
+    } catch (e) {
+      // Some browsers throw when speech is blocked. Silence is fine.
+    }
+  }
+
+  function renderSound() {
+    el.sound.setAttribute("aria-pressed", state.sound ? "true" : "false");
+  }
+
+  function toggleSound() {
+    state.sound = !state.sound;
+    save();
+    renderSound();
+    if (!state.sound && speech) speech.cancel();
+  }
+
   // ---------------------------------------------------------------- actions
 
   function answer(article) {
@@ -473,6 +529,7 @@
 
     var meaning = state.lang === "fa" ? current.fa : current.en;
     el.live.textContent = (ok ? "Correct. " : "Wrong. ") + current.a + " " + current.w + ". " + meaning;
+    say(current.a + " " + current.w);
     el.next.focus({ preventScroll: true });
   }
 
@@ -512,10 +569,11 @@
       return;
     }
     disarmReset();
-    var keep = { level: state.level, lang: state.lang };
+    var keep = { level: state.level, lang: state.lang, sound: state.sound };
     state = defaults();
     state.level = keep.level;
     state.lang = keep.lang;
+    state.sound = keep.sound;
     save();
     renderScore();
     renderStats();
@@ -578,6 +636,7 @@
     if (e.target === el.statsDialog) closeStats();
   });
   el.reset.addEventListener("click", resetProgress);
+  el.sound.addEventListener("click", toggleSound);
 
   document.addEventListener("keydown", function (e) {
     if (e.ctrlKey || e.metaKey || e.altKey) return;
@@ -600,6 +659,16 @@
   // ---------------------------------------------------------------- start
 
   document.documentElement.setAttribute("data-lang", state.lang);
+  renderSound();
+  if (speech) {
+    findVoice();
+    // Chrome and Edge load the voice list after the page.
+    if (typeof speech.addEventListener === "function") {
+      speech.addEventListener("voiceschanged", findVoice);
+    } else {
+      speech.onvoiceschanged = findVoice;
+    }
+  }
   renderScore();
   nextWord();
 })();

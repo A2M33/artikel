@@ -16,6 +16,7 @@ artikel drills der, die and das on over 900 German nouns from A1 to B1. You answ
 
 - Each card shows one noun. You answer with a tap or with the keys 1, 2 and 3, and Enter takes you to the next card.
 - After you answer, the card shows the article and the plural, with the meaning in English or Persian. Persian text runs right to left.
+- After each answer your browser reads the article and noun aloud, as in "der Gast". The speaker button turns this off and the app remembers your choice. Browsers without a German voice skip it and hide the button.
 - If you miss a noun that follows a gender rule, the card shows you the rule. The [hint table](#hints) lists them.
 - Five boxes decide which noun comes next. A right answer moves the noun up a box, and a miss sends it back to box 1 so you see it again within a few cards. A noun you get right the first time starts in box 3, and box 5 counts as mastered.
 - The app tracks your score and your current and best streak.

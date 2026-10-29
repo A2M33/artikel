@@ -257,6 +257,28 @@ kbd {
   border-color: var(--rule-strong);
 }
 
+.sound {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  padding: 0;
+  color: var(--ink);
+}
+
+.sound .sound-off,
+.sound[aria-pressed="false"] .sound-waves {
+  display: none;
+}
+
+.sound[aria-pressed="false"] {
+  color: var(--ink-2);
+}
+
+.sound[aria-pressed="false"] .sound-off {
+  display: inline;
+}
+
 /* ------------------------------------------------------------ stage */
 
 .stage {
@@ -860,10 +882,10 @@ kbd {
   /* Two rows on phones: brand and Stats, then level and language. */
   .top {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto auto;
     grid-template-areas:
-      "brand stats"
-      "level lang";
+      "brand sound stats"
+      "level level lang";
   }
 
   .controls {
@@ -871,6 +893,7 @@ kbd {
   }
 
   .brand { grid-area: brand; }
+  .sound { grid-area: sound; }
   #stats-open { grid-area: stats; justify-self: end; }
   .seg-level { grid-area: level; justify-self: start; }
   .seg-lang { grid-area: lang; justify-self: end; }
