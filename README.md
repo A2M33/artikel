@@ -1,27 +1,43 @@
-# artikel
+<p align="center"><img src="docs/header.svg" alt="artikel" width="100%"></p>
 
-Practise der, die and das with 900+ German nouns until the gender sticks.
+<p align="center">
+  <a href="https://a2m33.github.io/artikel/"><img alt="Try it" src="https://img.shields.io/badge/try%20it-a2m33.github.io%2Fartikel-1f6feb"></a>
+  <a href="https://github.com/A2M33/artikel/actions/workflows/test.yml"><img alt="tests" src="https://github.com/A2M33/artikel/actions/workflows/test.yml/badge.svg"></a>
+  <a href="https://github.com/A2M33/artikel/blob/main/LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-3fb950"></a>
+</p>
+
+artikel drills der, die and das on over 900 German nouns from A1 to B1. You answer one card at a time until the genders stick. I built it while preparing for an Ausbildung in Germany.
 
 **Try it:** https://a2m33.github.io/artikel/
 
-![artikel on a phone and a laptop](docs/screenshot.png)
+![artikel quizzing the noun Packung](docs/screenshot.png)
 
 ## Features
 
-- One noun at a time. You pick der, die or das with a tap or the keys 1, 2 and 3.
-- After each answer you see the full noun with its article, the plural, and the meaning in English or Persian. Persian reads right to left.
-- Miss a word that follows a gender pattern (-ung, -heit, -keit, -schaft, -ion and -tät take die; -chen, -lein, -ment and -um take das; -ling and -ismus take der; days, months and seasons take der) and you get the pattern as a hint.
-- A five-box card system decides what comes next. A right answer moves a word up a box. A miss sends it back to box 1, so you meet it again within a few cards. Words in box 5 count as mastered.
-- Score, current streak and best streak.
-- Stats show your accuracy for each article and how many words you have mastered per level.
-- Level filter for A1, A2, B1 or all words.
+- Each card shows one noun. You answer with a tap or with the keys 1, 2 and 3, and Enter takes you to the next card.
+- After you answer, the card shows the article and the plural, with the meaning in English or Persian. Persian text runs right to left.
+- If you miss a noun that follows a gender rule, the card shows you the rule. The [hint table](#hints) lists them.
+- Five boxes decide which noun comes next. A right answer moves the noun up a box, and a miss sends it back to box 1 so you see it again within a few cards. A noun you get right the first time starts in box 3, and box 5 counts as mastered.
+- The app tracks your score and your current and best streak.
+- The stats panel shows your accuracy for each article and how many nouns you have mastered per level.
+- You can limit the cards to A1, A2 or B1, or practise all levels together.
 - Colours follow the classroom convention: blue for der, red for die, green for das.
-- Light and dark themes follow your system setting. Big buttons on phones, full keyboard support, screen reader labels.
-- Your progress lives in your browser's local storage. The page makes no network requests, and you can wipe everything with "Reset progress" in the stats panel.
+- The light or dark theme follows your system setting. Buttons are large on phones, and screen readers get labels.
+- Your progress stays in your browser's local storage, and the page makes no network requests. "Reset progress" in the stats panel clears it.
+
+## Hints
+
+| Article | Endings and word groups |
+|---------|-------------------------|
+| die | -ung, -heit, -keit, -schaft, -tät, -ion |
+| das | -chen, -lein, -ment, -um |
+| der | -ling, -ismus, days of the week, months, seasons |
+
+The app shows a hint only when the noun follows the rule. Exceptions such as der Kuchen or das Stadion get no hint, so you won't learn a rule that contradicts the word in front of you.
 
 ## Run it locally
 
-Download or clone the repository and open `index.html` in a browser. There is no build step and nothing to install. The page works offline.
+Download or clone the repository and open `index.html` in a browser. You don't need a build step or any installs, and the page works offline.
 
 To check the word list you need Node.js 18 or newer:
 
@@ -29,17 +45,19 @@ To check the word list you need Node.js 18 or newer:
 node tests/words.test.mjs
 ```
 
-## How the word list is checked
+## The word list
 
-`words.js` holds one noun per line: article, noun, plural, English, Persian, grouped by level. I kept the list to standard German as Duden gives it and left out three kinds of nouns:
+`words.js` holds one noun per line with its article, plural, English and Persian meaning, grouped by level. I followed standard German as Duden gives it and left out three kinds of nouns:
 
 - nouns with two genders or a meaning that changes with the article, such as der/die See, der/das Teil, das/der Band, die/der Leiter, der/das Joghurt and der/das Bonbon
-- nouns you almost only meet in the plural, such as Eltern, Leute and Ferien
+- nouns you meet almost only in the plural, such as Eltern, Leute and Ferien
 - adjectival nouns like der/die Deutsche, where the article depends on the person
 
-A dash in the plural column means the noun has no plural in everyday use (die Milch, das Obst).
+A dash in the plural column marks a noun with no plural in everyday use (die Milch, das Obst).
 
-`tests/words.test.mjs` runs on every push through GitHub Actions. It fails if the list has fewer than 600 nouns, a duplicate, an article other than der, die or das, an empty field, a level outside A1, A2 and B1, or any noun from the exclusion list. If you spot a wrong gender, plural or translation, please open an issue.
+GitHub Actions runs `tests/words.test.mjs` on every push. The test fails if the list drops below 600 nouns or contains a duplicate. It also catches an article other than der, die or das, an empty field, a level outside A1 to B1, and any noun from the exclusion list.
+
+If you spot a wrong gender, plural or translation, please open an issue.
 
 ## License
 

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="210" viewBox="0 0 900 210" role="img" aria-label="artikel: der, die or das? Practise until it sticks.">
+  <rect width="900" height="210" rx="14" fill="#0d1117"/>
+  <rect x="0.5" y="0.5" width="899" height="209" rx="14" fill="none" stroke="#30363d"/>
+  <g font-family="ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace">
+    <text x="56" y="50" font-size="15" fill="#3fb950">$ open a2m33.github.io/artikel</text>
+    <text x="56" y="104" font-size="50" font-weight="700" fill="#e6edf3" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">artikel</text>
+    <text x="58" y="132" font-size="17" fill="#8b949e" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">der, die or das? Practise until it sticks.</text>
+    <g font-size="14" text-anchor="middle"><rect x="56" y="150" width="114" height="30" rx="15" fill="#0f2a1a" stroke="#3fb950"/><text x="113.0" y="170" fill="#3fb950">900+ nouns</text><rect x="180" y="150" width="174" height="30" rx="15" fill="#161b22" stroke="#30363d"/><text x="267.0" y="170" fill="#e6edf3">Spaced repetition</text><rect x="364" y="150" width="88" height="30" rx="15" fill="#161b22" stroke="#30363d"/><text x="408.0" y="170" fill="#e6edf3">EN / FA</text><rect x="462" y="150" width="88" height="30" rx="15" fill="#161b22" stroke="#30363d"/><text x="506.0" y="170" fill="#e6edf3">Offline</text></g>
+    <text x="844" y="50" font-size="13" fill="#6e7681" text-anchor="end">github.com/A2M33</text>
+  </g>
+</svg>
