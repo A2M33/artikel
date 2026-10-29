@@ -94,6 +94,12 @@ input {
   outline: none;
 }
 
+/* Components set their own display (grid, flex), which would otherwise win
+   over the hidden attribute and show the Next button before an answer. */
+[hidden] {
+  display: none !important;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -354,12 +360,29 @@ kbd {
 
 /* ------------------------------------------------------------ feedback */
 
+/* Sits under the answer buttons, so opening it never moves them. */
 .feedback {
   display: grid;
   gap: 0.35rem;
-  padding-top: 1rem;
-  border-top: 1px dashed var(--rule);
+  margin-top: 0.75rem;
+  padding: 1rem 1.25rem 1.1rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-card);
+  background: var(--card);
+  box-shadow: var(--shadow);
   text-align: center;
+  animation: rise-in 180ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.4rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .feedback p {
@@ -370,11 +393,11 @@ kbd {
   font-weight: 600;
 }
 
-.card[data-result="right"] .verdict {
+.card[data-result="right"] ~ .feedback .verdict {
   color: var(--das);
 }
 
-.card[data-result="wrong"] .verdict {
+.card[data-result="wrong"] ~ .feedback .verdict {
   color: var(--die);
 }
 
@@ -857,7 +880,8 @@ kbd {
     padding: 0 0.45rem;
   }
 
-  .card {
+  .card,
+  .feedback {
     padding: 0.9rem 1rem 1.25rem;
   }
 

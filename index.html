@@ -50,20 +50,21 @@
         <span class="slot" id="slot"></span>
         <span class="noun" id="noun" tabindex="-1"></span>
       </p>
-
-      <div class="feedback" id="feedback" hidden>
-        <p class="verdict" id="verdict"></p>
-        <p class="plural" id="plural"></p>
-        <p class="meaning" id="meaning"></p>
-        <p class="hint" id="hint" hidden></p>
-        <button type="button" class="next" id="next">Next word <kbd>Enter</kbd></button>
-      </div>
     </section>
 
     <div class="choices" role="group" aria-label="Choose the article">
       <button type="button" class="choice" data-article="der" lang="de"><span class="choice-key" aria-hidden="true">1</span>der</button>
       <button type="button" class="choice" data-article="die" lang="de"><span class="choice-key" aria-hidden="true">2</span>die</button>
       <button type="button" class="choice" data-article="das" lang="de"><span class="choice-key" aria-hidden="true">3</span>das</button>
+    </div>
+
+    <!-- Below the buttons on purpose: showing it must not push der/die/das down. -->
+    <div class="feedback" id="feedback" hidden>
+      <p class="verdict" id="verdict"></p>
+      <p class="plural" id="plural"></p>
+      <p class="meaning" id="meaning"></p>
+      <p class="hint" id="hint" hidden></p>
+      <button type="button" class="next" id="next">Next word <kbd>Enter</kbd></button>
     </div>
     <p class="keys-help">Keys <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> answer, <kbd>Enter</kbd> moves on.</p>
 
