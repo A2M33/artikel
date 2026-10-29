@@ -27,7 +27,8 @@ artikel drills der, die and das on over 900 German nouns from A1 to B1. You answ
 - You can limit the cards to A1, A2 or B1, or practise all levels together.
 - Colours follow the classroom convention: blue for der, red for die, green for das.
 - The light or dark theme follows your system setting. Buttons are large on phones, and screen readers get labels.
-- Your progress stays in your browser's local storage, and the page makes no network requests. "Reset progress" in the stats panel clears it.
+- Your progress stays in your browser's local storage, and the page makes no network requests beyond loading its own files. "Reset progress" in the stats panel clears it.
+- After your first visit the game works offline. You can install it to your home screen or desktop like an app.
 
 ## Hints
 

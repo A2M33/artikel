@@ -1107,4 +1107,12 @@
   }
   renderScore();
   nextWord();
+
+  // Offline support. Service workers need http(s); opened from disk, the
+  // page simply runs without one.
+  if ("serviceWorker" in navigator && /^https?:$/.test(window.location.protocol)) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("sw.js").catch(function () {});
+    });
+  }
 })();
