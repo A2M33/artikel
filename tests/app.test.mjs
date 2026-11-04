@@ -358,6 +358,15 @@ test("reset says so inside the dialog and the note returns on reopening", () => 
   assert.match(g.$("reset-note").textContent, /^Clears/);
 });
 
+test("the empty blank has a role for its label and loses both when filled", () => {
+  const g = boot();
+  assert.equal(g.$("slot").getAttribute("role"), "img");
+  assert.equal(g.$("slot").getAttribute("aria-label"), "missing article");
+  g.answerRight();
+  assert.equal(g.$("slot").getAttribute("role"), null);
+  assert.equal(g.$("slot").getAttribute("aria-label"), null);
+});
+
 // ---- tests end ----
 
 let failed = 0;

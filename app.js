@@ -445,6 +445,8 @@
     el.card.style.setProperty("--len", String(current.w.length));
     el.slot.textContent = "";
     el.slot.removeAttribute("data-article");
+    // A plain span cannot carry a label, so the empty blank counts as an image.
+    el.slot.setAttribute("role", "img");
     el.slot.setAttribute("aria-label", t("missingArticle"));
     el.noun.textContent = current.w;
     setText(el.wordLevel, current.lvl);
@@ -853,6 +855,7 @@
     // Fill the blank.
     el.slot.textContent = current.a;
     el.slot.setAttribute("data-article", current.a);
+    el.slot.removeAttribute("role");
     el.slot.removeAttribute("aria-label");
     el.card.setAttribute("data-article", current.a);
     el.card.setAttribute("data-result", ok ? "right" : "wrong");
