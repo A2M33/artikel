@@ -760,6 +760,11 @@
   var speech = window.speechSynthesis && window.SpeechSynthesisUtterance ? window.speechSynthesis : null;
   var germanVoice = null;
 
+  // Android writes de_DE where the Web Speech API expects de-DE.
+  function voiceLang(voice) {
+    return String(voice.lang || "").replace("_", "-");
+  }
+
   function findVoice() {
     var voices = [];
     try {
@@ -769,13 +774,14 @@
     }
     germanVoice = null;
     for (var i = 0; i < voices.length; i++) {
-      var lang = String(voices[i].lang || "").replace("_", "-");
+      var lang = voiceLang(voices[i]);
       if (!/^de(-|$)/i.test(lang)) continue;
+      var best = germanVoice && voiceLang(germanVoice);
       // Prefer de-DE over Austrian or Swiss voices, and local voices
       // over network ones.
       var better = !germanVoice ||
-        (lang === "de-DE" && germanVoice.lang !== "de-DE") ||
-        (lang === germanVoice.lang && voices[i].localService && !germanVoice.localService);
+        (lang === "de-DE" && best !== "de-DE") ||
+        (lang === best && voices[i].localService && !germanVoice.localService);
       if (better) germanVoice = voices[i];
     }
     el.sound.hidden = !germanVoice;
@@ -787,7 +793,7 @@
       speech.cancel();
       var u = new window.SpeechSynthesisUtterance(text);
       u.voice = germanVoice;
-      u.lang = germanVoice.lang;
+      u.lang = voiceLang(germanVoice);
       u.rate = 0.9;
       speech.speak(u);
     } catch (e) {

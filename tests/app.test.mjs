@@ -311,6 +311,30 @@ test("the Next button scrolls into view, and the next card comes back", () => {
   assert.equal(g.$("card").scrolled.length, before + 1);
 });
 
+test("a local de_DE voice beats a network one and speaks as de-DE", () => {
+  const voices = [
+    { name: "swiss", lang: "de-CH", localService: true },
+    { name: "network", lang: "de_DE", localService: false },
+    { name: "local", lang: "de_DE", localService: true },
+    { name: "second", lang: "de_DE", localService: false },
+    { name: "french", lang: "fr_FR", localService: true },
+  ];
+  const g = boot({ voices });
+  assert.equal(g.$("sound").hidden, false);
+  const w = g.word();
+  g.answerRight();
+  assert.equal(g.sandbox.spoken[0].voice.name, "local");
+  assert.equal(g.sandbox.spoken[0].lang, "de-DE");
+  assert.equal(g.sandbox.spoken[0].text, `${w.a} ${w.w}`);
+});
+
+test("without a German voice the sound button stays hidden", () => {
+  const g = boot({ voices: [{ name: "french", lang: "fr-FR" }] });
+  assert.equal(g.$("sound").hidden, true);
+  g.answerRight();
+  assert.equal(g.sandbox.spoken.length, 0);
+});
+
 // ---- tests end ----
 
 let failed = 0;
