@@ -1131,6 +1131,13 @@
     redraw();
   });
 
+  // A tab or installed app can stay open past midnight; the day count and
+  // the streak must not keep showing yesterday.
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible") renderDaily();
+  });
+  setInterval(renderDaily, 60000);
+
   // ---------------------------------------------------------------- start
 
   applyLang();

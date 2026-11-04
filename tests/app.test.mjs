@@ -254,6 +254,21 @@ test("storage events for other keys change nothing", () => {
   assert.equal(g.$("stat-correct").textContent, before);
 });
 
+test("the daily count resets on screen after midnight without an answer", () => {
+  let time = Date.parse("2026-11-04T23:59:00");
+  const g = boot({ now: () => time });
+  g.answerRight();
+  assert.equal(g.$("daily-count").textContent, "1 / 20");
+  time = Date.parse("2026-11-05T00:01:00");
+  g.doc.emit("visibilitychange");
+  assert.equal(g.$("daily-count").textContent, "0 / 20");
+  time = Date.parse("2026-11-04T23:59:00");
+  g.doc.emit("visibilitychange");
+  time = Date.parse("2026-11-05T00:01:00");
+  g.timers.forEach((fn) => fn());
+  assert.equal(g.$("daily-count").textContent, "0 / 20");
+});
+
 // ---- tests end ----
 
 let failed = 0;
