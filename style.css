@@ -82,6 +82,7 @@ button,
 input {
   font: inherit;
   color: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 :focus-visible {
@@ -511,6 +512,12 @@ kbd {
   font-size: 1.05rem;
   font-weight: 600;
   cursor: pointer;
+  transition: background-color 120ms ease, transform 80ms ease;
+  touch-action: manipulation;
+}
+
+.next:active {
+  transform: translateY(1px) scale(0.99);
 }
 
 .next kbd {
@@ -548,9 +555,26 @@ kbd {
 .choice[data-article="die"] { --c: var(--die); --c-soft: var(--die-soft); }
 .choice[data-article="das"] { --c: var(--das); --c-soft: var(--das-soft); }
 
-.choice:hover:not(:disabled) {
-  background: var(--c);
-  color: var(--card);
+/* Touch screens keep :hover after a tap, which would leave the button painted
+   as the answer on the next card. */
+@media (hover: hover) {
+  .choice:hover:not(:disabled) {
+    background: var(--c);
+    color: var(--card);
+  }
+
+  .seg input:not(:checked):hover + span {
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .next:hover {
+    background: var(--ink-2);
+  }
+
+  .reset:not(.is-armed):hover {
+    background: var(--die-soft);
+  }
 }
 
 .choice:active:not(:disabled) {

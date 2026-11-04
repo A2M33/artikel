@@ -60,6 +60,11 @@ check(!/\.choice-key\s*\{[^}]*opacity/.test(css), ".choice-key keeps full contra
 // interface text inherited body's Latin one.
 check(/\[lang="fa"\]\s+body\b[^{]*\{[^}]*var\(--fa\)/.test(css), "Persian mode applies --fa to body");
 
+// Bug: the tapped answer button stayed filled on the next card on touch screens.
+const hoverRule = css.indexOf(".choice:hover");
+check(hoverRule > css.lastIndexOf("@media (hover: hover)", hoverRule) && css.lastIndexOf("@media (hover: hover)", hoverRule) !== -1,
+  ".choice hover colours apply to hover devices only");
+
 if (failures) {
   console.log(`\n${failures} check(s) failed`);
   process.exit(1);
