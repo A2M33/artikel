@@ -1193,7 +1193,10 @@
     }
   }
   renderScore();
-  nextWord();
+  // Not nextWord(): focus stays at the top of the page on load, so the first
+  // Tab reaches the skip link and the header.
+  current = pickNext();
+  renderWord();
 
   // Offline support. Service workers need http(s); opened from disk, the
   // page simply runs without one.

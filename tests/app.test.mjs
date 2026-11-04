@@ -367,6 +367,15 @@ test("the empty blank has a role for its label and loses both when filled", () =
   assert.equal(g.$("slot").getAttribute("aria-label"), null);
 });
 
+test("loading the page leaves focus alone, moving on takes it to the noun", () => {
+  const g = boot();
+  assert.equal(g.doc.activeElement, g.doc.body);
+  g.answerRight();
+  assert.equal(g.doc.activeElement, g.$("next"));
+  g.$("next").click();
+  assert.equal(g.doc.activeElement, g.$("noun"));
+});
+
 // ---- tests end ----
 
 let failed = 0;
