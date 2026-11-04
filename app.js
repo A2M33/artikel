@@ -411,6 +411,7 @@
     statsMissed: $("stats-missed"),
     statsMissedEmpty: $("stats-missed-empty"),
     reset: $("reset"),
+    resetNote: $("reset-note"),
     sound: $("sound"),
     daily: $("daily"),
     dailyCount: $("daily-count"),
@@ -1042,7 +1043,9 @@
     renderStats();
     current = null;
     nextWord();
-    el.live.textContent = t("erased");
+    // Inside the dialog: the page behind a modal is inert, so a screen reader
+    // would not hear #live, and sighted players need the message too.
+    setText(el.resetNote, t("erased"));
   }
 
   function disarmReset() {
@@ -1053,6 +1056,7 @@
 
   function openStats() {
     renderStats();
+    setText(el.resetNote, t("resetNote"));
     if (typeof el.statsDialog.showModal === "function") {
       el.statsDialog.showModal();
     } else {

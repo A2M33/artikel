@@ -344,6 +344,20 @@ test("impossible saved numbers are repaired on load", () => {
   assert.ok(Number.isInteger(g.saved().stats.der.n));
 });
 
+test("reset says so inside the dialog and the note returns on reopening", () => {
+  const g = boot();
+  g.answerRight();
+  g.$("stats-open").click();
+  g.$("reset").click();
+  assert.equal(g.saved().answered, 1, "the first press only arms the button");
+  g.$("reset").click();
+  assert.equal(g.saved().answered, 0);
+  assert.equal(g.$("reset-note").textContent, "Progress erased.");
+  g.$("stats").close();
+  g.$("stats-open").click();
+  assert.match(g.$("reset-note").textContent, /^Clears/);
+});
+
 // ---- tests end ----
 
 let failed = 0;
