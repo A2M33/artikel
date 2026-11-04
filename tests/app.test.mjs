@@ -335,6 +335,15 @@ test("without a German voice the sound button stays hidden", () => {
   assert.equal(g.sandbox.spoken.length, 0);
 });
 
+test("impossible saved numbers are repaired on load", () => {
+  const g = boot({ stored: { answered: 3, correct: 9, streak: 8, best: 2, stats: { der: { n: 2.5, ok: 7.9 } } } });
+  assert.equal(g.$("stat-correct").textContent, "3 / 3");
+  assert.equal(g.$("stat-best").textContent, "8");
+  g.answerRight();
+  assert.ok(g.saved().stats.der.ok <= g.saved().stats.der.n);
+  assert.ok(Number.isInteger(g.saved().stats.der.n));
+});
+
 // ---- tests end ----
 
 let failed = 0;

@@ -274,6 +274,9 @@
     ["turn", "answered", "correct", "streak", "best", "days"].forEach(function (k) {
       if (isCount(data[k])) s[k] = Math.floor(data[k]);
     });
+    // Keep the score line believable if a save was edited or cut short.
+    s.correct = Math.min(s.correct, s.answered);
+    s.best = Math.max(s.best, s.streak);
     if (LEVELS.indexOf(data.level) !== -1) s.level = data.level;
     if (LANGS.indexOf(data.lang) !== -1) s.lang = data.lang;
     if (typeof data.sound === "boolean") s.sound = data.sound;
@@ -285,7 +288,10 @@
     if (data.stats && typeof data.stats === "object") {
       ARTICLES.forEach(function (a) {
         var st = data.stats[a];
-        if (st && isCount(st.n) && isCount(st.ok)) s.stats[a] = { n: st.n, ok: Math.min(st.ok, st.n) };
+        if (st && isCount(st.n) && isCount(st.ok)) {
+          var n = Math.floor(st.n);
+          s.stats[a] = { n: n, ok: Math.min(Math.floor(st.ok), n) };
+        }
       });
     }
     if (data.prog && typeof data.prog === "object") {
