@@ -910,6 +910,15 @@ kbd {
   background: rgb(10 14 20 / 0.45);
 }
 
+/* The page behind the panel stays put when the panel reaches its end. */
+html:has(.stats[open]) {
+  overflow: hidden;
+}
+
+.stats {
+  overscroll-behavior: contain;
+}
+
 .stats-head {
   display: flex;
   align-items: center;
