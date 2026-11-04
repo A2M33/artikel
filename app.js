@@ -1100,6 +1100,14 @@
     var tag = e.target && e.target.tagName;
     if (tag === "TEXTAREA" || tag === "SELECT" || (tag === "INPUT" && e.target.type === "text")) return;
 
+    var isNextKey = e.key === "Enter" || e.key === " " || e.code === "Space";
+    // A key held a little too long would answer the card and skip the
+    // feedback in the same press, also through the button's own click.
+    if (e.repeat) {
+      if (isNextKey) e.preventDefault();
+      return;
+    }
+
     var index = Object.prototype.hasOwnProperty.call(ANSWER_KEYS, e.code)
       ? ANSWER_KEYS[e.code]
       : ["1", "2", "3"].indexOf(e.key);
@@ -1108,9 +1116,10 @@
       answer(ARTICLES[index]);
       return;
     }
-    // On a focused button, Enter and Space already click it.
-    var isNextKey = e.key === "Enter" || e.key === " " || e.code === "Space";
-    if (hasAnswered && isNextKey && tag !== "BUTTON" && tag !== "A" && tag !== "INPUT") {
+    // On a focused button, Enter and Space already click it. Space on an
+    // unchecked radio selects it, but a checked one has no use for either key.
+    var keyIsTaken = tag === "BUTTON" || tag === "A" || (tag === "INPUT" && !e.target.checked);
+    if (hasAnswered && isNextKey && !keyIsTaken) {
       e.preventDefault();
       nextWord();
     }
@@ -1129,6 +1138,7 @@
       nextWord();
     }
     redraw();
+    if (el.statsDialog.open) renderStats();
   });
 
   // A tab or installed app can stay open past midnight; the day count and

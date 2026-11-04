@@ -232,7 +232,7 @@ test("a second tab's answers survive this tab's next save", () => {
   g.key("Enter", { target: g.doc.body });
   g.answerRight();
   assert.equal(g.saved().answered, 8);
-  assert.equal(g.saved().prog.Tisch.b >= 4 || g.word().w === "Tisch", true);
+  assert.ok(g.saved().prog.Tisch.b >= 4);
   assert.equal(g.$("stat-correct").textContent, "6 / 8");
 });
 
@@ -267,6 +267,38 @@ test("the daily count resets on screen after midnight without an answer", () => 
   time = Date.parse("2026-11-05T00:01:00");
   g.timers.forEach((fn) => fn());
   assert.equal(g.$("daily-count").textContent, "0 / 20");
+});
+
+test("holding Enter does not skip the feedback", () => {
+  const g = boot();
+  g.answerRight();
+  const shown = g.word();
+  const e = g.key("Enter", { repeat: true });
+  assert.equal(e.defaultPrevented, true, "the repeat must not click the focused Next button");
+  assert.equal(g.word(), shown);
+  assert.equal(g.$("feedback").hidden, false);
+});
+
+test("Enter moves on after switching language with the mouse", () => {
+  const g = boot();
+  g.answerRight();
+  const shown = g.word();
+  const fa = g.doc.querySelectorAll('input[name="lang"]').find((i) => i.value === "fa");
+  fa.checked = true;
+  fa.emit("change");
+  g.doc.activeElement = fa;
+  g.key("Enter");
+  assert.notEqual(g.word(), shown);
+});
+
+test("Space on an unchecked radio stays with the radio", () => {
+  const g = boot();
+  g.answerRight();
+  const shown = g.word();
+  const a2 = g.doc.querySelectorAll('input[name="level"]').find((i) => i.value === "A2");
+  g.doc.activeElement = a2;
+  g.key("Space");
+  assert.equal(g.word(), shown);
 });
 
 // ---- tests end ----
