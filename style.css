@@ -140,7 +140,10 @@ kbd {
   text-align: center;
 }
 
-[lang="fa"] {
+/* body sets its own font, so naming <html lang="fa"> alone would not reach
+   the Persian interface text. */
+[lang="fa"],
+[lang="fa"] body {
   font-family: var(--fa);
 }
 

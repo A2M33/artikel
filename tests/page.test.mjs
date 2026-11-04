@@ -56,6 +56,10 @@ check(/\.phrase\s*\{[^}]*min-height\s*:/.test(css), ".phrase reserves its height
 // Bug: 75% opacity took the 12px key numbers on the buttons down to 3:1.
 check(!/\.choice-key\s*\{[^}]*opacity/.test(css), ".choice-key keeps full contrast");
 
+// Bug: only elements with their own lang="fa" got the Persian font stack; the
+// interface text inherited body's Latin one.
+check(/\[lang="fa"\]\s+body\b[^{]*\{[^}]*var\(--fa\)/.test(css), "Persian mode applies --fa to body");
+
 if (failures) {
   console.log(`\n${failures} check(s) failed`);
   process.exit(1);
