@@ -560,7 +560,6 @@ kbd {
   left: 0.55rem;
   font-size: 0.75rem;
   font-weight: 400;
-  opacity: 0.75;
 }
 
 .choice:disabled {

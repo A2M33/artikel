@@ -53,6 +53,9 @@ check(icons.some((s) => s.endsWith(".png")) && icons.some((s) => s.endsWith(".sv
 // higher or lower from one card to the next.
 check(/\.phrase\s*\{[^}]*min-height\s*:/.test(css), ".phrase reserves its height");
 
+// Bug: 75% opacity took the 12px key numbers on the buttons down to 3:1.
+check(!/\.choice-key\s*\{[^}]*opacity/.test(css), ".choice-key keeps full contrast");
+
 if (failures) {
   console.log(`\n${failures} check(s) failed`);
   process.exit(1);
