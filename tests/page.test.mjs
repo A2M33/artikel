@@ -65,6 +65,9 @@ const hoverRule = css.indexOf(".choice:hover");
 check(hoverRule > css.lastIndexOf("@media (hover: hover)", hoverRule) && css.lastIndexOf("@media (hover: hover)", hoverRule) !== -1,
   ".choice hover colours apply to hover devices only");
 
+// Bug: the install step could copy a stale file from the HTTP cache.
+check(/cache:\s*"reload"/.test(sw), "sw.js fetches past the HTTP cache on install");
+
 if (failures) {
   console.log(`\n${failures} check(s) failed`);
   process.exit(1);

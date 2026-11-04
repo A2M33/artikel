@@ -2,11 +2,12 @@
  * Service worker for artikel: keeps every file of the site in a cache so the
  * game works offline after the first visit.
  *
- * Bump VERSION whenever FILES changes. Files already in the list update on
- * their own: the worker answers from the cache and refreshes that copy from
- * the network in the background, so the next visit gets the new version.
+ * The worker answers from the cache and refreshes that copy in the background,
+ * so a visit can end with some files refreshed and others not. Bump VERSION
+ * with every release that changes a file: the new worker then fetches the
+ * whole list at once and all files switch together on the next visit.
  */
-var VERSION = "v1";
+var VERSION = "v2";
 var CACHE = "artikel-" + VERSION;
 var FILES = [
   "./",
@@ -24,7 +25,11 @@ var FILES = [
 self.addEventListener("install", function (event) {
   event.waitUntil(
     caches.open(CACHE).then(function (cache) {
-      return cache.addAll(FILES);
+      // Past the HTTP cache: GitHub Pages lets browsers keep files for 10
+      // minutes, which could put an old file into the new cache.
+      return cache.addAll(FILES.map(function (file) {
+        return new Request(file, { cache: "reload" });
+      }));
     }).then(function () {
       return self.skipWaiting();
     })
@@ -47,12 +52,14 @@ self.addEventListener("activate", function (event) {
 self.addEventListener("fetch", function (event) {
   var req = event.request;
   if (req.method !== "GET" || new URL(req.url).origin !== self.location.origin) return;
+  // One copy per file, so a link with a query string adds nothing to the cache.
+  var key = req.url.split("#")[0].split("?")[0];
 
   event.respondWith(
     caches.open(CACHE).then(function (cache) {
-      return cache.match(req, { ignoreSearch: true }).then(function (cached) {
+      return cache.match(key).then(function (cached) {
         var fresh = fetch(req).then(function (res) {
-          if (res && res.ok) cache.put(req, res.clone());
+          if (res && res.ok) cache.put(key, res.clone());
           return res;
         }).catch(function () {
           // Offline: a page request falls back to the cached game.
