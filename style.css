@@ -514,6 +514,8 @@ kbd {
   cursor: pointer;
   transition: background-color 120ms ease, transform 80ms ease;
   touch-action: manipulation;
+  /* Covers the panel's rise-in, which is still offset when app.js scrolls. */
+  scroll-margin-block-end: 1rem;
 }
 
 .next:active {

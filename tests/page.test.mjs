@@ -68,6 +68,10 @@ check(hoverRule > css.lastIndexOf("@media (hover: hover)", hoverRule) && css.las
 // Bug: the install step could copy a stale file from the HTTP cache.
 check(/cache:\s*"reload"/.test(sw), "sw.js fetches past the HTTP cache on install");
 
+// Bug: the button stopped 6px below the fold on a 320x568 phone, because the
+// scroll ran while the panel's rise-in animation still offset it.
+check(/\.next\s*\{[^}]*scroll-margin-block-end/.test(css), ".next keeps a scroll margin");
+
 if (failures) {
   console.log(`\n${failures} check(s) failed`);
   process.exit(1);
