@@ -209,6 +209,17 @@ test("corrupt saves fall back to a working game", () => {
   }
 });
 
+test("a click on the dialog's padding keeps it open; the backdrop closes it", () => {
+  const g = boot();
+  const dialog = g.$("stats");
+  g.$("stats-open").click();
+  dialog.rect = { left: 100, right: 500, top: 50, bottom: 600 };
+  dialog.emit("click", { clientX: 106, clientY: 300 });
+  assert.equal(dialog.open, true);
+  dialog.emit("click", { clientX: 20, clientY: 300 });
+  assert.equal(dialog.open, false);
+});
+
 // ---- tests end ----
 
 let failed = 0;

@@ -1073,8 +1073,13 @@
   el.statsClose.addEventListener("click", closeStats);
   el.statsDialog.addEventListener("close", disarmReset);
   el.statsDialog.addEventListener("click", function (e) {
-    // Click on the backdrop closes the dialog.
-    if (e.target === el.statsDialog) closeStats();
+    // A click on the backdrop closes the dialog. The dialog's own padding is
+    // also the event target, so only a point outside its box counts.
+    if (e.target !== el.statsDialog) return;
+    var box = el.statsDialog.getBoundingClientRect();
+    var inside = e.clientX >= box.left && e.clientX <= box.right &&
+      e.clientY >= box.top && e.clientY <= box.bottom;
+    if (!inside) closeStats();
   });
   el.reset.addEventListener("click", resetProgress);
   el.sound.addEventListener("click", toggleSound);
