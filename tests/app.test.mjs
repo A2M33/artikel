@@ -220,6 +220,40 @@ test("a click on the dialog's padding keeps it open; the backdrop closes it", ()
   assert.equal(dialog.open, false);
 });
 
+test("a second tab's answers survive this tab's next save", () => {
+  const g = boot();
+  g.answerRight();
+  const other = g.saved();
+  other.answered = 7;
+  other.correct = 5;
+  other.prog.Tisch = { b: 4, n: 40 };
+  g.store.set(STORE_KEY, JSON.stringify(other));
+  g.win.emit("storage", { key: STORE_KEY });
+  g.key("Enter", { target: g.doc.body });
+  g.answerRight();
+  assert.equal(g.saved().answered, 8);
+  assert.equal(g.saved().prog.Tisch.b >= 4 || g.word().w === "Tisch", true);
+  assert.equal(g.$("stat-correct").textContent, "6 / 8");
+});
+
+test("a level or language changed in another tab shows up here", () => {
+  const g = boot();
+  const other = { ...JSON.parse(g.store.get(STORE_KEY) ?? "{}"), level: "B1", lang: "fa" };
+  g.store.set(STORE_KEY, JSON.stringify(other));
+  g.win.emit("storage", { key: STORE_KEY });
+  assert.equal(g.word().lvl, "B1");
+  assert.equal(g.doc.documentElement.dir, "rtl");
+  assert.equal(g.doc.querySelectorAll('input[name="lang"]').find((i) => i.checked).value, "fa");
+});
+
+test("storage events for other keys change nothing", () => {
+  const g = boot();
+  g.answerRight();
+  const before = g.$("stat-correct").textContent;
+  g.win.emit("storage", { key: "something.else" });
+  assert.equal(g.$("stat-correct").textContent, before);
+});
+
 // ---- tests end ----
 
 let failed = 0;

@@ -954,6 +954,12 @@
     if (LANGS.indexOf(lang) === -1) return;
     state.lang = lang;
     save();
+    redraw();
+  }
+
+  // Everything that depends on the language or the saved numbers, for the
+  // card on screen.
+  function redraw() {
     applyLang();
     renderScore();
     renderDaily();
@@ -1049,21 +1055,25 @@
   });
   el.next.addEventListener("click", nextWord);
 
+  function syncInputs() {
+    el.levelInputs.forEach(function (input) { input.checked = input.value === state.level; });
+    el.langInputs.forEach(function (input) { input.checked = input.value === state.lang; });
+    el.goalInputs.forEach(function (input) { input.checked = Number(input.value) === state.goal; });
+  }
+
+  syncInputs();
   el.levelInputs.forEach(function (input) {
-    input.checked = input.value === state.level;
     input.addEventListener("change", function () {
       if (input.checked) setLevel(input.value);
     });
   });
   el.langInputs.forEach(function (input) {
-    input.checked = input.value === state.lang;
     input.addEventListener("change", function () {
       if (input.checked) setLang(input.value);
     });
   });
 
   el.goalInputs.forEach(function (input) {
-    input.checked = Number(input.value) === state.goal;
     input.addEventListener("change", function () {
       if (input.checked) setGoal(Number(input.value));
     });
@@ -1104,6 +1114,21 @@
       e.preventDefault();
       nextWord();
     }
+  });
+
+  // Every tab saves its whole state, so a tab that missed another tab's
+  // answers would erase them with its next save. Read the save again instead.
+  window.addEventListener("storage", function (e) {
+    if (e.key !== STORE_KEY && e.key !== null) return;
+    var level = state.level;
+    state = load();
+    syncInputs();
+    renderSound();
+    if (state.level !== level) {
+      current = null;
+      nextWord();
+    }
+    redraw();
   });
 
   // ---------------------------------------------------------------- start
