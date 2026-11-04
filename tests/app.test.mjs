@@ -301,6 +301,16 @@ test("Space on an unchecked radio stays with the radio", () => {
   assert.equal(g.word(), shown);
 });
 
+test("the Next button scrolls into view, and the next card comes back", () => {
+  const g = boot();
+  g.answerWrong();
+  assert.equal(g.$("next").scrolled.length, 1);
+  assert.equal(g.$("next").scrolled[0].block, "nearest");
+  const before = g.$("card").scrolled.length;
+  g.$("next").click();
+  assert.equal(g.$("card").scrolled.length, before + 1);
+});
+
 // ---- tests end ----
 
 let failed = 0;

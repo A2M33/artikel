@@ -866,6 +866,16 @@
       (mastered ? " " + t("liveMastered") : "") + (goalMet ? " " + t("liveGoal") : "");
     say(current.a + " " + current.w);
     el.next.focus({ preventScroll: true });
+    // A long hint on a small phone puts the button below the fold.
+    reveal(el.next, calmMotion() ? "auto" : "smooth");
+  }
+
+  function calmMotion() {
+    return !window.matchMedia || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  function reveal(node, behavior) {
+    if (node.scrollIntoView) node.scrollIntoView({ block: "nearest", behavior: behavior });
   }
 
   // Verdict, plural, box line and meaning for the last answer. fresh is
@@ -937,6 +947,7 @@
     el.card.removeAttribute("data-result");
     current = pickNext();
     renderWord();
+    reveal(el.card, "auto");
     if (document.activeElement === el.next || document.activeElement === document.body) {
       el.noun.focus({ preventScroll: true });
     }
