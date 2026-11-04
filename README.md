@@ -57,6 +57,7 @@ The tests need Node.js 18 or newer:
 node tests/words.test.mjs
 node tests/rules.test.mjs
 node tests/page.test.mjs
+node tests/app.test.mjs
 ```
 
 ## The word list
