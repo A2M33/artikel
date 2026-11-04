@@ -49,6 +49,10 @@ const uncached = [...referenced, ...icons].filter((f) => !cached.includes(f));
 check(uncached.length === 0, "sw.js caches every file the page and manifest use" + (uncached.length ? `: ${uncached.join(", ")}` : ""));
 check(icons.some((s) => s.endsWith(".png")) && icons.some((s) => s.endsWith(".svg")), "manifest lists a PNG and an SVG icon");
 
+// Bug: the noun's type scales with its length, so der/die/das sat up to 38px
+// higher or lower from one card to the next.
+check(/\.phrase\s*\{[^}]*min-height\s*:/.test(css), ".phrase reserves its height");
+
 if (failures) {
   console.log(`\n${failures} check(s) failed`);
   process.exit(1);
