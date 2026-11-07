@@ -1131,24 +1131,33 @@ html:has(.stats[open]) {
     padding-top: 0.75rem;
   }
 
-  /* Two rows on phones: brand and Stats, then level and language. */
+  /* Two rows on phones: brand and Stats, then level and language. Flex
+     rather than a grid, so with large text the language switch can drop
+     to a row of its own instead of running off the screen. */
   .top {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    grid-template-areas:
-      "brand sound stats"
-      "level level lang";
+    row-gap: 0;
   }
 
   .controls {
     display: contents;
   }
 
-  .brand { grid-area: brand; }
-  .sound { grid-area: sound; }
-  #stats-open { grid-area: stats; justify-self: end; }
-  .seg-level { grid-area: level; justify-self: start; }
-  .seg-lang { grid-area: lang; justify-self: end; }
+  .brand { margin-inline-end: auto; }
+
+  /* Forces the line break after Stats. */
+  .top::after {
+    content: "";
+    order: 2;
+    flex-basis: 100%;
+  }
+
+  .seg-level,
+  .seg-lang {
+    order: 3;
+    margin-top: 0.75rem;
+  }
+
+  .seg-lang { margin-inline-start: auto; }
 
   .seg span {
     min-width: 2.4rem;
