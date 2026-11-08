@@ -414,6 +414,7 @@
     resetNote: $("reset-note"),
     sound: $("sound"),
     daily: $("daily"),
+    dailyLamp: $("daily-lamp"),
     dailyCount: $("daily-count"),
     dailyMeter: $("daily-meter"),
     dailyFill: $("daily-fill"),
@@ -638,6 +639,8 @@
     el.dailyMeter.setAttribute("aria-valuemax", String(state.goal));
     el.dailyMeter.setAttribute("aria-valuenow", String(Math.min(n, state.goal)));
     el.daily.classList.toggle("is-done", done);
+    // The status lamp turns amber once today's goal is met.
+    el.dailyLamp.setAttribute("data-state", done ? "live" : "idle");
     var days = dayStreak();
     setText(el.dailyDays, num(days));
     setText(el.dailyDaysLabel, t(days === 1 ? "dayOne" : "days"));

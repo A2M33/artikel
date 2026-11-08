@@ -1,81 +1,26 @@
 /*
- * artikel. Colours follow the usual classroom code for German genders:
- * der blue, die red, das green. Type is DIN-style (Bahnschrift on Windows,
- * DIN Alternate on Apple) so no web font has to be downloaded.
+ * artikel. Built on the A2M33 "control room" tokens in tokens.css: grey
+ * surfaces, 1px borders, colour only for state. Steel marks the selection,
+ * the amber lamp shows today's goal met, ok and fault mark an answer.
+ * This file only uses the variables from tokens.css.
  */
 
+/* Persian interface text. Barlow has no Arabic script, so the stack falls
+   through to Vazirmatn for Persian and keeps Barlow for Latin and German. */
+@font-face { font-family: "Vazirmatn"; font-weight: 400; font-display: swap; src: url("fonts/Vazirmatn-Regular.woff2") format("woff2"); }
+@font-face { font-family: "Vazirmatn"; font-weight: 500; font-display: swap; src: url("fonts/Vazirmatn-Medium.woff2") format("woff2"); }
+@font-face { font-family: "Vazirmatn"; font-weight: 600; font-display: swap; src: url("fonts/Vazirmatn-SemiBold.woff2") format("woff2"); }
+
 :root {
-  --paper: #e8ecef;
-  --card: #fafbfc;
-  --ink: #17202b;
-  --ink-2: #4c5866;
-  --rule: #d3d9e0;
-  --rule-strong: #b7c0ca;
-
-  --der: #1d56b0;
-  --der-soft: #e2eaf7;
-  --die: #bb2f2a;
-  --die-soft: #f7e3e1;
-  --das: #18784a;
-  --das-soft: #dff0e6;
-
-  --focus: #0b63d6;
-  --shadow: 0 1px 0 rgb(23 32 43 / 0.06), 0 8px 24px -12px rgb(23 32 43 / 0.25);
-
-  --din: "Bahnschrift", "DIN Alternate", "DIN Next", "D-DIN", "Roboto Condensed", "Arial Narrow", "Vazirmatn", "Segoe UI", Tahoma, system-ui, sans-serif;
-  --ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --fa: "Vazirmatn", "Segoe UI", Tahoma, "Geeza Pro", "Noto Naskh Arabic", system-ui, sans-serif;
-
-  --radius-card: 18px;
-  --radius-btn: 12px;
-  --radius-small: 8px;
-
-  color-scheme: light dark;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper: #101419;
-    --card: #1a2028;
-    --ink: #e4e8ed;
-    --ink-2: #a3adb9;
-    --rule: #2b333d;
-    --rule-strong: #3d4753;
-
-    --der: #86aef5;
-    --der-soft: #1d2a40;
-    --die: #f28c82;
-    --die-soft: #3a2224;
-    --das: #6fd09c;
-    --das-soft: #1b3328;
-
-    --focus: #8cb8ff;
-    --shadow: 0 1px 0 rgb(0 0 0 / 0.3), 0 10px 30px -14px rgb(0 0 0 / 0.7);
-  }
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
+  --fa: var(--font);
+  --page: 44rem;
 }
 
 body {
-  margin: 0;
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--ui);
-  font-size: 1rem;
-  line-height: 1.5;
 }
 
 button,
@@ -85,9 +30,8 @@ input {
   -webkit-tap-highlight-color: transparent;
 }
 
-:focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 3px;
+p {
+  margin: 0;
 }
 
 .noun:focus,
@@ -115,37 +59,42 @@ input {
 
 .skip {
   position: absolute;
-  inset-inline-start: 1rem;
+  inset-inline-start: var(--s4);
   top: -3rem;
-  padding: 0.5rem 0.9rem;
+  padding: var(--s2) var(--s3);
   background: var(--ink);
-  color: var(--card);
-  border-radius: var(--radius-small);
+  color: var(--panel);
+  border-radius: var(--r-control);
   z-index: 10;
 }
 
 .skip:focus {
-  top: 1rem;
+  top: var(--s4);
 }
 
 kbd {
   display: inline-block;
-  min-width: 1.5em;
+  min-width: 1.6em;
   padding: 0 0.35em;
-  border: 1px solid var(--rule-strong);
-  border-bottom-width: 2px;
-  border-radius: 5px;
-  font-family: var(--din);
-  font-size: 0.8em;
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
+  background: var(--panel);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--t-xs);
   line-height: 1.5;
   text-align: center;
 }
 
 /* body sets its own font, so naming <html lang="fa"> alone would not reach
-   the Persian interface text. */
+   the Persian interface text. Vazirmatn needs more line height. */
 [lang="fa"],
 [lang="fa"] body {
   font-family: var(--fa);
+}
+
+[lang="fa"] body {
+  line-height: 1.7;
 }
 
 /* German words inside Persian text keep their own direction. */
@@ -165,59 +114,44 @@ kbd {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem 1rem;
+  gap: var(--s3) var(--s4);
   width: 100%;
-  max-width: 44rem;
+  max-width: var(--page);
   margin: 0 auto;
-  padding: 1rem 1rem 0.5rem;
+  padding: var(--s5) var(--s4) var(--s3);
 }
 
 .brand {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
   margin: 0;
-  font-family: var(--din);
-  font-size: 1.45rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  font-size: var(--t-xl);
+  line-height: 1;
 }
-
-.brand-mark {
-  display: inline-flex;
-  gap: 3px;
-}
-
-.brand-mark i {
-  display: block;
-  width: 6px;
-  height: 20px;
-  border-radius: 2px;
-}
-
-.m-der { background: var(--der); }
-.m-die { background: var(--die); }
-.m-das { background: var(--das); }
 
 .controls {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--s2);
 }
 
+/* Segmented switch: the selected option reads in ink with a steel bar. */
 .seg {
   display: inline-flex;
   margin: 0;
-  padding: 3px;
-  border: 1px solid var(--rule);
-  border-radius: 999px;
-  background: var(--card);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
+  background: var(--panel);
+  overflow: hidden;
 }
 
 .seg label {
   position: relative;
   display: block;
+}
+
+.seg label + label {
+  border-inline-start: 1px solid var(--line);
 }
 
 .seg input {
@@ -233,51 +167,50 @@ kbd {
   align-items: center;
   justify-content: center;
   min-width: 2.75rem;
-  min-height: 2.25rem;
-  padding: 0 0.7rem;
-  border-radius: 999px;
-  font-family: var(--din);
-  font-size: 0.95rem;
+  min-height: 2.5rem;
+  padding: 0 var(--s3);
+  font-size: var(--t-sm);
+  font-weight: 500;
   color: var(--ink-2);
-  transition: background-color 120ms ease, color 120ms ease;
-}
-
-.seg span[lang="fa"] {
-  font-family: var(--fa);
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
 
 .seg input:checked + span {
-  background: var(--ink);
-  color: var(--card);
+  background: var(--inset);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: inset 0 -3px 0 var(--steel);
 }
 
 .seg input:focus-visible + span {
-  outline: 3px solid var(--focus);
-  outline-offset: 2px;
+  outline: 2px solid var(--steel);
+  outline-offset: -4px;
+  border-radius: var(--r-control);
 }
 
 .ghost {
-  min-height: 2.6rem;
-  padding: 0 1rem;
-  border: 1px solid var(--rule);
-  border-radius: 999px;
-  background: var(--card);
-  font-family: var(--din);
-  font-size: 0.95rem;
+  min-height: 2.5rem;
+  padding: 0 var(--s4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
+  background: var(--panel);
+  color: var(--ink);
+  font-size: var(--t-sm);
+  font-weight: 500;
   cursor: pointer;
+  transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease);
 }
 
-.ghost:hover {
-  border-color: var(--rule-strong);
+.ghost:active {
+  background: var(--inset);
 }
 
 .sound {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.6rem;
+  width: 2.5rem;
   padding: 0;
-  color: var(--ink);
 }
 
 .sound .sound-off,
@@ -298,66 +231,49 @@ kbd {
 .stage {
   flex: 1;
   width: 100%;
-  max-width: 44rem;
+  max-width: var(--page);
   margin: 0 auto;
-  padding: 0.75rem 1rem 2rem;
+  padding: var(--s3) var(--s4) var(--s6);
 }
 
 .card {
-  --accent: var(--rule-strong);
   container-type: inline-size;
-  position: relative;
-  padding: 1.1rem 1.25rem 1.5rem;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-card);
-  background: var(--card);
-  box-shadow: var(--shadow);
-  overflow: hidden;
+  padding: var(--s4) var(--s5) var(--s5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-panel);
+  background: var(--panel);
 }
-
-/* The leading edge takes the colour of the right article once answered. */
-.card::before {
-  content: "";
-  position: absolute;
-  inset-block: 0;
-  inset-inline-start: 0;
-  width: 6px;
-  background: var(--accent);
-  transition: background-color 200ms ease;
-}
-
-.card[data-article="der"] { --accent: var(--der); }
-.card[data-article="die"] { --accent: var(--die); }
-.card[data-article="das"] { --accent: var(--das); }
 
 .card-meta {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
-  font-size: 0.85rem;
+  gap: var(--s4);
+  font-family: var(--font-tag);
+  font-size: var(--t-sm);
+  font-weight: 500;
   color: var(--ink-2);
-  font-family: var(--din);
 }
 
+/* The noun is the reading: big, in Barlow, left aligned like a gauge value. */
 .phrase {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   align-content: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0 0.3em;
   /* Tall enough for the largest noun, so der, die and das sit at the same
      height on every card however the type scales. */
   min-height: 5.15rem;
-  margin: 1.5rem 0 1.25rem;
-  font-family: var(--din);
-  font-weight: 600;
+  margin: var(--s5) 0 var(--s4);
+  font-family: var(--font);
+  font-weight: 500;
   line-height: 1.1;
-  font-size: 2.4rem;
+  letter-spacing: -0.01em;
+  font-size: var(--t-value);
   /* Scale with the noun's length (set by app.js) so "der" and the noun
      share one line; the extra 6 accounts for the article slot. */
   font-size: clamp(1.6rem, calc(150cqi / (var(--len, 6) + 6)), 4.25rem);
-  text-align: center;
   overflow-wrap: anywhere;
 }
 
@@ -366,9 +282,10 @@ kbd {
   display: inline-block;
   min-width: 2.4em;
   padding: 0 0.1em;
-  border-bottom: 0.08em solid var(--rule-strong);
-  color: var(--accent, var(--ink));
+  border-bottom: 0.06em solid var(--line);
+  color: var(--ink);
   text-align: center;
+  transition: border-color var(--dur) var(--ease);
 }
 
 .slot:empty::before {
@@ -376,155 +293,11 @@ kbd {
 }
 
 .slot[data-article] {
-  border-bottom-color: currentColor;
-  animation: drop-in 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.slot[data-article="der"] { color: var(--der); }
-.slot[data-article="die"] { color: var(--die); }
-.slot[data-article="das"] { color: var(--das); }
-
-@keyframes drop-in {
-  from {
-    opacity: 0;
-    transform: translateY(-0.25em);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+  border-bottom-color: var(--ink);
 }
 
 .noun {
   color: var(--ink);
-}
-
-/* ------------------------------------------------------------ feedback */
-
-/* Sits under the answer buttons, so opening it never moves them. */
-.feedback {
-  display: grid;
-  gap: 0.35rem;
-  margin-top: 0.75rem;
-  padding: 1rem 1.25rem 1.1rem;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-card);
-  background: var(--card);
-  box-shadow: var(--shadow);
-  text-align: center;
-  animation: rise-in 180ms cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-@keyframes rise-in {
-  from {
-    opacity: 0;
-    transform: translateY(-0.4rem);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.feedback p {
-  margin: 0;
-}
-
-.verdict {
-  font-weight: 600;
-}
-
-.card[data-result="right"] ~ .feedback .verdict {
-  color: var(--das);
-}
-
-.card[data-result="wrong"] ~ .feedback .verdict {
-  color: var(--die);
-}
-
-.verdict b {
-  color: var(--ink);
-}
-
-.plural {
-  color: var(--ink-2);
-}
-
-.plural span {
-  color: var(--ink);
-  font-family: var(--din);
-  font-size: 1.05em;
-}
-
-.meaning {
-  font-size: 1.15rem;
-}
-
-.meaning[lang="fa"] {
-  font-size: 1.25rem;
-  line-height: 1.8;
-}
-
-.hint {
-  justify-self: center;
-  max-width: 34rem;
-  margin-top: 0.5rem !important;
-  padding: 0.55rem 0.85rem;
-  border-radius: var(--radius-small);
-  background: var(--paper);
-  color: var(--ink);
-  font-size: 0.95rem;
-}
-
-.hint[lang="fa"] {
-  line-height: 1.9;
-}
-
-.suffix {
-  font-family: var(--din);
-  font-weight: 600;
-  unicode-bidi: isolate;
-}
-
-.art {
-  font-family: var(--din);
-  font-weight: 600;
-  unicode-bidi: isolate;
-}
-
-.art-der { color: var(--der); }
-.art-die { color: var(--die); }
-.art-das { color: var(--das); }
-
-.next {
-  justify-self: center;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  min-height: 3rem;
-  margin-top: 0.85rem;
-  padding: 0 1.4rem;
-  border: 0;
-  border-radius: 999px;
-  background: var(--ink);
-  color: var(--card);
-  font-family: var(--din);
-  font-size: 1.05rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 120ms ease, transform 80ms ease;
-  touch-action: manipulation;
-  /* Covers the panel's rise-in, which is still offset when app.js scrolls. */
-  scroll-margin-block-end: 1rem;
-}
-
-.next:active {
-  transform: translateY(1px) scale(0.99);
-}
-
-.next kbd {
-  border-color: currentColor;
-  opacity: 0.7;
 }
 
 /* ------------------------------------------------------------ choices */
@@ -532,92 +305,99 @@ kbd {
 .choices {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.6rem;
-  margin-top: 1rem;
+  gap: var(--s2);
+  margin-top: var(--s3);
 }
 
 .choice {
-  --c: var(--ink);
-  --c-soft: var(--card);
   position: relative;
   min-height: 4.5rem;
-  border: 2px solid var(--c);
-  border-radius: var(--radius-btn);
-  background: var(--c-soft);
-  color: var(--c);
-  font-family: var(--din);
-  font-size: 1.7rem;
-  font-weight: 600;
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
+  background: var(--panel);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--t-2xl);
+  font-weight: 500;
   cursor: pointer;
-  transition: transform 80ms ease, background-color 150ms ease, color 150ms ease, opacity 150ms ease;
+  transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease), color var(--dur) var(--ease);
   touch-action: manipulation;
 }
 
-.choice[data-article="der"] { --c: var(--der); --c-soft: var(--der-soft); }
-.choice[data-article="die"] { --c: var(--die); --c-soft: var(--die-soft); }
-.choice[data-article="das"] { --c: var(--das); --c-soft: var(--das-soft); }
-
-/* Touch screens keep :hover after a tap, which would leave the button painted
-   as the answer on the next card. */
+/* Touch screens keep :hover after a tap, which would leave the button
+   marked on the next card. */
 @media (hover: hover) {
   .choice:hover:not(:disabled) {
-    background: var(--c);
-    color: var(--card);
+    border-color: var(--ink-2);
   }
 
   .seg input:not(:checked):hover + span {
-    background: var(--paper);
     color: var(--ink);
+  }
+
+  .ghost:hover {
+    border-color: var(--ink-2);
   }
 
   .next:hover {
     background: var(--ink-2);
+    border-color: var(--ink-2);
   }
 
   .reset:not(.is-armed):hover {
-    background: var(--die-soft);
+    background: var(--inset);
   }
 }
 
 .choice:active:not(:disabled) {
-  transform: translateY(1px) scale(0.99);
+  background: var(--inset);
 }
 
 .choice-key {
   position: absolute;
-  top: 0.4rem;
-  left: 0.55rem;
-  font-size: 0.75rem;
+  top: var(--s1);
+  inset-inline-start: var(--s2);
+  font-size: var(--t-xs);
   font-weight: 400;
+  color: var(--ink-2);
+}
+
+[dir="rtl"] .choice-key {
+  inset-inline-start: auto;
+  left: var(--s2);
 }
 
 .choice:disabled {
   cursor: default;
-  opacity: 0.35;
+  color: var(--ink-2);
 }
 
-.choice.is-correct,
-.choice.is-wrong {
-  opacity: 1;
-}
-
+/* The right answer gets an ok border and bar, a wrong pick a fault border
+   and a strike-through. The verdict below says the same in words. */
 .choice.is-correct {
-  background: var(--c);
-  color: var(--card);
+  border-color: var(--ok);
+  color: var(--ok);
+  font-weight: 600;
+  box-shadow: inset 0 -3px 0 var(--ok);
 }
 
 .choice.is-wrong {
-  background: var(--card);
+  border-color: var(--fault);
+  color: var(--fault);
   text-decoration: line-through;
   text-decoration-thickness: 2px;
 }
 
+.choice.is-correct .choice-key,
+.choice.is-wrong .choice-key {
+  color: inherit;
+}
+
 .keys-help {
   display: none;
-  margin: 0.75rem 0 0;
+  margin-top: var(--s3);
   color: var(--ink-2);
-  font-size: 0.85rem;
-  text-align: center;
+  font-size: var(--t-xs);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -626,198 +406,275 @@ kbd {
   }
 }
 
-/* ------------------------------------------------------------ daily goal */
+/* ------------------------------------------------------------ feedback */
 
-.daily {
-  display: flex;
+/* Sits under the answer buttons, so opening it never moves them. */
+.feedback {
+  display: grid;
+  gap: var(--s1);
+  justify-items: start;
+  margin-top: var(--s3);
+  padding: var(--s4) var(--s5) var(--s5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-panel);
+  background: var(--panel);
+}
+
+.verdict {
+  font-size: var(--t-lg);
+  font-weight: 600;
+}
+
+/* The words carry the verdict; the lamp beside them repeats it in ok or
+   fault, since fault red on the dark panel is too faint for body text. */
+.verdict::before {
+  content: "";
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  margin-inline-end: var(--s2);
+  border-radius: var(--r-lamp);
+  background: var(--inset);
+  vertical-align: 0.05em;
+}
+
+.card[data-result="right"] ~ .feedback .verdict::before {
+  background: var(--ok);
+}
+
+.card[data-result="wrong"] ~ .feedback .verdict::before {
+  background: var(--fault);
+}
+
+.verdict b {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.plural {
+  color: var(--ink-2);
+}
+
+.plural span {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.meaning {
+  font-size: var(--t-lg);
+}
+
+.meaning[lang="fa"] {
+  line-height: 1.8;
+}
+
+.hint {
+  max-width: 70ch;
+  margin-top: var(--s2);
+  padding: var(--s2) var(--s3);
+  border-radius: var(--r-control);
+  background: var(--inset);
+  color: var(--ink);
+  font-size: var(--t-sm);
+}
+
+.hint[lang="fa"] {
+  line-height: 1.9;
+}
+
+.suffix,
+.art {
+  font-weight: 600;
+  unicode-bidi: isolate;
+}
+
+.next {
+  display: inline-flex;
   align-items: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
+  gap: var(--s3);
+  min-height: 2.75rem;
+  margin-top: var(--s3);
+  padding: 0 var(--s5);
+  border: 1px solid var(--ink);
+  border-radius: var(--r-control);
+  background: var(--ink);
+  color: var(--panel);
+  font-size: var(--t-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  touch-action: manipulation;
+  /* Leaves room under the button when app.js scrolls it into view. */
+  scroll-margin-block-end: var(--s4);
+}
+
+.next kbd {
+  border-color: currentColor;
+  background: transparent;
+  color: inherit;
+}
+
+/* Mastered: a plain ok tag next to the verdict. */
+.mastered {
+  display: inline-block;
+  margin-inline-start: var(--s2);
+  padding: 0 var(--s2);
+  border: 1px solid var(--ok);
+  border-radius: var(--r-control);
+  color: var(--ok);
+  font-family: var(--font-tag);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  vertical-align: 0.1em;
+}
+
+.burst {
+  display: none;
+}
+
+/* ------------------------------------------------------------ readings */
+
+/* Today's goal, days in a row and the score share one panel, each value
+   big with a small label under it. */
+.daily {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-top: var(--s5);
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  border-radius: var(--r-panel) var(--r-panel) 0 0;
+  background: var(--panel);
 }
 
 .daily-goal {
-  flex: 1;
   min-width: 0;
+  padding: var(--s3) var(--s4) var(--s4);
 }
 
 .daily-line {
   display: flex;
-  justify-content: space-between;
-  gap: 0.5rem;
-  margin: 0 0 0.35rem;
+  align-items: baseline;
+  gap: var(--s2);
+  margin-bottom: var(--s2);
   color: var(--ink-2);
-  font-size: 0.85rem;
+  font-family: var(--font-tag);
+  font-size: var(--t-sm);
+  font-weight: 500;
+}
+
+.daily-line .lamp {
+  flex: none;
+  align-self: center;
+  transition: background-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
 
 .daily-count {
+  margin-inline-start: auto;
   color: var(--ink);
-  font-family: var(--din);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
+  font-family: var(--font);
+  font-size: var(--t-lg);
+  font-weight: 500;
+  line-height: 1;
 }
 
-/* The page is --paper too, so the track needs a darker tone here. */
-.daily .meter {
-  background: var(--rule);
+/* Inset track; the fill is ink, the lamp carries the "met" signal. */
+.meter {
+  display: block;
+  height: 8px;
+  border-radius: var(--r-control);
+  background: var(--inset);
+  box-shadow: inset 0 0 0 1px var(--line);
+  overflow: hidden;
+}
+
+.meter-fill {
+  display: block;
+  height: 100%;
+  background: var(--ink-2);
 }
 
 .daily .meter-fill {
-  transition: width 250ms ease, background-color 250ms ease;
+  transition: width var(--dur) var(--ease);
 }
 
 .daily.is-done .meter-fill {
-  background: var(--das);
+  background: var(--ink);
 }
 
 .daily-days {
-  flex: none;
-  margin: 0;
-  padding: 0.35rem 0.75rem;
-  border-radius: 999px;
-  background: var(--card);
-  border: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 7.5rem;
+  padding: var(--s3) var(--s4);
+  border-inline-start: 1px solid var(--line);
   color: var(--ink-2);
-  font-size: 0.85rem;
+  font-family: var(--font-tag);
+  font-size: var(--t-sm);
+  font-weight: 500;
+  line-height: 1.3;
 }
 
 .daily-num {
   color: var(--ink);
-  font-family: var(--din);
-  font-size: 1.05rem;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
+  font-family: var(--font);
+  font-size: var(--t-2xl);
+  font-weight: 500;
+  line-height: 1.1;
 }
-
-/* ------------------------------------------------------------ mastered */
-
-.mastered {
-  position: relative;
-  display: inline-block;
-  margin-inline-start: 0.5rem;
-  padding: 0.05rem 0.6rem;
-  border-radius: 999px;
-  background: var(--das);
-  color: var(--card);
-  font-family: var(--din);
-  font-size: 0.85rem;
-  vertical-align: 0.1em;
-  animation: pop 420ms cubic-bezier(0.2, 1.4, 0.4, 1);
-}
-
-.mastered.is-still {
-  animation: none;
-}
-
-@keyframes pop {
-  from {
-    opacity: 0;
-    transform: scale(0.4);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-/* Six short bars in the der/die/das colours fly out of the badge once. */
-.burst {
-  position: absolute;
-  inset: 50% auto auto 50%;
-  pointer-events: none;
-}
-
-.burst i {
-  position: absolute;
-  width: 4px;
-  height: 10px;
-  margin: -5px 0 0 -2px;
-  border-radius: 2px;
-  opacity: 0;
-  transform: rotate(var(--r)) translateY(0);
-  animation: burst 650ms ease-out 80ms;
-}
-
-.burst i:nth-child(3n + 1) { background: var(--der); }
-.burst i:nth-child(3n + 2) { background: var(--die); }
-.burst i:nth-child(3n + 3) { background: var(--das); }
-.burst i:nth-child(1) { --r: 0deg; }
-.burst i:nth-child(2) { --r: 60deg; }
-.burst i:nth-child(3) { --r: 120deg; }
-.burst i:nth-child(4) { --r: 180deg; }
-.burst i:nth-child(5) { --r: 240deg; }
-.burst i:nth-child(6) { --r: 300deg; }
-
-@keyframes burst {
-  0% {
-    opacity: 1;
-    transform: rotate(var(--r)) translateY(-8px);
-  }
-  100% {
-    opacity: 0;
-    transform: rotate(var(--r)) translateY(-34px);
-  }
-}
-
-.box-cell.is-celebrating {
-  animation: glow 1s ease-out;
-}
-
-@keyframes glow {
-  from {
-    background: var(--das-soft);
-  }
-}
-
-/* ------------------------------------------------------------ score */
 
 .score {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  margin: 1.5rem 0 0;
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 0 0 var(--r-panel) var(--r-panel);
+  background: var(--panel);
 }
 
 .score div {
-  padding: 0.65rem 0.5rem;
-  text-align: center;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  min-width: 0;
+  padding: var(--s3) var(--s4);
 }
 
 .score div + div {
-  border-inline-start: 1px solid var(--rule);
+  border-inline-start: 1px solid var(--line);
 }
 
 .score dt {
-  font-size: 0.8rem;
   color: var(--ink-2);
+  font-family: var(--font-tag);
+  font-size: var(--t-sm);
+  font-weight: 500;
 }
 
 .score dd {
   margin: 0;
-  font-family: var(--din);
-  font-size: 1.4rem;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
+  font-size: var(--t-2xl);
+  font-weight: 500;
+  line-height: 1.1;
+  white-space: nowrap;
 }
 
 /* ------------------------------------------------------------ card box */
 
 .box {
-  margin-top: 1.5rem;
+  margin-top: var(--s6);
 }
 
 .box-caption {
   margin: 0;
-  font-family: var(--din);
-  font-size: 1.05rem;
-  font-weight: 600;
+  font-size: var(--t-lg);
 }
 
 .box-note {
-  margin: 0.15rem 0 0.75rem;
-  max-width: 36rem;
+  max-width: 70ch;
+  margin: var(--s1) 0 var(--s3);
   color: var(--ink-2);
-  font-size: 0.9rem;
+  font-size: var(--t-sm);
 }
 
 /* Drawn like the front of a card file: six compartments in one box. */
@@ -827,9 +684,9 @@ kbd {
   margin: 0;
   padding: 0;
   list-style: none;
-  border: 2px solid var(--rule-strong);
-  border-radius: var(--radius-small);
-  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-panel);
+  background: var(--panel);
   overflow: hidden;
 }
 
@@ -837,62 +694,48 @@ kbd {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 0.7rem 0.25rem 0.5rem;
-  transition: background-color 200ms ease;
+  align-items: flex-start;
+  min-width: 0;
+  padding: var(--s3) var(--s3) var(--s2);
+  transition: background-color var(--dur) var(--ease);
 }
 
 .box-cell + .box-cell {
-  border-inline-start: 1px solid var(--rule);
-}
-
-.box-new {
-  background: var(--paper);
+  border-inline-start: 1px solid var(--line);
 }
 
 .box-count {
-  font-family: var(--din);
-  font-size: 1.3rem;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
+  font-size: var(--t-xl);
+  font-weight: 500;
+  line-height: 1.1;
 }
 
 .box-label {
-  font-size: 0.8rem;
   color: var(--ink-2);
+  font-family: var(--font-tag);
+  font-size: var(--t-sm);
+  font-weight: 500;
 }
 
-/* The tab marks where the current word sits. */
-.box-cell.is-active::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 20%;
-  right: 20%;
-  height: 5px;
-  border-radius: 0 0 4px 4px;
-  background: var(--ink);
-}
-
+/* The current word's box is selected: inset fill and a steel bar. */
 .box-cell.is-active {
-  background: var(--paper);
+  background: var(--inset);
+  box-shadow: inset 0 3px 0 var(--steel);
 }
 
-.card[data-article="der"] ~ .box .box-cell.is-active::before { background: var(--der); }
-.card[data-article="die"] ~ .box .box-cell.is-active::before { background: var(--die); }
-.card[data-article="das"] ~ .box .box-cell.is-active::before { background: var(--das); }
+.box-cell.is-active .box-label {
+  color: var(--ink);
+}
 
 /* ------------------------------------------------------------ footer */
 
 .foot {
-  padding: 1rem;
+  width: 100%;
+  max-width: var(--page);
+  margin: 0 auto;
+  padding: var(--s4) var(--s4) var(--s5);
   color: var(--ink-2);
-  font-size: 0.85rem;
-  text-align: center;
-}
-
-.foot p {
-  margin: 0;
+  font-size: var(--t-xs);
 }
 
 /* ------------------------------------------------------------ stats dialog */
@@ -900,16 +743,16 @@ kbd {
 .stats {
   width: min(32rem, calc(100vw - 2rem));
   max-height: calc(100dvh - 2rem);
-  padding: 1.25rem 1.25rem 1.5rem;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-card);
-  background: var(--card);
+  padding: var(--s5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-panel);
+  background: var(--panel);
   color: var(--ink);
-  box-shadow: var(--shadow);
+  overscroll-behavior: contain;
 }
 
 .stats::backdrop {
-  background: rgb(10 14 20 / 0.45);
+  background: color-mix(in srgb, var(--cab) 80%, transparent);
 }
 
 /* The page behind the panel stays put when the panel reaches its end. */
@@ -917,33 +760,26 @@ html:has(.stats[open]) {
   overflow: hidden;
 }
 
-.stats {
-  overscroll-behavior: contain;
-}
-
 .stats-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--s4);
 }
 
 .stats h2 {
   margin: 0;
-  font-family: var(--din);
-  font-size: 1.4rem;
+  font-size: var(--t-xl);
 }
 
 .stats h3 {
-  margin: 1.4rem 0 0.6rem;
-  font-family: var(--din);
-  font-size: 1rem;
-  font-weight: 600;
+  margin: var(--s5) 0 var(--s2);
+  font-size: var(--t-md);
 }
 
 .meters {
   display: grid;
-  gap: 0.6rem;
+  gap: var(--s3);
 }
 
 .meter-row {
@@ -953,72 +789,53 @@ html:has(.stats[open]) {
     "name bar value"
     ". detail detail";
   align-items: center;
-  column-gap: 0.75rem;
+  column-gap: var(--s3);
 }
 
-.meter-name { grid-area: name; font-size: 1.15rem; }
-.meter { grid-area: bar; }
+.meter-name { grid-area: name; font-size: var(--t-lg); }
+.meter-row .meter { grid-area: bar; }
 .meter-value {
   grid-area: value;
   text-align: end;
-  font-family: var(--din);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
+  font-weight: 500;
 }
 .meter-detail {
   grid-area: detail;
-  font-size: 0.8rem;
   color: var(--ink-2);
+  font-size: var(--t-xs);
 }
-
-.meter {
-  display: block;
-  height: 10px;
-  border-radius: 999px;
-  background: var(--paper);
-  overflow: hidden;
-}
-
-.meter-fill {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--ink);
-}
-
-.meter-row[data-article="der"] .meter-fill { background: var(--der); }
-.meter-row[data-article="die"] .meter-fill { background: var(--die); }
-.meter-row[data-article="das"] .meter-fill { background: var(--das); }
 
 .totals {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-  margin-top: 1.25rem;
+  margin-top: var(--s5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-panel);
 }
 
 .totals p {
-  margin: 0;
-  padding: 0.75rem;
-  border-radius: var(--radius-small);
-  background: var(--paper);
+  padding: var(--s3) var(--s4);
   color: var(--ink-2);
-  font-size: 0.9rem;
+  font-family: var(--font-tag);
+  font-size: var(--t-sm);
+  font-weight: 500;
+}
+
+.totals p + p {
+  border-inline-start: 1px solid var(--line);
 }
 
 .total-num {
   display: block;
   color: var(--ink);
-  font-family: var(--din);
-  font-size: 1.8rem;
-  font-weight: 600;
+  font-family: var(--font);
+  font-size: var(--t-2xl);
+  font-weight: 500;
   line-height: 1.1;
-  font-variant-numeric: tabular-nums;
 }
 
 .missed {
   display: grid;
-  gap: 0.15rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1031,9 +848,9 @@ html:has(.stats[open]) {
     "noun detail"
     "meaning detail";
   align-items: center;
-  column-gap: 0.75rem;
-  padding: 0.4rem 0;
-  border-bottom: 1px solid var(--rule);
+  column-gap: var(--s3);
+  padding: var(--s2) 0;
+  border-bottom: 1px solid var(--line);
 }
 
 /* The noun runs left to right even in Persian mode; justify-self keeps it
@@ -1041,8 +858,6 @@ html:has(.stats[open]) {
 .missed-noun {
   grid-area: noun;
   justify-self: start;
-  font-family: var(--din);
-  font-size: 1.05rem;
   font-weight: 600;
 }
 
@@ -1050,7 +865,7 @@ html:has(.stats[open]) {
   grid-area: meaning;
   overflow: hidden;
   color: var(--ink-2);
-  font-size: 0.85rem;
+  font-size: var(--t-sm);
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -1058,84 +873,80 @@ html:has(.stats[open]) {
 .missed-detail {
   grid-area: detail;
   color: var(--ink-2);
-  font-size: 0.85rem;
-  font-variant-numeric: tabular-nums;
+  font-size: var(--t-sm);
 }
 
-.missed-empty {
-  margin: 0;
+.missed-empty,
+.goal-note {
   color: var(--ink-2);
-  font-size: 0.9rem;
+  font-size: var(--t-sm);
 }
 
 .goal-note {
-  margin: 0.5rem 0 0;
-  color: var(--ink-2);
-  font-size: 0.85rem;
+  margin-top: var(--s2);
 }
 
 .levels {
   width: 100%;
   border-collapse: collapse;
-  font-variant-numeric: tabular-nums;
 }
 
 .levels th,
 .levels td {
-  padding: 0.45rem 0.25rem;
-  border-bottom: 1px solid var(--rule);
+  padding: var(--s2) var(--s1);
+  border-bottom: 1px solid var(--line);
   text-align: start;
 }
 
 .levels thead th {
   color: var(--ink-2);
-  font-size: 0.8rem;
-  font-weight: 400;
+  font-family: var(--font-tag);
+  font-size: var(--t-sm);
+  font-weight: 500;
 }
 
 .levels tbody th {
-  font-family: var(--din);
+  font-weight: 600;
 }
 
 .danger {
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--rule);
+  margin-top: var(--s5);
+  padding-top: var(--s4);
+  border-top: 1px solid var(--line);
 }
 
 .danger p {
-  margin: 0.4rem 0 0;
+  margin-top: var(--s2);
   color: var(--ink-2);
-  font-size: 0.85rem;
+  font-size: var(--t-sm);
 }
 
 .reset {
   min-height: 2.75rem;
-  padding: 0 1rem;
-  border: 1px solid var(--die);
-  border-radius: var(--radius-btn);
-  background: transparent;
-  color: var(--die);
+  padding: 0 var(--s4);
+  border: 1px solid var(--fault);
+  border-radius: var(--r-control);
+  background: var(--panel);
+  color: var(--ink);
+  font-weight: 500;
   cursor: pointer;
+  transition: background-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
 
 .reset.is-armed {
-  background: var(--die);
-  color: var(--card);
+  font-weight: 600;
+  box-shadow: inset 0 -3px 0 var(--fault);
 }
 
 /* ------------------------------------------------------------ small screens */
 
 @media (max-width: 30rem) {
-  .top {
-    padding-top: 0.75rem;
-  }
-
   /* Two rows on phones: brand and Stats, then level and language. Flex
      rather than a grid, so with large text the language switch can drop
      to a row of its own instead of running off the screen. */
   .top {
     row-gap: 0;
+    padding-top: var(--s4);
   }
 
   .controls {
@@ -1154,35 +965,54 @@ html:has(.stats[open]) {
   .seg-level,
   .seg-lang {
     order: 3;
-    margin-top: 0.75rem;
+    margin-top: var(--s3);
   }
 
   .seg-lang { margin-inline-start: auto; }
 
   .seg span {
     min-width: 2.4rem;
-    padding: 0 0.45rem;
+    padding: 0 var(--s2);
   }
 
   .card,
   .feedback {
-    padding: 0.9rem 1rem 1.25rem;
+    padding: var(--s3) var(--s4) var(--s4);
   }
 
   .phrase {
-    margin-block: 0.9rem 0.6rem;
+    margin-block: var(--s4) var(--s2);
   }
 
   .choice {
     min-height: 4.75rem;
   }
 
+  .daily-days {
+    min-width: 0;
+  }
+
+  .score div,
+  .daily-goal,
+  .daily-days {
+    padding-inline: var(--s3);
+  }
+
+  .score dd,
+  .daily-num {
+    font-size: var(--t-xl);
+  }
+
   .box-cell {
-    padding-inline: 0;
+    padding-inline: var(--s2);
   }
 
   .box-count {
-    font-size: 1.1rem;
+    font-size: var(--t-lg);
+  }
+
+  .totals p {
+    padding-inline: var(--s3);
   }
 }
 
@@ -1190,12 +1020,7 @@ html:has(.stats[open]) {
   *,
   *::before,
   *::after {
-    animation-duration: 1ms !important;
-    transition-duration: 1ms !important;
-  }
-
-  /* The badge alone says it; no flying bars. */
-  .burst {
-    display: none;
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
   }
 }
