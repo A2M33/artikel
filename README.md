@@ -1,16 +1,24 @@
-<p align="center"><img src="docs/header.svg" alt="artikel" width="100%"></p>
+![artikel banner: the app icon and name with a sample card, die Hauptstadt, where der is struck through in red and die is marked right in green. Four readings below: 909 nouns from A1 to B1, 5 boxes of spaced repetition, a full English or Persian interface, and 0 requests after the page loads.](docs/banner.png)
 
-<p align="center">
-  <a href="https://a2m33.github.io/artikel/"><img alt="Try it" src="https://img.shields.io/badge/try%20it-a2m33.github.io%2Fartikel-1f6feb"></a>
-  <a href="https://github.com/A2M33/artikel/actions/workflows/test.yml"><img alt="tests" src="https://github.com/A2M33/artikel/actions/workflows/test.yml/badge.svg"></a>
-  <a href="https://github.com/A2M33/artikel/blob/main/LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-3fb950"></a>
-</p>
+# artikel
 
-artikel drills der, die and das on over 900 German nouns from A1 to B1. You answer one card at a time until the genders stick. I built it while preparing for an Ausbildung in Germany.
+[![test](https://github.com/A2M33/artikel/actions/workflows/test.yml/badge.svg)](https://github.com/A2M33/artikel/actions/workflows/test.yml)
+
+artikel drills der, die and das on 909 German nouns from A1 to B1. You answer one card at a time until the genders stick. I built it while preparing for an Ausbildung in Germany.
 
 **Try it:** https://a2m33.github.io/artikel/
 
-![artikel quizzing the noun Packung](docs/screenshot.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/desktop-dark.png">
+  <img src="docs/desktop-light.png" alt="artikel after a wrong answer: the card reads der Bus, the die button is struck through in red and der is marked right in green, with the verdict Not die. It is der Bus., the plural die Busse and the meaning bus. Below, the daily goal shows 11 of 10 with its lamp lit amber, 1 day in a row, and the score: 3 of 11 correct, streak 0, best 2. The card box at the bottom counts the nouns in each box.">
+</picture>
+
+On a phone the buttons fill the width and the controls wrap onto two rows:
+
+<p>
+  <img src="docs/phone-light.png" width="260" alt="The same card on a 390 px phone in the light theme: der Bus with der marked right and die struck through, the verdict, plural and meaning, then the daily goal and score.">
+  <img src="docs/phone-dark.png" width="260" alt="The same phone view in the dark theme.">
+</p>
 
 ## Features
 
@@ -22,10 +30,10 @@ artikel drills der, die and das on over 900 German nouns from A1 to B1. You answ
 - Five boxes decide which noun comes next. A right answer moves the noun up a box, and a miss sends it back to box 1 so you see it again within a few cards. A noun you get right the first time starts in box 3, and box 5 counts as mastered.
 - The app tracks your score and your current and best streak.
 - You set a daily goal of 10, 20, 30 or 50 cards in the stats panel. A bar shows how many cards you have done today, and a counter shows how many days in a row you have met the goal.
-- When a noun reaches box 5, the card marks it as mastered with a short burst in the der, die and das colours. If your system asks for reduced motion, you get the badge without the animation.
+- When a noun reaches box 5, the verdict gets a "Mastered" tag.
 - The stats panel shows your accuracy for each article and how many nouns you have mastered per level. It also lists the eight nouns you miss most, with how often you missed each one and which box it sits in.
 - You can limit the cards to A1, A2 or B1, or practise all levels together.
-- Colours follow the classroom convention: blue for der, red for die, green for das.
+- Colour only marks state. Green and a bar under the button mark the right article, red and a strike-through mark a wrong pick, and the verdict says it in words too. The lamp next to "Today" turns amber once you meet the daily goal.
 - The light or dark theme follows your system setting. Buttons are large on phones, and screen readers get labels.
 - Your progress stays in your browser's local storage, and the page makes no network requests beyond loading its own files. "Reset progress" in the stats panel clears it.
 - After your first visit the game works offline. You can install it to your home screen or desktop like an app.
@@ -76,4 +84,4 @@ If you spot a wrong gender, plural or translation, please open an issue.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE). The Barlow and Vazirmatn fonts in `fonts/` are under the SIL Open Font License (`fonts/OFL.txt`, `fonts/OFL-Vazirmatn.txt`).
