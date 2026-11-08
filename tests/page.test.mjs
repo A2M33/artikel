@@ -47,7 +47,13 @@ const manifest = JSON.parse(readFileSync(join(root, "manifest.webmanifest"), "ut
 const icons = (manifest.icons || []).map((i) => i.src);
 const uncached = [...referenced, ...icons].filter((f) => !cached.includes(f));
 check(uncached.length === 0, "sw.js caches every file the page and manifest use" + (uncached.length ? `: ${uncached.join(", ")}` : ""));
-check(icons.some((s) => s.endsWith(".png")) && icons.some((s) => s.endsWith(".svg")), "manifest lists a PNG and an SVG icon");
+check(["192x192", "512x512"].every((size) => (manifest.icons || []).some((i) => i.sizes === size && i.src.endsWith(".png"))),
+  "manifest lists 192 and 512 PNG icons");
+
+// The fonts come from style sheets, not the page, so list them separately.
+const fontFiles = [...(readFileSync(join(root, "tokens.css"), "utf8") + css).matchAll(/url\("([^"]+\.woff2)"\)/g)].map((m) => m[1]);
+const uncachedFonts = fontFiles.filter((f) => !cached.includes(f));
+check(fontFiles.length > 0 && uncachedFonts.length === 0, "sw.js caches every font" + (uncachedFonts.length ? `: ${uncachedFonts.join(", ")}` : ""));
 
 // Bug: the noun's type scales with its length, so der/die/das sat up to 38px
 // higher or lower from one card to the next.

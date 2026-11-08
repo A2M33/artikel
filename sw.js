@@ -7,19 +7,29 @@
  * with every release that changes a file: the new worker then fetches the
  * whole list at once and all files switch together on the next visit.
  */
-var VERSION = "v2";
+var VERSION = "v3";
 var CACHE = "artikel-" + VERSION;
 var FILES = [
   "./",
   "index.html",
+  "tokens.css",
   "style.css",
   "words.js",
   "rules.js",
   "app.js",
-  "favicon.svg",
   "manifest.webmanifest",
+  "icons/icon-32.png",
+  "icons/icon-180.png",
   "icons/icon-192.png",
-  "icons/icon-512.png"
+  "icons/icon-512.png",
+  "fonts/Barlow-Regular.woff2",
+  "fonts/Barlow-Medium.woff2",
+  "fonts/Barlow-SemiBold.woff2",
+  "fonts/BarlowSemiCondensed-Medium.woff2",
+  "fonts/BarlowSemiCondensed-SemiBold.woff2",
+  "fonts/Vazirmatn-Regular.woff2",
+  "fonts/Vazirmatn-Medium.woff2",
+  "fonts/Vazirmatn-SemiBold.woff2"
 ];
 
 self.addEventListener("install", function (event) {
