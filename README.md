@@ -1,8 +1,8 @@
-![artikel banner: the app icon and name with a sample card, die Hauptstadt, where der is struck through in red and die is marked right in green. Four readings below: 909 nouns from A1 to B1, 5 boxes of spaced repetition, a full English or Persian interface, and 0 requests after the page loads.](docs/banner.png)
+![artikel banner: the app icon, the name and the line "Practise der, die and das on 909 German nouns from A1 to B1." Next to it, the real app in dark mode shows the card der Bus after a wrong answer. A cyan trace runs from the label "The right article" to the der button, marked in green. A grey trace runs from "A wrong pick" to the die button, struck through in red.](docs/banner.png)
 
 # artikel
 
-[![test](https://github.com/A2M33/artikel/actions/workflows/test.yml/badge.svg)](https://github.com/A2M33/artikel/actions/workflows/test.yml)
+[![test](https://img.shields.io/github/actions/workflow/status/A2M33/artikel/test.yml?label=test&style=flat-square&labelColor=111a2d&color=22304b)](https://github.com/A2M33/artikel/actions/workflows/test.yml)
 
 artikel drills der, die and das on 909 German nouns from A1 to B1. You answer one card at a time until the genders stick. I built it while preparing for an Ausbildung in Germany.
 
@@ -10,13 +10,13 @@ artikel drills der, die and das on 909 German nouns from A1 to B1. You answer on
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/desktop-dark.png">
-  <img src="docs/desktop-light.png" alt="artikel after a wrong answer: the card reads der Bus, the die button is struck through in red and der is marked right in green, with the verdict Not die. It is der Bus., the plural die Busse and the meaning bus. Below, the daily goal shows 11 of 10 with its lamp lit amber, 1 day in a row, and the score: 3 of 11 correct, streak 0, best 2. The card box at the bottom counts the nouns in each box.">
+  <img src="docs/desktop-light.png" alt="artikel after a wrong answer: the card reads der Bus, the die button is struck through in red and der is marked right in green, with the verdict Not die. It is der Bus., the plural die Busse and the meaning bus. Below, the daily goal shows 11 of 10 with its pad lit cyan, 1 day in a row, and the score: 3 of 11 correct, streak 0, best 2. The card box at the bottom counts the nouns in each box.">
 </picture>
 
 On a phone the buttons fill the width and the controls wrap onto two rows:
 
 <p>
-  <img src="docs/phone-light.png" width="260" alt="The same card on a 390 px phone in the light theme: der Bus with der marked right and die struck through, the verdict, plural and meaning, then the daily goal and score.">
+  <img src="docs/phone-light.png" width="260" alt="The same card on a 390 px phone in the light theme: der Bus with der marked right and die struck through, the verdict, plural and meaning, then the daily goal, the score and the card box.">
   <img src="docs/phone-dark.png" width="260" alt="The same phone view in the dark theme.">
 </p>
 
@@ -33,7 +33,7 @@ On a phone the buttons fill the width and the controls wrap onto two rows:
 - When a noun reaches box 5, the verdict gets a "Mastered" tag.
 - The stats panel shows your accuracy for each article and how many nouns you have mastered per level. It also lists the eight nouns you miss most, with how often you missed each one and which box it sits in.
 - You can limit the cards to A1, A2 or B1, or practise all levels together.
-- Colour only marks state. Green and a bar under the button mark the right article, red and a strike-through mark a wrong pick, and the verdict says it in words too. The lamp next to "Today" turns amber once you meet the daily goal.
+- Colour only marks state. Green and a bar under the button mark the right article, red and a strike-through mark a wrong pick, and the verdict says it in words too. The pad next to "Today" turns cyan once you meet the daily goal.
 - The light or dark theme follows your system setting. Buttons are large on phones, and screen readers get labels.
 - Your progress stays in your browser's local storage, and the page makes no network requests beyond loading its own files. "Reset progress" in the stats panel clears it.
 - After your first visit the game works offline. You can install it to your home screen or desktop like an app.
@@ -68,6 +68,8 @@ node tests/page.test.mjs
 node tests/app.test.mjs
 ```
 
+The README images come from the real app in a headless Edge. With Python and Playwright installed, `python tools/screens/render.py` takes the screenshots and `python tools/banner/render.py` draws the banner from them.
+
 ## The word list
 
 `words.js` holds one noun per line with its article, plural, English and Persian meaning, grouped by level. I followed standard German as Duden gives it and left out three kinds of nouns:
@@ -84,4 +86,4 @@ If you spot a wrong gender, plural or translation, please open an issue.
 
 ## License
 
-MIT. See [LICENSE](LICENSE). The Barlow and Vazirmatn fonts in `fonts/` are under the SIL Open Font License (`fonts/OFL.txt`, `fonts/OFL-Vazirmatn.txt`).
+MIT. See [LICENSE](LICENSE). The Archivo, JetBrains Mono and Vazirmatn fonts in `fonts/` are under the SIL Open Font License (`fonts/OFL-Archivo.txt`, `fonts/OFL-JetBrainsMono.txt`, `fonts/OFL-Vazirmatn.txt`).

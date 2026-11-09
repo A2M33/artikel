@@ -7,7 +7,7 @@
  * with every release that changes a file: the new worker then fetches the
  * whole list at once and all files switch together on the next visit.
  */
-var VERSION = "v3";
+var VERSION = "v4";
 var CACHE = "artikel-" + VERSION;
 var FILES = [
   "./",
@@ -22,11 +22,12 @@ var FILES = [
   "icons/icon-180.png",
   "icons/icon-192.png",
   "icons/icon-512.png",
-  "fonts/Barlow-Regular.woff2",
-  "fonts/Barlow-Medium.woff2",
-  "fonts/Barlow-SemiBold.woff2",
-  "fonts/BarlowSemiCondensed-Medium.woff2",
-  "fonts/BarlowSemiCondensed-SemiBold.woff2",
+  "fonts/Archivo-400.woff2",
+  "fonts/Archivo-500.woff2",
+  "fonts/Archivo-600.woff2",
+  "fonts/Archivo-700.woff2",
+  "fonts/JetBrainsMono-400.woff2",
+  "fonts/JetBrainsMono-500.woff2",
   "fonts/Vazirmatn-Regular.woff2",
   "fonts/Vazirmatn-Medium.woff2",
   "fonts/Vazirmatn-SemiBold.woff2"

@@ -1,12 +1,12 @@
 /*
- * artikel. Built on the A2M33 "control room" tokens in tokens.css: grey
- * surfaces, 1px borders, colour only for state. Steel marks the selection,
- * the amber lamp shows today's goal met, ok and fault mark an answer.
- * This file only uses the variables from tokens.css.
+ * artikel. Built on the A2M33 "trace" tokens in tokens.css: navy and paper
+ * surfaces, 1px borders, colour only for state. Link blue marks the
+ * selection, the cyan pad shows today's goal met, ok and fault mark an
+ * answer. This file only uses the variables from tokens.css.
  */
 
-/* Persian interface text. Barlow has no Arabic script, so the stack falls
-   through to Vazirmatn for Persian and keeps Barlow for Latin and German. */
+/* Persian interface text. Archivo has no Arabic script, so the stack falls
+   through to Vazirmatn for Persian and keeps Archivo for Latin and German. */
 @font-face { font-family: "Vazirmatn"; font-weight: 400; font-display: swap; src: url("fonts/Vazirmatn-Regular.woff2") format("woff2"); }
 @font-face { font-family: "Vazirmatn"; font-weight: 500; font-display: swap; src: url("fonts/Vazirmatn-Medium.woff2") format("woff2"); }
 @font-face { font-family: "Vazirmatn"; font-weight: 600; font-display: swap; src: url("fonts/Vazirmatn-SemiBold.woff2") format("woff2"); }
@@ -80,8 +80,9 @@ kbd {
   border-radius: var(--r-control);
   background: var(--panel);
   color: var(--ink);
-  font-family: var(--font);
+  font-family: var(--font-code);
   font-size: var(--t-xs);
+  font-weight: 500;
   line-height: 1.5;
   text-align: center;
 }
@@ -134,7 +135,7 @@ kbd {
   gap: var(--s2);
 }
 
-/* Segmented switch: the selected option reads in ink with a steel bar. */
+/* Segmented switch: the selected option reads in ink with a link-blue bar. */
 .seg {
   display: inline-flex;
   margin: 0;
@@ -179,11 +180,11 @@ kbd {
   background: var(--inset);
   color: var(--ink);
   font-weight: 600;
-  box-shadow: inset 0 -3px 0 var(--steel);
+  box-shadow: inset 0 -2px 0 var(--link);
 }
 
 .seg input:focus-visible + span {
-  outline: 2px solid var(--steel);
+  outline: 2px solid var(--link);
   outline-offset: -4px;
   border-radius: var(--r-control);
 }
@@ -198,11 +199,12 @@ kbd {
   font-size: var(--t-sm);
   font-weight: 500;
   cursor: pointer;
-  transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+  transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
 
 .ghost:active {
   background: var(--inset);
+  transform: scale(0.98);
 }
 
 .sound {
@@ -248,13 +250,12 @@ kbd {
   display: flex;
   justify-content: space-between;
   gap: var(--s4);
-  font-family: var(--font-tag);
   font-size: var(--t-sm);
   font-weight: 500;
   color: var(--ink-2);
 }
 
-/* The noun is the reading: big, in Barlow, left aligned like a gauge value. */
+/* The noun is the reading: big, in Archivo, left aligned like a gauge value. */
 .phrase {
   display: flex;
   flex-wrap: wrap;
@@ -320,7 +321,7 @@ kbd {
   font-size: var(--t-2xl);
   font-weight: 500;
   cursor: pointer;
-  transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease), color var(--dur) var(--ease), transform var(--dur) var(--ease);
   touch-action: manipulation;
 }
 
@@ -351,6 +352,7 @@ kbd {
 
 .choice:active:not(:disabled) {
   background: var(--inset);
+  transform: scale(0.98);
 }
 
 .choice-key {
@@ -378,7 +380,7 @@ kbd {
   border-color: var(--ok);
   color: var(--ok);
   font-weight: 600;
-  box-shadow: inset 0 -3px 0 var(--ok);
+  box-shadow: inset 0 -2px 0 var(--ok);
 }
 
 .choice.is-wrong {
@@ -425,7 +427,7 @@ kbd {
   font-weight: 600;
 }
 
-/* The words carry the verdict; the lamp beside them repeats it in ok or
+/* The words carry the verdict; the pad beside them repeats it in ok or
    fault, since fault red on the dark panel is too faint for body text. */
 .verdict::before {
   content: "";
@@ -433,16 +435,18 @@ kbd {
   width: 0.6em;
   height: 0.6em;
   margin-inline-end: var(--s2);
-  border-radius: var(--r-lamp);
-  background: var(--inset);
+  border: var(--trace-w) solid var(--trace);
+  border-radius: var(--r-pad);
   vertical-align: 0.05em;
 }
 
 .card[data-result="right"] ~ .feedback .verdict::before {
+  border-color: var(--ok);
   background: var(--ok);
 }
 
 .card[data-result="wrong"] ~ .feedback .verdict::before {
+  border-color: var(--fault);
   background: var(--fault);
 }
 
@@ -502,10 +506,14 @@ kbd {
   font-size: var(--t-md);
   font-weight: 600;
   cursor: pointer;
-  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
   touch-action: manipulation;
   /* Leaves room under the button when app.js scrolls it into view. */
   scroll-margin-block-end: var(--s4);
+}
+
+.next:active {
+  transform: scale(0.98);
 }
 
 .next kbd {
@@ -522,7 +530,6 @@ kbd {
   border: 1px solid var(--ok);
   border-radius: var(--r-control);
   color: var(--ok);
-  font-family: var(--font-tag);
   font-size: var(--t-sm);
   font-weight: 600;
   vertical-align: 0.1em;
@@ -557,15 +564,14 @@ kbd {
   gap: var(--s2);
   margin-bottom: var(--s2);
   color: var(--ink-2);
-  font-family: var(--font-tag);
   font-size: var(--t-sm);
   font-weight: 500;
 }
 
-.daily-line .lamp {
+.daily-line .pad {
   flex: none;
   align-self: center;
-  transition: background-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 
 .daily-count {
@@ -577,7 +583,7 @@ kbd {
   line-height: 1;
 }
 
-/* Inset track; the fill is ink, the lamp carries the "met" signal. */
+/* Inset track; the fill is ink, the pad carries the "met" signal. */
 .meter {
   display: block;
   height: 8px;
@@ -609,7 +615,6 @@ kbd {
   padding: var(--s3) var(--s4);
   border-inline-start: 1px solid var(--line);
   color: var(--ink-2);
-  font-family: var(--font-tag);
   font-size: var(--t-sm);
   font-weight: 500;
   line-height: 1.3;
@@ -646,7 +651,6 @@ kbd {
 
 .score dt {
   color: var(--ink-2);
-  font-family: var(--font-tag);
   font-size: var(--t-sm);
   font-weight: 500;
 }
@@ -712,15 +716,14 @@ kbd {
 
 .box-label {
   color: var(--ink-2);
-  font-family: var(--font-tag);
   font-size: var(--t-sm);
   font-weight: 500;
 }
 
-/* The current word's box is selected: inset fill and a steel bar. */
+/* The current word's box is selected: inset fill and a link-blue bar. */
 .box-cell.is-active {
   background: var(--inset);
-  box-shadow: inset 0 3px 0 var(--steel);
+  box-shadow: inset 0 2px 0 var(--link);
 }
 
 .box-cell.is-active .box-label {
@@ -752,7 +755,7 @@ kbd {
 }
 
 .stats::backdrop {
-  background: color-mix(in srgb, var(--cab) 80%, transparent);
+  background: color-mix(in srgb, var(--ground) 80%, transparent);
 }
 
 /* The page behind the panel stays put when the panel reaches its end. */
@@ -816,7 +819,6 @@ html:has(.stats[open]) {
 .totals p {
   padding: var(--s3) var(--s4);
   color: var(--ink-2);
-  font-family: var(--font-tag);
   font-size: var(--t-sm);
   font-weight: 500;
 }
@@ -900,7 +902,6 @@ html:has(.stats[open]) {
 
 .levels thead th {
   color: var(--ink-2);
-  font-family: var(--font-tag);
   font-size: var(--t-sm);
   font-weight: 500;
 }
@@ -930,12 +931,16 @@ html:has(.stats[open]) {
   color: var(--ink);
   font-weight: 500;
   cursor: pointer;
-  transition: background-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  transition: background-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.reset:active {
+  transform: scale(0.98);
 }
 
 .reset.is-armed {
   font-weight: 600;
-  box-shadow: inset 0 -3px 0 var(--fault);
+  box-shadow: inset 0 -2px 0 var(--fault);
 }
 
 /* ------------------------------------------------------------ small screens */

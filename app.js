@@ -639,7 +639,7 @@
     el.dailyMeter.setAttribute("aria-valuemax", String(state.goal));
     el.dailyMeter.setAttribute("aria-valuenow", String(Math.min(n, state.goal)));
     el.daily.classList.toggle("is-done", done);
-    // The status lamp turns amber once today's goal is met.
+    // The pad turns cyan once today's goal is met.
     el.dailyLamp.setAttribute("data-state", done ? "live" : "idle");
     var days = dayStreak();
     setText(el.dailyDays, num(days));
