@@ -6,7 +6,6 @@ script answers "die" so the card shows a wrong pick and its verdict.
 
     docs/desktop-light.png, docs/desktop-dark.png   1280 px wide, full page
     docs/phone-light.png, docs/phone-dark.png       390 px wide at 2x, full page
-    tools/banner/app.png                            dark desktop at 2x, for the banner
 
     pip install playwright
     python tools/screens/render.py
@@ -48,7 +47,6 @@ SHOTS = [
     (DOCS / "desktop-dark.png", 1280, 900, 1, "dark"),
     (DOCS / "phone-light.png", 390, 844, 2, "light"),
     (DOCS / "phone-dark.png", 390, 844, 2, "dark"),
-    (ROOT / "tools" / "banner" / "app.png", 1280, 900, 2, "dark"),
 ]
 
 
